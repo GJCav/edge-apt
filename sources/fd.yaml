@@ -1,0 +1,9 @@
+template: edgeapt.deb_upstream/v1
+id: fd
+package: fd
+
+upstream:
+  - version: 10.4.1
+    arch: amd64
+    suites: [jammy, noble]
+    url: "https://github.com/sharkdp/fd/releases/download/v10.4.1/fd_10.4.1_amd64.deb"

@@ -1,0 +1,18 @@
+template: edgeapt.single_binary/v1
+id: doggo
+package: edgeapt-doggo
+
+repackage:
+  type: nfpm
+  install_path: /usr/bin/doggo
+  metadata:
+    description: "Command-line DNS client for humans"
+    homepage: "https://github.com/mr-karan/doggo"
+
+upstream:
+  - version: v1.1.7
+    revision: 1
+    arch: amd64
+    suites: [jammy, noble]
+    url: "https://github.com/mr-karan/doggo/releases/download/v1.1.7/doggo_1.1.7_Linux_x86_64.tar.gz"
+    extract_path: doggo_1.1.7_Linux_x86_64/doggo

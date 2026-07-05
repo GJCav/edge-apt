@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-07-05T13:48:04Z",
+  "schema": "edgeapt.lock/v1",
+  "sources": {
+    "doggo": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-05T13:48:04Z",
+          "package": "edgeapt-doggo",
+          "path": "packages/doggo/edgeapt-doggo_1.1.7-1_amd64.deb",
+          "revision": 1,
+          "sha256": "sha256:7c53570265bec7850d3d43f8e7bea3ed1d598087d1c70fce08911753f5d71b5f",
+          "size": 4724422,
+          "suites": [
+            "jammy",
+            "noble"
+          ],
+          "upstream": {
+            "etag": "\"0x8DEBA4AD9A1316F\"",
+            "last_modified": "Mon, 25 May 2026 10:46:17 GMT",
+            "sha256": "sha256:a908d045dbda977482927fd90ee1ab2020115fbf0905b93c7d6ef40d357b5392",
+            "size": 5779683,
+            "url": "https://github.com/mr-karan/doggo/releases/download/v1.1.7/doggo_1.1.7_Linux_x86_64.tar.gz"
+          },
+          "upstream_version": "v1.1.7",
+          "version": "1.1.7-1"
+        }
+      ],
+      "package": "edgeapt-doggo",
+      "source_file": "sources/doggo.yaml",
+      "source_sha256": "sha256:f4e23464a39a2757fb7f1cd3af722f7abe6b2fdd4b832f2ece1c34b2e859921a",
+      "template": "edgeapt.single_binary/v1"
+    },
+    "fd": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-05T13:48:04Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "fd",
+            "version": "10.4.1"
+          },
+          "package": "fd",
+          "path": "packages/fd/fd_10.4.1_amd64.deb",
+          "sha256": "sha256:fa4dee2b27ea61bdd0f41716304d0a2668cec244c8dc8f0ef26967613d47907c",
+          "size": 1397558,
+          "suites": [
+            "jammy",
+            "noble"
+          ],
+          "upstream": {
+            "etag": "\"0x8DE7CEF1DDFBE84\"",
+            "last_modified": "Sun, 08 Mar 2026 08:45:57 GMT",
+            "sha256": "sha256:fa4dee2b27ea61bdd0f41716304d0a2668cec244c8dc8f0ef26967613d47907c",
+            "size": 1397558,
+            "url": "https://github.com/sharkdp/fd/releases/download/v10.4.1/fd_10.4.1_amd64.deb"
+          },
+          "upstream_version": "10.4.1",
+          "version": "10.4.1"
+        }
+      ],
+      "package": "fd",
+      "source_file": "sources/fd.yaml",
+      "source_sha256": "sha256:16e44066629b47f4437e859972a55e07dcb04f902a7f2f85335d53cc8577210b",
+      "template": "edgeapt.deb_upstream/v1"
+    },
+    "hello": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-05T13:48:04Z",
+          "package": "edgeapt-hello",
+          "path": "packages/hello/edgeapt-hello_0.1.0-1_amd64.deb",
+          "revision": 1,
+          "sha256": "sha256:876fe78dedecc156bf938428bf23f3e0d21d4af19766b60c58c8949b5f8c101a",
+          "size": 608,
+          "suites": [
+            "jammy",
+            "noble"
+          ],
+          "upstream": {
+            "sha256": "sha256:74443048b52bf2be3b0f003a8f37592551d316c6c7c28b1a110ee6f879ef4130",
+            "size": 39,
+            "url": "tests/fixtures/hello-world"
+          },
+          "upstream_version": "v0.1.0",
+          "version": "0.1.0-1"
+        }
+      ],
+      "package": "edgeapt-hello",
+      "source_file": "sources/hello.yaml",
+      "source_sha256": "sha256:5f9bd275c839fe204bb3dcdd2dfa04b41282196de508bcbec716cb35677febe9",
+      "template": "edgeapt.single_binary/v1"
+    }
+  }
+}

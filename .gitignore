@@ -1,0 +1,8 @@
+tmp/
+public/
+tools/.venv/
+tools/.pytest_cache/
+tools/.ruff_cache/
+tools/.pyright/
+__pycache__/
+*.pyc
