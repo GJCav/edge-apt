@@ -38,6 +38,8 @@ class SourceConfig:
     source_file: str
     repackage: RepackageConfig | None
     upstream: tuple[UpstreamConfig, ...]
+    allow_ubuntu_package_override: bool = False
+    override_reason: str | None = None
 
 
 @attrs.define(kw_only=True, frozen=True)

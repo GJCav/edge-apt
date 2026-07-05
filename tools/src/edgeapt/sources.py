@@ -57,6 +57,20 @@ def load_source(path: Path) -> SourceConfig:
     validate_id(source_id, path)
     validate_package(package, path)
 
+    allow_ubuntu_package_override = _optional_bool(
+        data,
+        "allow_ubuntu_package_override",
+        path,
+    )
+    override_reason = _optional_str(data, "override_reason", path)
+    if allow_ubuntu_package_override and override_reason is None:
+        _raise("override_reason is required when package override is allowed", path)
+    if not allow_ubuntu_package_override and override_reason is not None:
+        _raise(
+            "override_reason is only valid with allow_ubuntu_package_override: true",
+            path,
+        )
+
     upstream = _parse_upstream(data.get("upstream"), template, path)
     repackage = _parse_repackage(data.get("repackage"), template, path)
 
@@ -67,6 +81,8 @@ def load_source(path: Path) -> SourceConfig:
         source_file=relative_to_root(path, ROOT),
         repackage=repackage,
         upstream=upstream,
+        allow_ubuntu_package_override=allow_ubuntu_package_override,
+        override_reason=override_reason,
     )
 
 
@@ -219,6 +235,15 @@ def _optional_int(data: Mapping[str, Any], key: str, path: Path) -> int | None:
         return None
     if not isinstance(value, int):
         _raise(f"{key} must be an integer", path)
+    return value
+
+
+def _optional_bool(data: Mapping[str, Any], key: str, path: Path) -> bool:
+    value = data.get(key)
+    if value is None:
+        return False
+    if not isinstance(value, bool):
+        _raise(f"{key} must be a boolean", path)
     return value
 
 

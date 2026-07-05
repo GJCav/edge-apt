@@ -1,17 +1,51 @@
 {
-  "generated_at": "2026-07-05T13:48:04Z",
+  "generated_at": "2026-07-05T15:18:01Z",
   "schema": "edgeapt.lock/v1",
   "sources": {
+    "bat": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-05T15:18:01Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "bat",
+            "version": "0.25.0"
+          },
+          "package": "bat",
+          "path": "packages/bat/bat_0.25.0_amd64.deb",
+          "sha256": "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc",
+          "size": 2631980,
+          "suites": [
+            "jammy",
+            "noble"
+          ],
+          "upstream": {
+            "etag": "\"0x8DD2F4FA8B04F10\"",
+            "last_modified": "Tue, 07 Jan 2025 19:15:33 GMT",
+            "sha256": "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc",
+            "size": 2631980,
+            "url": "https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb"
+          },
+          "upstream_version": "0.25.0",
+          "version": "0.25.0"
+        }
+      ],
+      "package": "bat",
+      "source_file": "sources/bat.yaml",
+      "source_sha256": "sha256:04b23776d686fd18f12148fe6f54d957e655eb69b78c7370e97d0c2d834f1da4",
+      "template": "edgeapt.deb_upstream/v1"
+    },
     "doggo": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-05T13:48:04Z",
-          "package": "edgeapt-doggo",
-          "path": "packages/doggo/edgeapt-doggo_1.1.7-1_amd64.deb",
+          "created_at": "2026-07-05T15:18:01Z",
+          "package": "doggo",
+          "path": "packages/doggo/doggo_1.1.7-1_amd64.deb",
           "revision": 1,
-          "sha256": "sha256:7c53570265bec7850d3d43f8e7bea3ed1d598087d1c70fce08911753f5d71b5f",
-          "size": 4724422,
+          "sha256": "sha256:97b6b4eb62963f63e61559edb43142ad3f6ba1a4fba3eda9fb5bae02f00750bd",
+          "size": 4724408,
           "suites": [
             "jammy",
             "noble"
@@ -27,16 +61,16 @@
           "version": "1.1.7-1"
         }
       ],
-      "package": "edgeapt-doggo",
+      "package": "doggo",
       "source_file": "sources/doggo.yaml",
-      "source_sha256": "sha256:f4e23464a39a2757fb7f1cd3af722f7abe6b2fdd4b832f2ece1c34b2e859921a",
+      "source_sha256": "sha256:2d99a34af6a77641f75386f96f049e26331b497822905f0317e03e981c921d9c",
       "template": "edgeapt.single_binary/v1"
     },
     "fd": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-05T13:48:04Z",
+          "created_at": "2026-07-05T15:18:01Z",
           "deb_control": {
             "architecture": "amd64",
             "package": "fd",
@@ -70,7 +104,7 @@
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-05T13:48:04Z",
+          "created_at": "2026-07-05T15:18:01Z",
           "package": "edgeapt-hello",
           "path": "packages/hello/edgeapt-hello_0.1.0-1_amd64.deb",
           "revision": 1,

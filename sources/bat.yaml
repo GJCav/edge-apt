@@ -1,0 +1,11 @@
+template: edgeapt.deb_upstream/v1
+id: bat
+package: bat
+allow_ubuntu_package_override: true
+override_reason: "Use upstream bat release directly instead of Ubuntu packaged version."
+
+upstream:
+  - version: 0.25.0
+    arch: amd64
+    suites: [jammy, noble]
+    url: "https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb"

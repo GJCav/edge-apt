@@ -7,7 +7,15 @@ from typing import Any
 
 import attrs
 
-from edgeapt.constants import COMPONENT, LOCK_PATH, PUBLIC_DIR, ROOT, TEST_PUBLIC_DIR, TMP_DIR
+from edgeapt.constants import (
+    COMPONENT,
+    LOCK_PATH,
+    PUBLIC_DIR,
+    ROOT,
+    STATIC_ASSET_SIZE_LIMIT_BYTES,
+    TEST_PUBLIC_DIR,
+    TMP_DIR,
+)
 from edgeapt.errors import ValidationError
 from edgeapt.keyring import is_test_key_fingerprint, load_test_signing_key
 from edgeapt.lockfile import load_lock
@@ -101,11 +109,37 @@ def generate_repo(
             snapshot_name,
             "filesystem:local:",
         )
+    check_static_asset_size_limit(output_dir)
     return RepoGenerationResult(
         output_dir=output_dir,
         signing_key_fingerprint=fingerprint,
         profile=profile,
     )
+
+
+def check_static_asset_size_limit(
+    output_dir: Path,
+    *,
+    limit_bytes: int = STATIC_ASSET_SIZE_LIMIT_BYTES,
+) -> None:
+    oversized: list[tuple[Path, int]] = []
+    for path in sorted(output_dir.rglob("*")):
+        if path.is_file():
+            size = path.stat().st_size
+            if size > limit_bytes:
+                oversized.append((path, size))
+    if not oversized:
+        return
+
+    limit_mib = _format_mib(limit_bytes)
+    lines = [
+        "Static asset size limit exceeded:",
+        *[
+            f"- {path}: {_format_mib(size)} MiB > {limit_mib} MiB"
+            for path, size in oversized
+        ],
+    ]
+    raise ValidationError("\n".join(lines))
 
 
 def _resolve_profile(
@@ -130,3 +164,7 @@ def _resolve_profile(
 
 def _aptly(config: Path, *args: str) -> None:
     run(["aptly", f"-config={config}", *args])
+
+
+def _format_mib(size_bytes: int) -> str:
+    return f"{size_bytes / (1024 * 1024):.2f}"

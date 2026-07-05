@@ -1,6 +1,6 @@
 template: edgeapt.single_binary/v1
 id: doggo
-package: edgeapt-doggo
+package: doggo
 
 repackage:
   type: nfpm

@@ -11,24 +11,55 @@ from edgeapt.keyring import ensure_test_key
 from edgeapt.repackage import repackage_all
 from edgeapt.repo import generate_repo
 from edgeapt.sources import load_sources
+from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
+from edgeapt.ubuntu_index import refresh_ubuntu_indexes
 
 app = App(name="edgeapt")
 console = Console()
 
 
 @app.command
-def validate() -> None:
+def validate(skip_ubuntu_conflicts: bool = False) -> None:
     """Validate sources/*.yaml."""
     sources = load_sources(SOURCES_DIR)
+    if not skip_ubuntu_conflicts:
+        ensure_no_ubuntu_package_conflicts(sources)
     table = Table(title="EdgeAPT Sources")
     table.add_column("id")
     table.add_column("template")
     table.add_column("package")
+    table.add_column("ubuntu override")
     table.add_column("upstreams", justify="right")
     for source in sources:
-        table.add_row(source.id, source.template, source.package, str(len(source.upstream)))
+        table.add_row(
+            source.id,
+            source.template,
+            source.package,
+            "yes" if source.allow_ubuntu_package_override else "no",
+            str(len(source.upstream)),
+        )
     console.print(table)
     console.print(f"[green]Validated {len(sources)} source(s).[/green]")
+
+
+@app.command
+def refresh_ubuntu_index() -> None:
+    """Refresh cached Ubuntu official package indexes."""
+    indexes = refresh_ubuntu_indexes()
+    table = Table(title="Ubuntu Package Index")
+    table.add_column("suite")
+    table.add_column("arch")
+    table.add_column("packages", justify="right")
+    table.add_column("refreshed")
+    for index in indexes:
+        table.add_row(
+            index.suite,
+            index.arch,
+            str(len(index.packages)),
+            index.refreshed_at,
+        )
+    console.print(table)
+    console.print("[green]Ubuntu package indexes refreshed.[/green]")
 
 
 @app.command
