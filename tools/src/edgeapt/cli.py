@@ -5,9 +5,17 @@ from collections.abc import Callable
 import cyclopts
 from rich.console import Console
 from rich.panel import Panel
+from rich.progress import BarColumn, Progress, TextColumn, TimeElapsedColumn
 from rich.table import Table
 
-from edgeapt.constants import LOCK_PATH, SOURCES_DIR
+from edgeapt.constants import (
+    LOCK_PATH,
+    SOURCES_DIR,
+    SUPPORTED_SUITES,
+    UBUNTU_COMPONENTS,
+    UBUNTU_INDEX_ARCHES,
+)
+from edgeapt.config import load_config
 from edgeapt.e2e import run_e2e
 from edgeapt.errors import EdgeAptError
 from edgeapt.keyring import check_signing_key, ensure_test_key
@@ -16,6 +24,7 @@ from edgeapt.repo import generate_repo
 from edgeapt.sources import load_sources
 from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
 from edgeapt.ubuntu_index import refresh_ubuntu_indexes
+from edgeapt.ubuntu_index import UbuntuIndexRefreshEvent
 
 console = Console()
 
@@ -66,7 +75,32 @@ def validate(skip_ubuntu_conflicts: bool = False) -> None:
 
 def refresh_ubuntu_index() -> None:
     """Refresh cached Ubuntu official package indexes."""
-    indexes = refresh_ubuntu_indexes()
+    config = load_config()
+    total_downloads = (
+        len(SUPPORTED_SUITES) * len(UBUNTU_INDEX_ARCHES) * len(UBUNTU_COMPONENTS)
+    )
+    console.print(f"Ubuntu mirror: {config.ubuntu_mirror_url}")
+    with Progress(
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(),
+        TextColumn("{task.completed}/{task.total}"),
+        TimeElapsedColumn(),
+        console=console,
+    ) as progress:
+        task_id = progress.add_task("Refreshing Ubuntu package indexes", total=total_downloads)
+
+        def on_download_start(event: UbuntuIndexRefreshEvent) -> None:
+            progress.update(
+                task_id,
+                description=f"Downloading {event.suite}/{event.arch} {event.component}",
+                advance=1,
+            )
+
+        indexes = refresh_ubuntu_indexes(
+            base_url=config.ubuntu_mirror_url,
+            on_download_start=on_download_start,
+        )
+        progress.update(task_id, description="Ubuntu package indexes refreshed")
     table = Table(title="Ubuntu Package Index")
     table.add_column("suite")
     table.add_column("arch")

@@ -21,6 +21,7 @@ SUPPORTED_ARCHES = {"amd64", "arm64"}
 SUPPORTED_E2E_ARCHES = {"amd64"}
 UBUNTU_INDEX_ARCHES = ("amd64",)
 UBUNTU_COMPONENTS = ("main", "restricted", "universe", "multiverse")
+DEFAULT_UBUNTU_ARCHIVE_BASE_URL = "http://archive.ubuntu.com/ubuntu"
 
 COMPONENT = "main"
 LOCK_SCHEMA = "edgeapt.lock/v1"

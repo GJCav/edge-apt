@@ -4,7 +4,7 @@ import gzip
 import json
 import urllib.error
 import urllib.request
-from collections.abc import Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, cast
@@ -12,6 +12,7 @@ from typing import Any, cast
 import attrs
 
 from edgeapt.constants import (
+    DEFAULT_UBUNTU_ARCHIVE_BASE_URL,
     SUPPORTED_SUITES,
     UBUNTU_COMPONENTS,
     UBUNTU_INDEX_ARCHES,
@@ -21,9 +22,6 @@ from edgeapt.errors import ValidationError
 from edgeapt.models import SourceConfig
 from edgeapt.util import write_json
 
-UBUNTU_ARCHIVE_BASE_URL = "http://archive.ubuntu.com/ubuntu"
-
-
 @attrs.define(kw_only=True, frozen=True)
 class UbuntuPackageIndex:
     suite: str
@@ -31,15 +29,19 @@ class UbuntuPackageIndex:
     components: tuple[str, ...]
     packages: frozenset[str]
     refreshed_at: str
+    base_url: str | None = None
 
     def to_json(self) -> dict[str, Any]:
-        return {
+        data: dict[str, Any] = {
             "suite": self.suite,
             "arch": self.arch,
             "components": list(self.components),
             "packages": sorted(self.packages),
             "refreshed_at": self.refreshed_at,
         }
+        if self.base_url is not None:
+            data["base_url"] = self.base_url
+        return data
 
 
 @attrs.define(kw_only=True, frozen=True)
@@ -50,12 +52,22 @@ class PackageConflict:
     suite: str
 
 
+@attrs.define(kw_only=True, frozen=True)
+class UbuntuIndexRefreshEvent:
+    suite: str
+    arch: str
+    component: str
+    url: str
+
+
 def refresh_ubuntu_indexes(
     *,
     suites: Iterable[str] = SUPPORTED_SUITES,
     arches: Iterable[str] = UBUNTU_INDEX_ARCHES,
     components: Iterable[str] = UBUNTU_COMPONENTS,
     index_dir: Path = UBUNTU_INDEX_DIR,
+    base_url: str = DEFAULT_UBUNTU_ARCHIVE_BASE_URL,
+    on_download_start: Callable[[UbuntuIndexRefreshEvent], None] | None = None,
 ) -> tuple[UbuntuPackageIndex, ...]:
     refreshed: list[UbuntuPackageIndex] = []
     component_tuple = tuple(components)
@@ -67,6 +79,8 @@ def refresh_ubuntu_indexes(
                     arch=arch,
                     components=component_tuple,
                     index_dir=index_dir,
+                    base_url=base_url,
+                    on_download_start=on_download_start,
                 )
             )
     return tuple(refreshed)
@@ -78,11 +92,19 @@ def refresh_ubuntu_index(
     arch: str,
     components: tuple[str, ...] = UBUNTU_COMPONENTS,
     index_dir: Path = UBUNTU_INDEX_DIR,
+    base_url: str = DEFAULT_UBUNTU_ARCHIVE_BASE_URL,
+    on_download_start: Callable[[UbuntuIndexRefreshEvent], None] | None = None,
 ) -> UbuntuPackageIndex:
     packages: set[str] = set()
     for component in components:
         packages.update(
-            _download_component_packages(suite=suite, arch=arch, component=component)
+            _download_component_packages(
+                suite=suite,
+                arch=arch,
+                component=component,
+                base_url=base_url,
+                on_download_start=on_download_start,
+            )
         )
     index = UbuntuPackageIndex(
         suite=suite,
@@ -93,6 +115,7 @@ def refresh_ubuntu_index(
         .replace(microsecond=0)
         .isoformat()
         .replace("+00:00", "Z"),
+        base_url=base_url,
     )
     write_json(_index_path(index_dir=index_dir, suite=suite, arch=arch), index.to_json())
     return index
@@ -132,6 +155,7 @@ def load_ubuntu_index(
         components=tuple(cast(list[str], component_items)),
         packages=frozenset(cast(list[str], package_items)),
         refreshed_at=_expect_str(data, "refreshed_at", path),
+        base_url=_optional_str(data, "base_url", path),
     )
 
 
@@ -194,11 +218,27 @@ def parse_packages_index(text: str) -> frozenset[str]:
     return frozenset(packages)
 
 
-def _download_component_packages(*, suite: str, arch: str, component: str) -> frozenset[str]:
+def _download_component_packages(
+    *,
+    suite: str,
+    arch: str,
+    component: str,
+    base_url: str = DEFAULT_UBUNTU_ARCHIVE_BASE_URL,
+    on_download_start: Callable[[UbuntuIndexRefreshEvent], None] | None = None,
+) -> frozenset[str]:
     url = (
-        f"{UBUNTU_ARCHIVE_BASE_URL}/dists/{suite}/{component}/"
+        f"{base_url}/dists/{suite}/{component}/"
         f"binary-{arch}/Packages.gz"
     )
+    if on_download_start is not None:
+        on_download_start(
+            UbuntuIndexRefreshEvent(
+                suite=suite,
+                arch=arch,
+                component=component,
+                url=url,
+            )
+        )
     try:
         with urllib.request.urlopen(url) as response:
             compressed = response.read()
@@ -213,6 +253,15 @@ def _index_path(*, index_dir: Path, suite: str, arch: str) -> Path:
 
 def _expect_str(data: Mapping[str, Any], key: str, path: Path) -> str:
     value = data.get(key)
+    if not isinstance(value, str):
+        raise ValidationError(f"invalid {key} in Ubuntu index: {path}")
+    return value
+
+
+def _optional_str(data: Mapping[str, Any], key: str, path: Path) -> str | None:
+    value = data.get(key)
+    if value is None:
+        return None
     if not isinstance(value, str):
         raise ValidationError(f"invalid {key} in Ubuntu index: {path}")
     return value
