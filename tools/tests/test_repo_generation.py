@@ -34,7 +34,7 @@ def test_generate_repo_writes_signed_metadata() -> None:
     run(["gpg", "--verify", inrelease])
 
 
-def test_prod_requires_explicit_real_key() -> None:
+def test_prod_requires_configured_real_key() -> None:
     with pytest.raises(ValidationError):
         generate_repo(profile="prod")
 

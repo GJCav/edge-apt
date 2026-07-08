@@ -6,3 +6,4 @@ tools/.ruff_cache/
 tools/.pyright/
 __pycache__/
 *.pyc
+/keys/prod/sec.asc

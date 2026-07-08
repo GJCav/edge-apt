@@ -7,7 +7,7 @@ from rich.table import Table
 from edgeapt.constants import LOCK_PATH, SOURCES_DIR
 from edgeapt.e2e import run_e2e
 from edgeapt.errors import EdgeAptError
-from edgeapt.keyring import ensure_test_key
+from edgeapt.keyring import check_signing_key, ensure_test_key
 from edgeapt.repackage import repackage_all
 from edgeapt.repo import generate_repo
 from edgeapt.sources import load_sources
@@ -64,9 +64,20 @@ def refresh_ubuntu_index() -> None:
 
 @app.command
 def init_test_key() -> None:
-    """Create or export the local test archive signing key."""
+    """Create, import, or export the test archive signing key."""
     key = ensure_test_key()
     console.print("[green]Test signing key ready.[/green]")
+    console.print(f"fingerprint: {key.fingerprint}")
+    console.print(f"public keyring: {key.public_keyring}")
+    console.print(f"public ascii: {key.public_ascii}")
+    console.print(f"secret ascii: {key.secret_ascii}")
+
+
+@app.command
+def check_key(profile: str = "test") -> None:
+    """Check archive signing key files and local GPG secret key."""
+    key = check_signing_key(profile)
+    console.print(f"[green]{profile} signing key ready.[/green]")
     console.print(f"fingerprint: {key.fingerprint}")
     console.print(f"public keyring: {key.public_keyring}")
     console.print(f"public ascii: {key.public_ascii}")
@@ -81,15 +92,9 @@ def repackage() -> None:
 
 
 @app.command
-def generate(
-    profile: str = "test",
-    signing_key_fingerprint: str | None = None,
-) -> None:
+def generate(profile: str = "test") -> None:
     """Generate signed APT repository output."""
-    result = generate_repo(
-        profile=profile,
-        signing_key_fingerprint=signing_key_fingerprint,
-    )
+    result = generate_repo(profile=profile)
     console.print(
         f"[green]Generated {result.profile} signed APT repository at "
         f"{result.output_dir}[/green]"
@@ -98,13 +103,10 @@ def generate(
 
 
 @app.command
-def sync(
-    profile: str = "test",
-    signing_key_fingerprint: str | None = None,
-) -> None:
+def sync(profile: str = "test") -> None:
     """Run repackage and generate in sequence."""
     repackage()
-    generate(profile=profile, signing_key_fingerprint=signing_key_fingerprint)
+    generate(profile=profile)
 
 
 @app.command

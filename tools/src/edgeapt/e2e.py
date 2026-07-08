@@ -7,12 +7,13 @@ import time
 
 from edgeapt.constants import ROOT, TEST_PUBLIC_DIR
 from edgeapt.errors import CommandError
-from edgeapt.keyring import TEST_KEY_GPG
+from edgeapt.keyring import profile_public_keyring
 from edgeapt.util import require_executable, run
 
 
 def run_e2e(*, suite: str, image: str, package: str, command: str) -> None:
     require_executable("docker")
+    test_keyring = profile_public_keyring("test")
     port = _free_port()
     server = subprocess.Popen(
         [
@@ -53,7 +54,7 @@ apt-get install -y {package}
                 "--network",
                 "host",
                 "-v",
-                f"{TEST_KEY_GPG.resolve()}:/edgeapt-key.gpg:ro",
+                f"{test_keyring.resolve()}:/edgeapt-key.gpg:ro",
                 image,
                 "bash",
                 "-lc",

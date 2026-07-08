@@ -17,7 +17,7 @@ from edgeapt.constants import (
     TMP_DIR,
 )
 from edgeapt.errors import ValidationError
-from edgeapt.keyring import is_test_key_fingerprint, load_test_signing_key
+from edgeapt.keyring import load_signing_key
 from edgeapt.lockfile import load_lock
 from edgeapt.models import ArtifactFact
 from edgeapt.util import require_executable, run, write_json
@@ -33,14 +33,10 @@ class RepoGenerationResult:
 def generate_repo(
     *,
     profile: str,
-    signing_key_fingerprint: str | None = None,
 ) -> RepoGenerationResult:
     require_executable("aptly")
     require_executable("gpg")
-    output_dir, fingerprint = _resolve_profile(
-        profile=profile,
-        signing_key_fingerprint=signing_key_fingerprint,
-    )
+    output_dir, fingerprint = _resolve_profile(profile=profile)
     lock = load_lock(LOCK_PATH)
     if lock is None:
         raise ValueError("lock.json does not exist; run repackage first")
@@ -142,23 +138,11 @@ def check_static_asset_size_limit(
     raise ValidationError("\n".join(lines))
 
 
-def _resolve_profile(
-    *,
-    profile: str,
-    signing_key_fingerprint: str | None,
-) -> tuple[Path, str]:
+def _resolve_profile(*, profile: str) -> tuple[Path, str]:
     if profile == "test":
-        if signing_key_fingerprint is not None:
-            raise ValidationError("test profile uses the test signing key automatically")
-        return TEST_PUBLIC_DIR, load_test_signing_key().fingerprint
+        return TEST_PUBLIC_DIR, load_signing_key(profile).fingerprint
     if profile == "prod":
-        if signing_key_fingerprint is None or signing_key_fingerprint == "":
-            raise ValidationError(
-                "prod profile requires --signing-key-fingerprint with a real key"
-            )
-        if is_test_key_fingerprint(signing_key_fingerprint):
-            raise ValidationError("prod profile cannot use the test signing key")
-        return PUBLIC_DIR, signing_key_fingerprint
+        return PUBLIC_DIR, load_signing_key(profile).fingerprint
     raise ValidationError("profile must be either test or prod")
 
 
