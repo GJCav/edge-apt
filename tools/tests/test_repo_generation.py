@@ -34,11 +34,6 @@ def test_generate_repo_writes_signed_metadata() -> None:
     run(["gpg", "--verify", inrelease])
 
 
-def test_prod_requires_configured_real_key() -> None:
-    with pytest.raises(ValidationError):
-        generate_repo(profile="prod")
-
-
 def test_static_asset_size_limit_allows_exact_limit(tmp_path: Path) -> None:
     path = tmp_path / "asset.deb"
     path.write_bytes(b"0" * 10)

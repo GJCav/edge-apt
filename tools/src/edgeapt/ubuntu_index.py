@@ -108,7 +108,7 @@ def load_ubuntu_index(
     if not path.exists():
         raise ValidationError(
             f"Ubuntu package index missing for {suite}/{arch}; "
-            "run `edgeapt refresh-ubuntu-index` or pass `--skip-ubuntu-conflicts`"
+            "run `uv run refresh-ubuntu-index` or pass `--skip-ubuntu-conflicts`"
         )
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):

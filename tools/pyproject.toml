@@ -12,7 +12,14 @@ dependencies = [
 ]
 
 [project.scripts]
-edgeapt = "edgeapt.cli:main"
+guide = "edgeapt.cli:guide_main"
+refresh-ubuntu-index = "edgeapt.cli:refresh_ubuntu_index_main"
+validate = "edgeapt.cli:validate_main"
+init-test-key = "edgeapt.cli:init_test_key_main"
+check-key = "edgeapt.cli:check_key_main"
+repackage = "edgeapt.cli:repackage_main"
+generate = "edgeapt.cli:generate_main"
+e2e = "edgeapt.cli:e2e_main"
 
 [dependency-groups]
 dev = [

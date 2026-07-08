@@ -1,7 +1,10 @@
 from __future__ import annotations
 
-from cyclopts import App
+from collections.abc import Callable
+
+import cyclopts
 from rich.console import Console
+from rich.panel import Panel
 from rich.table import Table
 
 from edgeapt.constants import LOCK_PATH, SOURCES_DIR
@@ -14,11 +17,30 @@ from edgeapt.sources import load_sources
 from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
 from edgeapt.ubuntu_index import refresh_ubuntu_indexes
 
-app = App(name="edgeapt")
 console = Console()
 
 
-@app.command
+def guide() -> None:
+    """Show the recommended EdgeAPT workflow."""
+    table = Table(title="EdgeAPT Workflow")
+    table.add_column("Phase", style="bold")
+    table.add_column("Command")
+    table.add_row("Setup", "uv run init-test-key")
+    table.add_row("Setup", "uv run check-key --profile test")
+    table.add_row("Setup", "uv run refresh-ubuntu-index")
+    table.add_row("Validate", "uv run validate")
+    table.add_row("Repackage", "uv run repackage")
+    table.add_row("Generate", "uv run generate --profile test")
+    table.add_row("Verify", "uv run e2e")
+    console.print(table)
+    console.print(
+        Panel(
+            "uv run check-key --profile prod\nuv run generate --profile prod",
+            title="Production",
+        )
+    )
+
+
 def validate(skip_ubuntu_conflicts: bool = False) -> None:
     """Validate sources/*.yaml."""
     sources = load_sources(SOURCES_DIR)
@@ -42,7 +64,6 @@ def validate(skip_ubuntu_conflicts: bool = False) -> None:
     console.print(f"[green]Validated {len(sources)} source(s).[/green]")
 
 
-@app.command
 def refresh_ubuntu_index() -> None:
     """Refresh cached Ubuntu official package indexes."""
     indexes = refresh_ubuntu_indexes()
@@ -62,7 +83,6 @@ def refresh_ubuntu_index() -> None:
     console.print("[green]Ubuntu package indexes refreshed.[/green]")
 
 
-@app.command
 def init_test_key() -> None:
     """Create, import, or export the test archive signing key."""
     key = ensure_test_key()
@@ -73,7 +93,6 @@ def init_test_key() -> None:
     console.print(f"secret ascii: {key.secret_ascii}")
 
 
-@app.command
 def check_key(profile: str = "test") -> None:
     """Check archive signing key files and local GPG secret key."""
     key = check_signing_key(profile)
@@ -83,7 +102,6 @@ def check_key(profile: str = "test") -> None:
     console.print(f"public ascii: {key.public_ascii}")
 
 
-@app.command
 def repackage() -> None:
     """Run upstream repackaging and write packages/ plus lock.json."""
     lock = repackage_all()
@@ -91,7 +109,6 @@ def repackage() -> None:
     console.print(f"[green]Processed {len(lock.sources)} source(s).[/green]")
 
 
-@app.command
 def generate(profile: str = "test") -> None:
     """Generate signed APT repository output."""
     result = generate_repo(profile=profile)
@@ -102,14 +119,6 @@ def generate(profile: str = "test") -> None:
     console.print(f"signing key: {result.signing_key_fingerprint}")
 
 
-@app.command
-def sync(profile: str = "test") -> None:
-    """Run repackage and generate in sequence."""
-    repackage()
-    generate(profile=profile)
-
-
-@app.command
 def e2e(
     suite: str = "noble",
     image: str = "ubuntu:24.04",
@@ -121,13 +130,41 @@ def e2e(
     console.print("[green]E2E smoke test passed.[/green]")
 
 
-def main() -> None:
+def guide_main() -> None:
+    _run_cli(guide)
+
+
+def validate_main() -> None:
+    _run_cli(validate)
+
+
+def refresh_ubuntu_index_main() -> None:
+    _run_cli(refresh_ubuntu_index)
+
+
+def init_test_key_main() -> None:
+    _run_cli(init_test_key)
+
+
+def check_key_main() -> None:
+    _run_cli(check_key)
+
+
+def repackage_main() -> None:
+    _run_cli(repackage)
+
+
+def generate_main() -> None:
+    _run_cli(generate)
+
+
+def e2e_main() -> None:
+    _run_cli(e2e)
+
+
+def _run_cli(command: Callable[..., object]) -> None:
     try:
-        app()
+        cyclopts.run(command)
     except EdgeAptError as exc:
         console.print(f"[red]{exc}[/red]")
         raise SystemExit(1) from exc
-
-
-if __name__ == "__main__":
-    main()
