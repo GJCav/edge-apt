@@ -19,7 +19,7 @@ from edgeapt.config import load_config
 from edgeapt.e2e import run_e2e
 from edgeapt.errors import EdgeAptError
 from edgeapt.keyring import check_signing_key, ensure_test_key
-from edgeapt.repackage import repackage_all
+from edgeapt.repackage import repackage_all, RepackageEvent
 from edgeapt.repo import generate_repo
 from edgeapt.sources import load_sources
 from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
@@ -138,9 +138,44 @@ def check_key(profile: str = "test") -> None:
 
 def repackage() -> None:
     """Run upstream repackaging and write packages/ plus lock.json."""
-    lock = repackage_all()
+    sources = load_sources(SOURCES_DIR)
+    total_artifacts = sum(len(source.upstream) for source in sources)
+    with Progress(
+        TextColumn("[progress.description]{task.description}"),
+        TextColumn("[progress.percentage]{task.completed}/{task.total}"),
+        TimeElapsedColumn(),
+        console=console,
+    ) as progress:
+        task_id = progress.add_task("Waiting to start", total=total_artifacts)
+
+        def on_event(event: RepackageEvent) -> None:
+            if event.kind == "artifact_done":
+                progress.console.print(_format_repackage_done(event), soft_wrap=True)
+                progress.update(
+                    task_id,
+                    description=_format_repackage_status(event),
+                    advance=1,
+                )
+            elif event.kind in {
+                "source_start",
+                "fetch_start",
+                "extract_start",
+                "inspect_deb_start",
+            }:
+                progress.console.print(_format_repackage_log(event), soft_wrap=True)
+                progress.update(task_id, description=_format_repackage_status(event))
+            else:
+                progress.update(task_id, description=event.message)
+
+        lock = repackage_all(on_event=on_event)
+        progress.update(task_id, description="Repackaging complete")
+
+    artifact_count = sum(len(source_lock.artifacts) for source_lock in lock.sources.values())
     console.print(f"[green]Wrote {LOCK_PATH}[/green]")
-    console.print(f"[green]Processed {len(lock.sources)} source(s).[/green]")
+    console.print(
+        f"[green]Processed {len(lock.sources)} source(s), "
+        f"{artifact_count} artifact(s).[/green]"
+    )
 
 
 def generate(profile: str = "test") -> None:
@@ -162,6 +197,62 @@ def e2e(
     """Run a Docker apt install smoke test against the local test repo."""
     run_e2e(suite=suite, image=image, package=package, command=command)
     console.print("[green]E2E smoke test passed.[/green]")
+
+
+def _format_repackage_log(event: RepackageEvent) -> str:
+    if event.kind == "source_start":
+        return "\n".join(
+            [
+                f"\n---- {event.package} ----",
+                _format_repackage_field("Template", event.template),
+                _format_repackage_field("ID", event.source_id),
+            ]
+        )
+    if event.kind == "fetch_start":
+        return "\n".join(
+            [
+                _format_repackage_field(
+                    "Package",
+                    f"{event.package} {event.version} {event.arch}",
+                ),
+                _format_repackage_field("Fetch", event.url),
+            ]
+        )
+    if event.kind == "extract_start":
+        return _format_repackage_field("Extract", event.message)
+    if event.kind == "inspect_deb_start":
+        return _format_repackage_field("Inspect", "upstream deb control")
+    return event.message
+
+
+def _format_repackage_done(event: RepackageEvent) -> str:
+    return "\n".join(
+        [
+            _format_repackage_field("Artifact", event.path),
+            _format_repackage_field("Size", _format_bytes(event.size)),
+        ]
+    )
+
+
+def _format_repackage_status(event: RepackageEvent) -> str:
+    package = event.package or "-"
+    version = event.version or "-"
+    arch = event.arch or "-"
+    return f"Processing {package} {version} {arch}"
+
+
+def _format_bytes(size: int | None) -> str:
+    if size is None:
+        return "-"
+    if size < 1024:
+        return f"{size} B"
+    if size < 1024 * 1024:
+        return f"{size / 1024:.2f} KiB"
+    return f"{size / (1024 * 1024):.2f} MiB"
+
+
+def _format_repackage_field(label: str, value: object) -> str:
+    return f"{label + ':':<10} {value}"
 
 
 def guide_main() -> None:
