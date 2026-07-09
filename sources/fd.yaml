@@ -1,6 +1,7 @@
 template: edgeapt.deb_upstream/v1
 id: fd
 package: fd
+e2e_command: [fd, --version]
 
 upstream:
   - version: 10.4.1

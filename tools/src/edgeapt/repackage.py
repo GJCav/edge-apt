@@ -214,6 +214,7 @@ def repackage_all(
             source_sha256=sha256_file(source_path),
             template=source.template,
             package=source.package,
+            e2e_command=source.e2e_command,
             artifacts=tuple(
                 sorted(artifacts, key=lambda item: (item.package, item.version, item.arch))
             ),

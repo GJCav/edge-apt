@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-09T03:01:14Z",
+  "generated_at": "2026-07-09T03:34:09Z",
   "schema": "edgeapt.lock/v1",
   "sources": {
     "bat": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:01:14Z",
+          "created_at": "2026-07-09T03:34:09Z",
           "deb_control": {
             "architecture": "amd64",
             "package": "bat",
@@ -33,16 +33,20 @@
           "version": "0.25.0"
         }
       ],
+      "e2e_command": [
+        "bat",
+        "--version"
+      ],
       "package": "bat",
       "source_file": "sources/bat.yaml",
-      "source_sha256": "sha256:e5bc3b36c56e043d9ecd9e8ccca63fbd2611ffe1e36304bfc3c857636cb9554a",
+      "source_sha256": "sha256:e3b0d3749bb63182f9890695b16f6c6c6fe889842250571c1ebf2b842589ac2f",
       "template": "edgeapt.deb_upstream/v1"
     },
     "doggo": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:01:14Z",
+          "created_at": "2026-07-09T03:34:09Z",
           "package": "doggo",
           "path": "packages/doggo/doggo_1.1.7-1_amd64.deb",
           "revision": 1,
@@ -65,16 +69,20 @@
           "version": "1.1.7-1"
         }
       ],
+      "e2e_command": [
+        "doggo",
+        "--version"
+      ],
       "package": "doggo",
       "source_file": "sources/doggo.yaml",
-      "source_sha256": "sha256:012c8fb3e43bd743721884c3cd73da4bd49dd48be102056470970dc799b7eef6",
+      "source_sha256": "sha256:6e54ed5b00b97c16e3cdf631615f40465f6a33a099be5daf43a46f16d1d8966d",
       "template": "edgeapt.single_binary/v1"
     },
     "fd": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:01:14Z",
+          "created_at": "2026-07-09T03:34:09Z",
           "deb_control": {
             "architecture": "amd64",
             "package": "fd",
@@ -101,16 +109,20 @@
           "version": "10.4.1"
         }
       ],
+      "e2e_command": [
+        "fd",
+        "--version"
+      ],
       "package": "fd",
       "source_file": "sources/fd.yaml",
-      "source_sha256": "sha256:2f1590bf32c1f292ca2e64f629089b05699991052cd1cd54e5326a7cb321c204",
+      "source_sha256": "sha256:a51b68c50672a76d5fe553f1b17748ab0bb0cb49f5f839325b3c68ce903e6ffd",
       "template": "edgeapt.deb_upstream/v1"
     },
     "hello": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:01:14Z",
+          "created_at": "2026-07-09T03:34:09Z",
           "package": "edgeapt-hello",
           "path": "packages/hello/edgeapt-hello_0.1.0-1_amd64.deb",
           "revision": 1,
@@ -131,9 +143,12 @@
           "version": "0.1.0-1"
         }
       ],
+      "e2e_command": [
+        "edgeapt-hello"
+      ],
       "package": "edgeapt-hello",
       "source_file": "sources/hello.yaml",
-      "source_sha256": "sha256:4b15dd67c404e68a177d3225b37ffd21ac0ee9c936e499137053dbce618aec95",
+      "source_sha256": "sha256:f21214559cd8a145d35bf4e08fe674701edd4a2b08c2d53cc61951e46e7ca30d",
       "template": "edgeapt.single_binary/v1"
     }
   }

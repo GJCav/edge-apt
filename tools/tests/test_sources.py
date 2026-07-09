@@ -31,6 +31,7 @@ def test_artifact_path_for_single_binary() -> None:
         template="edgeapt.single_binary/v1",
         id="hello",
         package="edgeapt-hello",
+        e2e_command=("edgeapt-hello",),
         source_file="sources/hello.yaml",
         repackage=None,
         upstream=(),
@@ -60,6 +61,7 @@ def test_override_reason_required(tmp_path: Path) -> None:
 template: edgeapt.single_binary/v1
 id: bad
 package: bad
+e2e_command: [bad, --version]
 allow_ubuntu_package_override: true
 
 repackage:
@@ -91,6 +93,7 @@ def test_override_fields_are_loaded() -> None:
 template: edgeapt.deb_upstream/v1
 id: fd
 package: fd
+e2e_command: [fd, --version]
 allow_ubuntu_package_override: true
 override_reason: Use upstream release.
 
@@ -106,3 +109,47 @@ upstream:
     source = load_source(source_path)
     assert source.allow_ubuntu_package_override is True
     assert source.override_reason == "Use upstream release."
+    assert source.e2e_command == ("fd", "--version")
+
+
+def test_e2e_command_is_required(tmp_path: Path) -> None:
+    source_path = tmp_path / "missing-e2e.yaml"
+    source_path.write_text(
+        """
+template: edgeapt.deb_upstream/v1
+id: fd
+package: fd
+
+upstream:
+  - version: 10.4.1
+    arch: amd64
+    suites: [noble]
+    url: https://example.invalid/fd.deb
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValidationError, match="e2e_command"):
+        load_source(source_path)
+
+
+def test_e2e_command_must_contain_non_empty_strings(tmp_path: Path) -> None:
+    source_path = tmp_path / "bad-e2e.yaml"
+    source_path.write_text(
+        """
+template: edgeapt.deb_upstream/v1
+id: fd
+package: fd
+e2e_command: [fd, ""]
+
+upstream:
+  - version: 10.4.1
+    arch: amd64
+    suites: [noble]
+    url: https://example.invalid/fd.deb
+""",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValidationError, match="e2e_command"):
+        load_source(source_path)

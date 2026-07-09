@@ -16,7 +16,7 @@ from edgeapt.constants import (
     UBUNTU_INDEX_ARCHES,
 )
 from edgeapt.config import load_config
-from edgeapt.e2e import run_e2e
+from edgeapt.e2e import run_e2e, E2EEvent
 from edgeapt.errors import EdgeAptError
 from edgeapt.keyring import check_signing_key, ensure_test_key
 from edgeapt.repackage import repackage_all, RepackageEvent
@@ -190,14 +190,41 @@ def generate(profile: str = "test") -> None:
 
 
 def e2e(
-    suite: str = "noble",
-    image: str = "ubuntu:24.04",
-    package: str = "edgeapt-hello",
-    command: str = "edgeapt-hello",
+    suite: str | None = None,
+    source: str | None = None,
+    package: str | None = None,
 ) -> None:
-    """Run a Docker apt install smoke test against the local test repo."""
-    run_e2e(suite=suite, image=image, package=package, command=command)
-    console.print("[green]E2E smoke test passed.[/green]")
+    """Run Docker apt install tests against the local test repo."""
+
+    def on_event(event: E2EEvent) -> None:
+        if event.kind == "group_start":
+            console.print(
+                "\n".join(
+                    [
+                        f"\n---- {event.suite} / {event.arch} ----",
+                        _format_repackage_field("Image", event.image),
+                    ]
+                )
+            )
+        elif event.kind == "test_start":
+            console.print(
+                "\n".join(
+                    [
+                        _format_repackage_field("Package", f"{event.package} {event.version}"),
+                        _format_repackage_field("Command", " ".join(event.command)),
+                    ]
+                )
+            )
+        elif event.kind == "test_pass":
+            console.print(_format_repackage_field("Result", "[green]pass[/green]"))
+        elif event.kind == "test_skip":
+            console.print(_format_repackage_field("Skip", event.message))
+
+    result = run_e2e(suite=suite, source=source, package=package, on_event=on_event)
+    console.print(
+        f"[green]E2E passed: {result.tested} test(s), "
+        f"{result.groups} group(s), {result.skipped} skipped.[/green]"
+    )
 
 
 def _format_repackage_log(event: RepackageEvent) -> str:

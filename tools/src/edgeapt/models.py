@@ -35,6 +35,7 @@ class SourceConfig:
     template: str
     id: str
     package: str
+    e2e_command: tuple[str, ...]
     source_file: str
     repackage: RepackageConfig | None
     upstream: tuple[UpstreamConfig, ...]
@@ -118,6 +119,7 @@ class SourceLock:
     source_sha256: str
     template: str
     package: str
+    e2e_command: tuple[str, ...]
     artifacts: tuple[ArtifactFact, ...]
 
     def to_json(self) -> dict[str, Any]:
@@ -126,6 +128,7 @@ class SourceLock:
             "source_sha256": self.source_sha256,
             "template": self.template,
             "package": self.package,
+            "e2e_command": list(self.e2e_command),
             "artifacts": [artifact.to_json() for artifact in self.artifacts],
         }
 

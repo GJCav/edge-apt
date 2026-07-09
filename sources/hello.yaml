@@ -1,6 +1,7 @@
 template: edgeapt.single_binary/v1
 id: hello
 package: edgeapt-hello
+e2e_command: [edgeapt-hello]
 
 repackage:
   type: nfpm

@@ -55,6 +55,7 @@ def _source_lock_from_json(data: Mapping[str, Any]) -> SourceLock:
         source_sha256=_expect_str(data, "source_sha256"),
         template=_expect_str(data, "template"),
         package=_expect_str(data, "package"),
+        e2e_command=_expect_str_tuple(data, "e2e_command"),
         artifacts=tuple(artifacts),
     )
 
@@ -130,3 +131,16 @@ def _expect_int(data: Mapping[str, Any], key: str) -> int:
     if not isinstance(value, int):
         raise ValueError(f"lock field {key} must be an integer")
     return value
+
+
+def _expect_str_tuple(data: Mapping[str, Any], key: str) -> tuple[str, ...]:
+    value = data.get(key)
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"lock field {key} must be a non-empty string array")
+    value_list = cast(list[object], value)
+    result: list[str] = []
+    for item in value_list:
+        if not isinstance(item, str) or item == "":
+            raise ValueError(f"lock field {key} must be a non-empty string array")
+        result.append(item)
+    return tuple(result)

@@ -52,6 +52,7 @@ def load_source(path: Path) -> SourceConfig:
     template = _required_str(data, "template", path)
     source_id = _required_str(data, "id", path)
     package = _required_str(data, "package", path)
+    e2e_command = _required_str_list(data, "e2e_command", path)
 
     validate_template(template, path)
     validate_id(source_id, path)
@@ -78,6 +79,7 @@ def load_source(path: Path) -> SourceConfig:
         template=template,
         id=source_id,
         package=package,
+        e2e_command=tuple(e2e_command),
         source_file=relative_to_root(path, ROOT),
         repackage=repackage,
         upstream=upstream,

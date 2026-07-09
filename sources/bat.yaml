@@ -1,6 +1,7 @@
 template: edgeapt.deb_upstream/v1
 id: bat
 package: bat
+e2e_command: [bat, --version]
 allow_ubuntu_package_override: true
 override_reason: "Use upstream bat release directly instead of Ubuntu packaged version."
 

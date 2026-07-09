@@ -130,6 +130,7 @@ def _source(
         template="edgeapt.single_binary/v1",
         id=package.replace(".", "-"),
         package=package,
+        e2e_command=(package,),
         source_file=f"sources/{package}.yaml",
         repackage=None,
         upstream=(
