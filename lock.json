@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-05T15:18:01Z",
+  "generated_at": "2026-07-09T03:01:14Z",
   "schema": "edgeapt.lock/v1",
   "sources": {
     "bat": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-05T15:18:01Z",
+          "created_at": "2026-07-09T03:01:14Z",
           "deb_control": {
             "architecture": "amd64",
             "package": "bat",
@@ -17,8 +17,10 @@
           "sha256": "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc",
           "size": 2631980,
           "suites": [
+            "focal",
             "jammy",
-            "noble"
+            "noble",
+            "resolute"
           ],
           "upstream": {
             "etag": "\"0x8DD2F4FA8B04F10\"",
@@ -33,22 +35,24 @@
       ],
       "package": "bat",
       "source_file": "sources/bat.yaml",
-      "source_sha256": "sha256:04b23776d686fd18f12148fe6f54d957e655eb69b78c7370e97d0c2d834f1da4",
+      "source_sha256": "sha256:e5bc3b36c56e043d9ecd9e8ccca63fbd2611ffe1e36304bfc3c857636cb9554a",
       "template": "edgeapt.deb_upstream/v1"
     },
     "doggo": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-05T15:18:01Z",
+          "created_at": "2026-07-09T03:01:14Z",
           "package": "doggo",
           "path": "packages/doggo/doggo_1.1.7-1_amd64.deb",
           "revision": 1,
           "sha256": "sha256:97b6b4eb62963f63e61559edb43142ad3f6ba1a4fba3eda9fb5bae02f00750bd",
           "size": 4724408,
           "suites": [
+            "focal",
             "jammy",
-            "noble"
+            "noble",
+            "resolute"
           ],
           "upstream": {
             "etag": "\"0x8DEBA4AD9A1316F\"",
@@ -63,14 +67,14 @@
       ],
       "package": "doggo",
       "source_file": "sources/doggo.yaml",
-      "source_sha256": "sha256:2d99a34af6a77641f75386f96f049e26331b497822905f0317e03e981c921d9c",
+      "source_sha256": "sha256:012c8fb3e43bd743721884c3cd73da4bd49dd48be102056470970dc799b7eef6",
       "template": "edgeapt.single_binary/v1"
     },
     "fd": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-05T15:18:01Z",
+          "created_at": "2026-07-09T03:01:14Z",
           "deb_control": {
             "architecture": "amd64",
             "package": "fd",
@@ -81,8 +85,10 @@
           "sha256": "sha256:fa4dee2b27ea61bdd0f41716304d0a2668cec244c8dc8f0ef26967613d47907c",
           "size": 1397558,
           "suites": [
+            "focal",
             "jammy",
-            "noble"
+            "noble",
+            "resolute"
           ],
           "upstream": {
             "etag": "\"0x8DE7CEF1DDFBE84\"",
@@ -97,22 +103,24 @@
       ],
       "package": "fd",
       "source_file": "sources/fd.yaml",
-      "source_sha256": "sha256:16e44066629b47f4437e859972a55e07dcb04f902a7f2f85335d53cc8577210b",
+      "source_sha256": "sha256:2f1590bf32c1f292ca2e64f629089b05699991052cd1cd54e5326a7cb321c204",
       "template": "edgeapt.deb_upstream/v1"
     },
     "hello": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-05T15:18:01Z",
+          "created_at": "2026-07-09T03:01:14Z",
           "package": "edgeapt-hello",
           "path": "packages/hello/edgeapt-hello_0.1.0-1_amd64.deb",
           "revision": 1,
           "sha256": "sha256:876fe78dedecc156bf938428bf23f3e0d21d4af19766b60c58c8949b5f8c101a",
           "size": 608,
           "suites": [
+            "focal",
             "jammy",
-            "noble"
+            "noble",
+            "resolute"
           ],
           "upstream": {
             "sha256": "sha256:74443048b52bf2be3b0f003a8f37592551d316c6c7c28b1a110ee6f879ef4130",
@@ -125,7 +133,7 @@
       ],
       "package": "edgeapt-hello",
       "source_file": "sources/hello.yaml",
-      "source_sha256": "sha256:5f9bd275c839fe204bb3dcdd2dfa04b41282196de508bcbec716cb35677febe9",
+      "source_sha256": "sha256:4b15dd67c404e68a177d3225b37ffd21ac0ee9c936e499137053dbce618aec95",
       "template": "edgeapt.single_binary/v1"
     }
   }

@@ -16,7 +16,7 @@ SUPPORTED_TEMPLATES = {
     "edgeapt.single_binary/v1",
     "edgeapt.deb_upstream/v1",
 }
-SUPPORTED_SUITES = {"jammy", "noble"}
+SUPPORTED_SUITES = {"focal", "jammy", "noble", "resolute"}
 SUPPORTED_ARCHES = {"amd64", "arm64"}
 SUPPORTED_E2E_ARCHES = {"amd64"}
 UBUNTU_INDEX_ARCHES = ("amd64",)

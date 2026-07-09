@@ -39,7 +39,7 @@ def test_artifact_path_for_single_binary() -> None:
         version="v0.1.0",
         revision=1,
         arch="amd64",
-        suites=("jammy", "noble"),
+        suites=("focal", "jammy", "noble", "resolute"),
         url="tests/fixtures/hello-world",
     )
     assert artifact_version(source, upstream) == "0.1.0-1"
@@ -97,7 +97,7 @@ override_reason: Use upstream release.
 upstream:
   - version: 10.4.1
     arch: amd64
-    suites: [jammy, noble]
+    suites: [focal, jammy, noble, resolute]
     url: https://example.invalid/fd.deb
 """,
         encoding="utf-8",

@@ -13,5 +13,5 @@ upstream:
   - version: v0.1.0
     revision: 1
     arch: amd64
-    suites: [jammy, noble]
+    suites: [focal, jammy, noble, resolute]
     url: tests/fixtures/hello-world

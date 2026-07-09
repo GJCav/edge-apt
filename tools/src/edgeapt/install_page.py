@@ -11,8 +11,10 @@ from edgeapt.keyring import SigningKey
 from edgeapt.models import LockFile
 
 SUITE_LABELS = {
+    "focal": "focal (20)",
     "jammy": "jammy (22)",
     "noble": "noble (24)",
+    "resolute": "resolute (26)",
 }
 
 

@@ -13,6 +13,6 @@ upstream:
   - version: v1.1.7
     revision: 1
     arch: amd64
-    suites: [jammy, noble]
+    suites: [focal, jammy, noble, resolute]
     url: "https://github.com/mr-karan/doggo/releases/download/v1.1.7/doggo_1.1.7_Linux_x86_64.tar.gz"
     extract_path: doggo_1.1.7_Linux_x86_64/doggo
