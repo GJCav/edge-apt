@@ -185,6 +185,7 @@ def generate(profile: str = "test") -> None:
         f"[green]Generated {result.profile} signed APT repository at "
         f"{result.output_dir}[/green]"
     )
+    console.print(f"install page: {result.index_html}")
     console.print(f"signing key: {result.signing_key_fingerprint}")
 
 

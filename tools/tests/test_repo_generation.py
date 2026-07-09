@@ -26,11 +26,24 @@ def test_generate_repo_writes_signed_metadata() -> None:
     inrelease = TEST_PUBLIC_DIR / "dists" / "noble" / "InRelease"
     release = TEST_PUBLIC_DIR / "dists" / "noble" / "Release"
     release_gpg = TEST_PUBLIC_DIR / "dists" / "noble" / "Release.gpg"
+    index_html = TEST_PUBLIC_DIR / "index.html"
+    public_ascii = TEST_PUBLIC_DIR / "edgeapt.asc"
+    public_keyring = TEST_PUBLIC_DIR / "edgeapt.gpg"
 
     assert inrelease.exists()
     assert release.exists()
     assert release_gpg.exists()
+    assert result.index_html == index_html
+    assert index_html.exists()
+    assert public_ascii.exists()
+    assert public_keyring.exists()
     assert not PUBLIC_DIR.exists()
+    html = index_html.read_text(encoding="utf-8")
+    assert "Use DEB822 source format" in html
+    assert "Types: deb" in html
+    assert "deb [arch=" in html
+    assert "edgeapt.gpg" in html
+    assert "noble" in html
     run(["gpg", "--verify", inrelease])
 
 

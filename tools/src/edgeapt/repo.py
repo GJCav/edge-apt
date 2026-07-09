@@ -17,7 +17,8 @@ from edgeapt.constants import (
     TMP_DIR,
 )
 from edgeapt.errors import ValidationError
-from edgeapt.keyring import load_signing_key
+from edgeapt.install_page import write_install_page
+from edgeapt.keyring import load_signing_key, SigningKey
 from edgeapt.lockfile import load_lock
 from edgeapt.models import ArtifactFact
 from edgeapt.util import require_executable, run, write_json
@@ -28,6 +29,7 @@ class RepoGenerationResult:
     output_dir: Path
     signing_key_fingerprint: str
     profile: str
+    index_html: Path
 
 
 def generate_repo(
@@ -36,7 +38,7 @@ def generate_repo(
 ) -> RepoGenerationResult:
     require_executable("aptly")
     require_executable("gpg")
-    output_dir, fingerprint = _resolve_profile(profile=profile)
+    output_dir, signing_key = _resolve_profile(profile=profile)
     lock = load_lock(LOCK_PATH)
     if lock is None:
         raise ValueError("lock.json does not exist; run repackage first")
@@ -98,18 +100,25 @@ def generate_repo(
             "snapshot",
             "-batch",
             "-skip-contents",
-            f"-gpg-key={fingerprint}",
+            f"-gpg-key={signing_key.fingerprint}",
             "-architectures=amd64,arm64",
             f"-distribution={suite}",
             f"-component={COMPONENT}",
             snapshot_name,
             "filesystem:local:",
         )
+    install_page = write_install_page(
+        output_dir=output_dir,
+        profile=profile,
+        lock=lock,
+        signing_key=signing_key,
+    )
     check_static_asset_size_limit(output_dir)
     return RepoGenerationResult(
         output_dir=output_dir,
-        signing_key_fingerprint=fingerprint,
+        signing_key_fingerprint=signing_key.fingerprint,
         profile=profile,
+        index_html=install_page.index_html,
     )
 
 
@@ -138,11 +147,11 @@ def check_static_asset_size_limit(
     raise ValidationError("\n".join(lines))
 
 
-def _resolve_profile(*, profile: str) -> tuple[Path, str]:
+def _resolve_profile(*, profile: str) -> tuple[Path, SigningKey]:
     if profile == "test":
-        return TEST_PUBLIC_DIR, load_signing_key(profile).fingerprint
+        return TEST_PUBLIC_DIR, load_signing_key(profile)
     if profile == "prod":
-        return PUBLIC_DIR, load_signing_key(profile).fingerprint
+        return PUBLIC_DIR, load_signing_key(profile)
     raise ValidationError("profile must be either test or prod")
 
 
