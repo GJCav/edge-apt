@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-09T08:28:10Z",
+  "generated_at": "2026-07-09T08:37:20Z",
   "schema": "edgeapt.lock/v1",
   "sources": {
     "bat": {
@@ -248,6 +248,46 @@
       "source_file": "sources/hello.yaml",
       "source_sha256": "sha256:f21214559cd8a145d35bf4e08fe674701edd4a2b08c2d53cc61951e46e7ca30d",
       "template": "edgeapt.single_binary/v1"
+    },
+    "mihomo": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T08:36:07Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "mihomo",
+            "version": "1.19.28"
+          },
+          "package": "mihomo",
+          "path": "packages/mihomo/mihomo_1.19.28_amd64.deb",
+          "sha256": "sha256:8b3341e8d3341a6d96d7c8289c05f06ef9e3331ecb82f6ecc515932409730a90",
+          "size": 17992832,
+          "suites": [
+            "focal",
+            "jammy",
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DEDC88B0081895\"",
+            "last_modified": "Wed, 08 Jul 2026 00:34:36 GMT",
+            "sha256": "sha256:8b3341e8d3341a6d96d7c8289c05f06ef9e3331ecb82f6ecc515932409730a90",
+            "size": 17992832,
+            "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v3-v1.19.28.deb"
+          },
+          "upstream_version": "1.19.28",
+          "version": "1.19.28"
+        }
+      ],
+      "e2e_command": [
+        "mihomo",
+        "-v"
+      ],
+      "package": "mihomo",
+      "source_file": "sources/mihomo.yaml",
+      "source_sha256": "sha256:a65ceb8a3257a66bc9be4f1b016f25b538e600b69b9a6ca4f41e6e19363edec6",
+      "template": "edgeapt.deb_upstream/v1"
     },
     "yq": {
       "artifacts": [
