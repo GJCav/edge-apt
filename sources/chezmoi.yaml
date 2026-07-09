@@ -1,0 +1,15 @@
+template: edgeapt.deb_upstream/v1
+id: chezmoi
+package: chezmoi
+e2e_command: [chezmoi, --version]
+
+upstream:
+  - version: 2.47.1
+    arch: amd64
+    suites: [focal]
+    url: "https://github.com/twpayne/chezmoi/releases/download/v2.47.1/chezmoi_2.47.1_linux_amd64.deb"
+
+  - version: 2.71.0
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/twpayne/chezmoi/releases/download/v2.71.0/chezmoi_2.71.0_linux_amd64.deb"

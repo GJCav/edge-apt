@@ -1,0 +1,10 @@
+template: edgeapt.deb_upstream/v1
+id: yazi
+package: yazi
+e2e_command: [yazi, --version]
+
+upstream:
+  - version: 26.5.6-1
+    arch: amd64
+    suites: [noble, resolute]
+    url: "https://github.com/sxyazi/yazi/releases/download/v26.5.6/yazi-x86_64-unknown-linux-gnu.deb"

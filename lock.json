@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-09T08:37:20Z",
+  "generated_at": "2026-07-09T08:58:04Z",
   "schema": "edgeapt.lock/v1",
   "sources": {
     "bat": {
@@ -40,6 +40,70 @@
       "package": "bat",
       "source_file": "sources/bat.yaml",
       "source_sha256": "sha256:e3b0d3749bb63182f9890695b16f6c6c6fe889842250571c1ebf2b842589ac2f",
+      "template": "edgeapt.deb_upstream/v1"
+    },
+    "chezmoi": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T08:58:04Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "chezmoi",
+            "version": "2.47.1"
+          },
+          "package": "chezmoi",
+          "path": "packages/chezmoi/chezmoi_2.47.1_amd64.deb",
+          "sha256": "sha256:fe212a9a4e3ac5340fffc4f8148b942a1577554b70fafb9bbe08503fb5cd8863",
+          "size": 12376256,
+          "suites": [
+            "focal"
+          ],
+          "upstream": {
+            "etag": "\"0x8DC3B205E4820D7\"",
+            "last_modified": "Sun, 03 Mar 2024 01:22:18 GMT",
+            "sha256": "sha256:fe212a9a4e3ac5340fffc4f8148b942a1577554b70fafb9bbe08503fb5cd8863",
+            "size": 12376256,
+            "url": "https://github.com/twpayne/chezmoi/releases/download/v2.47.1/chezmoi_2.47.1_linux_amd64.deb"
+          },
+          "upstream_version": "2.47.1",
+          "version": "2.47.1"
+        },
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T08:52:52Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "chezmoi",
+            "version": "2.71.0"
+          },
+          "package": "chezmoi",
+          "path": "packages/chezmoi/chezmoi_2.71.0_amd64.deb",
+          "sha256": "sha256:a8880a1b01e877c3e5da250b9f882ce9fa39962686d75f436fa21e021fa092b1",
+          "size": 15594610,
+          "suites": [
+            "jammy",
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DEDC802886632A\"",
+            "last_modified": "Tue, 07 Jul 2026 23:33:32 GMT",
+            "sha256": "sha256:a8880a1b01e877c3e5da250b9f882ce9fa39962686d75f436fa21e021fa092b1",
+            "size": 15594610,
+            "url": "https://github.com/twpayne/chezmoi/releases/download/v2.71.0/chezmoi_2.71.0_linux_amd64.deb"
+          },
+          "upstream_version": "2.71.0",
+          "version": "2.71.0"
+        }
+      ],
+      "e2e_command": [
+        "chezmoi",
+        "--version"
+      ],
+      "package": "chezmoi",
+      "source_file": "sources/chezmoi.yaml",
+      "source_sha256": "sha256:db59de1267035ae8ae008fb83e07bd381c961a934c56de883c9e5dced399c9db",
       "template": "edgeapt.deb_upstream/v1"
     },
     "difftastic": {
@@ -287,6 +351,44 @@
       "package": "mihomo",
       "source_file": "sources/mihomo.yaml",
       "source_sha256": "sha256:a65ceb8a3257a66bc9be4f1b016f25b538e600b69b9a6ca4f41e6e19363edec6",
+      "template": "edgeapt.deb_upstream/v1"
+    },
+    "yazi": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T08:41:19Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "yazi",
+            "version": "26.5.6-1"
+          },
+          "package": "yazi",
+          "path": "packages/yazi/yazi_26.5.6-1_amd64.deb",
+          "sha256": "sha256:51ed35d7be4e9a33aa4d8a983849395bd38377cd0e03e8e7b96b3f0557c6cfad",
+          "size": 7281040,
+          "suites": [
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DEAAD3D8812D50\"",
+            "last_modified": "Tue, 05 May 2026 18:26:38 GMT",
+            "sha256": "sha256:51ed35d7be4e9a33aa4d8a983849395bd38377cd0e03e8e7b96b3f0557c6cfad",
+            "size": 7281040,
+            "url": "https://github.com/sxyazi/yazi/releases/download/v26.5.6/yazi-x86_64-unknown-linux-gnu.deb"
+          },
+          "upstream_version": "26.5.6-1",
+          "version": "26.5.6-1"
+        }
+      ],
+      "e2e_command": [
+        "yazi",
+        "--version"
+      ],
+      "package": "yazi",
+      "source_file": "sources/yazi.yaml",
+      "source_sha256": "sha256:5efc18570dbf07efd943bb37528035c3d92d455c55956e49c43e3c232e12acef",
       "template": "edgeapt.deb_upstream/v1"
     },
     "yq": {
