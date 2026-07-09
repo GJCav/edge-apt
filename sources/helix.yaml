@@ -1,0 +1,11 @@
+template: edgeapt.deb_upstream/v1
+id: helix
+package: helix
+e2e_command: [hx, --version]
+allow_ubuntu_package_override: false
+
+upstream:
+  - version: 25.7.1-1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/helix-editor/helix/releases/download/25.07.1/helix_25.7.1-1_amd64.deb"

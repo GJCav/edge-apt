@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-09T03:34:09Z",
+  "generated_at": "2026-07-09T06:44:36Z",
   "schema": "edgeapt.lock/v1",
   "sources": {
     "bat": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:34:09Z",
+          "created_at": "2026-07-09T06:44:36Z",
           "deb_control": {
             "architecture": "amd64",
             "package": "bat",
@@ -42,11 +42,47 @@
       "source_sha256": "sha256:e3b0d3749bb63182f9890695b16f6c6c6fe889842250571c1ebf2b842589ac2f",
       "template": "edgeapt.deb_upstream/v1"
     },
+    "difftastic": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T06:44:36Z",
+          "package": "difftastic",
+          "path": "packages/difftastic/difftastic_0.69.0-1_amd64.deb",
+          "revision": 1,
+          "sha256": "sha256:3f5825ae4bc9d5ea59387a41b9005a514e591ca5169cf55c85c5ba81e5efe509",
+          "size": 8409102,
+          "suites": [
+            "focal",
+            "jammy",
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DEA6FB2C9F246F\"",
+            "last_modified": "Thu, 30 Apr 2026 20:58:04 GMT",
+            "sha256": "sha256:038db96a0e8fce69f2554e33e04ff75fbf6f96ea45cb4edb9ed6203a2c4750ff",
+            "size": 12401737,
+            "url": "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-gnu.tar.gz"
+          },
+          "upstream_version": "v0.69.0",
+          "version": "0.69.0-1"
+        }
+      ],
+      "e2e_command": [
+        "difftastic",
+        "--version"
+      ],
+      "package": "difftastic",
+      "source_file": "sources/difftastic.yaml",
+      "source_sha256": "sha256:0c7d08176118416de2f75575c389ce837fca907c1833e7b45ff55f8683966804",
+      "template": "edgeapt.single_binary/v1"
+    },
     "doggo": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:34:09Z",
+          "created_at": "2026-07-09T06:44:36Z",
           "package": "doggo",
           "path": "packages/doggo/doggo_1.1.7-1_amd64.deb",
           "revision": 1,
@@ -67,6 +103,30 @@
           },
           "upstream_version": "v1.1.7",
           "version": "1.1.7-1"
+        },
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T06:44:36Z",
+          "package": "doggo",
+          "path": "packages/doggo/doggo_1.2.0-1_amd64.deb",
+          "revision": 1,
+          "sha256": "sha256:d8b77be54b6239e0a4e3d9758e30a7d6a978f0474db2554989f835f40736c348",
+          "size": 4725882,
+          "suites": [
+            "focal",
+            "jammy",
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DED0F753DA9488\"",
+            "last_modified": "Tue, 23 Jun 2026 07:16:21 GMT",
+            "sha256": "sha256:aa6760e7f163958e7626420447385ab938fdc127983edaceb121f809bd3e2bca",
+            "size": 5781657,
+            "url": "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-linux-x86_64.tar.gz"
+          },
+          "upstream_version": "v1.2.0",
+          "version": "1.2.0-1"
         }
       ],
       "e2e_command": [
@@ -75,14 +135,14 @@
       ],
       "package": "doggo",
       "source_file": "sources/doggo.yaml",
-      "source_sha256": "sha256:6e54ed5b00b97c16e3cdf631615f40465f6a33a099be5daf43a46f16d1d8966d",
+      "source_sha256": "sha256:e5b80ae8a38a35cf00210be395e143d4eb8b1a5d152cfc75592534f519d81c54",
       "template": "edgeapt.single_binary/v1"
     },
     "fd": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:34:09Z",
+          "created_at": "2026-07-09T06:44:36Z",
           "deb_control": {
             "architecture": "amd64",
             "package": "fd",
@@ -118,11 +178,51 @@
       "source_sha256": "sha256:a51b68c50672a76d5fe553f1b17748ab0bb0cb49f5f839325b3c68ce903e6ffd",
       "template": "edgeapt.deb_upstream/v1"
     },
+    "helix": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T06:44:36Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "helix",
+            "version": "25.7.1-1"
+          },
+          "package": "helix",
+          "path": "packages/helix/helix_25.7.1-1_amd64.deb",
+          "sha256": "sha256:c9ff7ee3113f039c21c3ff31e8e2b71d1cc51a2c3e6c39face36e3cf25fe8788",
+          "size": 16947844,
+          "suites": [
+            "focal",
+            "jammy",
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DDC60DA2180F7C\"",
+            "last_modified": "Fri, 18 Jul 2025 15:13:21 GMT",
+            "sha256": "sha256:c9ff7ee3113f039c21c3ff31e8e2b71d1cc51a2c3e6c39face36e3cf25fe8788",
+            "size": 16947844,
+            "url": "https://github.com/helix-editor/helix/releases/download/25.07.1/helix_25.7.1-1_amd64.deb"
+          },
+          "upstream_version": "25.7.1-1",
+          "version": "25.7.1-1"
+        }
+      ],
+      "e2e_command": [
+        "hx",
+        "--version"
+      ],
+      "package": "helix",
+      "source_file": "sources/helix.yaml",
+      "source_sha256": "sha256:75e89fa43da277d9ac88189130996732ecec2a49d1bcbe58f6f3171eb1c1c0a3",
+      "template": "edgeapt.deb_upstream/v1"
+    },
     "hello": {
       "artifacts": [
         {
           "arch": "amd64",
-          "created_at": "2026-07-09T03:34:09Z",
+          "created_at": "2026-07-09T06:44:36Z",
           "package": "edgeapt-hello",
           "path": "packages/hello/edgeapt-hello_0.1.0-1_amd64.deb",
           "revision": 1,

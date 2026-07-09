@@ -1,0 +1,19 @@
+template: edgeapt.single_binary/v1
+id: difftastic
+package: difftastic
+e2e_command: [difftastic, --version]
+
+repackage:
+  type: nfpm
+  install_path: /usr/bin/difft
+  metadata:
+    description: "Difftastic is a structural diff tool that understands syntax."
+    homepage: "https://github.com/Wilfred/difftastic"
+
+upstream:
+  - version: v0.69.0
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-gnu.tar.gz"
+    extract_path: difft
