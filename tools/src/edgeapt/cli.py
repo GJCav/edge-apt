@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from pathlib import Path
+from typing import Annotated
 
 import cyclopts
 from rich.console import Console
@@ -10,6 +12,7 @@ from rich.table import Table
 
 from edgeapt.constants import (
     LOCK_PATH,
+    ROOT,
     SOURCES_DIR,
     SUPPORTED_SUITES,
     UBUNTU_COMPONENTS,
@@ -19,7 +22,7 @@ from edgeapt.config import load_config
 from edgeapt.e2e import run_e2e, E2EEvent
 from edgeapt.errors import EdgeAptError
 from edgeapt.keyring import check_signing_key, ensure_test_key
-from edgeapt.repackage import repackage_all, RepackageEvent
+from edgeapt.repackage import prune_packages, repackage_all, PruneResult, RepackageEvent
 from edgeapt.repo import generate_repo
 from edgeapt.sources import load_sources
 from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
@@ -136,7 +139,10 @@ def check_key(profile: str = "test") -> None:
     console.print(f"public ascii: {key.public_ascii}")
 
 
-def repackage() -> None:
+def repackage(
+    prune: bool = False,
+    dry_run: Annotated[bool, cyclopts.Parameter(alias="-n")] = False,
+) -> None:
     """Run upstream repackaging and write packages/ plus lock.json."""
     sources = load_sources(SOURCES_DIR)
     total_artifacts = sum(len(source.upstream) for source in sources)
@@ -178,6 +184,8 @@ def repackage() -> None:
         f"[green]Processed {len(lock.sources)} source(s), "
         f"{artifact_count} artifact(s).[/green]"
     )
+    if prune:
+        _print_prune_result(prune_packages(lock, dry_run=dry_run))
 
 
 def generate(profile: str = "test") -> None:
@@ -287,6 +295,30 @@ def _format_bytes(size: int | None) -> str:
 
 def _format_repackage_field(label: str, value: object) -> str:
     return f"{label + ':':<10} {value}"
+
+
+def _print_prune_result(result: PruneResult) -> None:
+    console.print("\n[bold]Prune packages[/bold]")
+    console.print(_format_repackage_field("Mode", "dry-run" if result.dry_run else "apply"))
+    console.print(_format_repackage_field("Referenced", len(result.referenced)))
+    console.print(_format_repackage_field("Orphans", len(result.orphans)))
+    if not result.orphans:
+        console.print("[green]Nothing to prune.[/green]")
+        return
+
+    heading = "Would delete" if result.dry_run else "Deleted"
+    paths = result.orphans if result.dry_run else result.deleted
+    console.print(f"\n{heading}:")
+    for path in paths:
+        console.print(_display_path(path))
+
+
+def _display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return resolved.as_posix()
 
 
 def guide_main() -> None:

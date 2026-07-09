@@ -7,7 +7,7 @@ from pathlib import Path
 
 import attrs
 
-from edgeapt.constants import LOCK_PATH, LOCK_SCHEMA, ROOT, TMP_DIR
+from edgeapt.constants import LOCK_PATH, LOCK_SCHEMA, PACKAGES_DIR, ROOT, TMP_DIR
 from edgeapt.deb import build_binary_deb, read_deb_control, validate_deb_control
 from edgeapt.fetch import fetch_upstream, prepare_single_binary
 from edgeapt.lockfile import load_lock, write_lock
@@ -35,6 +35,14 @@ class RepackageEvent:
 class CacheLookupResult:
     artifact: ArtifactFact | None
     reason: str
+
+
+@attrs.define(kw_only=True, frozen=True)
+class PruneResult:
+    referenced: tuple[Path, ...]
+    orphans: tuple[Path, ...]
+    deleted: tuple[Path, ...]
+    dry_run: bool
 
 
 def repackage_all(
@@ -284,6 +292,33 @@ def repackage_all(
     return lock
 
 
+def prune_packages(
+    lock: LockFile,
+    *,
+    dry_run: bool,
+    packages_dir: Path = PACKAGES_DIR,
+) -> PruneResult:
+    referenced = tuple(sorted(_referenced_artifact_paths(lock)))
+    if not packages_dir.exists():
+        return PruneResult(referenced=referenced, orphans=(), deleted=(), dry_run=dry_run)
+
+    all_debs = tuple(sorted(path.resolve() for path in packages_dir.rglob("*.deb")))
+    referenced_set = set(referenced)
+    orphans = tuple(path for path in all_debs if path not in referenced_set)
+    deleted: list[Path] = []
+    if not dry_run:
+        for orphan in orphans:
+            orphan.unlink()
+            deleted.append(orphan)
+        _remove_empty_package_dirs(packages_dir)
+    return PruneResult(
+        referenced=referenced,
+        orphans=orphans,
+        deleted=tuple(deleted),
+        dry_run=dry_run,
+    )
+
+
 def _find_cached_artifact(
     *,
     previous_lock: LockFile | None,
@@ -322,6 +357,25 @@ def _find_cached_artifact(
                 reason="hit",
             )
     return CacheLookupResult(artifact=None, reason="artifact not in previous lock")
+
+
+def _referenced_artifact_paths(lock: LockFile) -> set[Path]:
+    paths: set[Path] = set()
+    for source_lock in lock.sources.values():
+        for artifact in source_lock.artifacts:
+            paths.add((ROOT / artifact.path).resolve())
+    return paths
+
+
+def _remove_empty_package_dirs(packages_dir: Path) -> None:
+    if not packages_dir.exists():
+        return
+    for path in sorted(packages_dir.rglob("*"), key=lambda item: len(item.parts), reverse=True):
+        if path.is_dir():
+            try:
+                path.rmdir()
+            except OSError:
+                pass
 
 
 def _artifact_matches_config(
