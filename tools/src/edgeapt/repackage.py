@@ -10,8 +10,8 @@ import attrs
 from edgeapt.constants import LOCK_PATH, LOCK_SCHEMA, ROOT, TMP_DIR
 from edgeapt.deb import build_binary_deb, read_deb_control, validate_deb_control
 from edgeapt.fetch import fetch_upstream, prepare_single_binary
-from edgeapt.lockfile import write_lock
-from edgeapt.models import ArtifactFact, LockFile, SourceLock
+from edgeapt.lockfile import load_lock, write_lock
+from edgeapt.models import ArtifactFact, LockFile, SourceConfig, SourceLock, UpstreamConfig
 from edgeapt.sources import artifact_path, artifact_version, load_sources
 from edgeapt.util import file_size, relative_to_root, sha256_file
 
@@ -31,10 +31,17 @@ class RepackageEvent:
     message: str
 
 
+@attrs.define(kw_only=True, frozen=True)
+class CacheLookupResult:
+    artifact: ArtifactFact | None
+    reason: str
+
+
 def repackage_all(
     on_event: Callable[[RepackageEvent], None] | None = None,
 ) -> LockFile:
     sources = load_sources()
+    previous_lock = load_lock(LOCK_PATH)
     source_locks: dict[str, SourceLock] = {}
     now = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     _emit(
@@ -77,6 +84,57 @@ def repackage_all(
                 path=artifact_rel.as_posix(),
                 url=upstream.url,
                 message=f"Repackaging {source.package} {version} {upstream.arch}",
+            )
+            cache_result = _find_cached_artifact(
+                previous_lock=previous_lock,
+                source=source,
+                upstream=upstream,
+                version=version,
+                artifact_rel=artifact_rel,
+            )
+            if cache_result.artifact is not None:
+                _emit(
+                    on_event,
+                    kind="cache_hit",
+                    source_id=source.id,
+                    template=source.template,
+                    package=source.package,
+                    version=version,
+                    arch=upstream.arch,
+                    path=cache_result.artifact.path,
+                    url=upstream.url,
+                    size=cache_result.artifact.size,
+                    sha256=cache_result.artifact.sha256,
+                    message="hit",
+                )
+                artifacts.append(cache_result.artifact)
+                _emit(
+                    on_event,
+                    kind="artifact_done",
+                    source_id=source.id,
+                    template=source.template,
+                    package=source.package,
+                    version=version,
+                    arch=upstream.arch,
+                    path=cache_result.artifact.path,
+                    url=upstream.url,
+                    size=cache_result.artifact.size,
+                    sha256=cache_result.artifact.sha256,
+                    message=f"Finished {cache_result.artifact.path}",
+                )
+                continue
+
+            _emit(
+                on_event,
+                kind="cache_miss",
+                source_id=source.id,
+                template=source.template,
+                package=source.package,
+                version=version,
+                arch=upstream.arch,
+                path=artifact_rel.as_posix(),
+                url=upstream.url,
+                message=f"miss - {cache_result.reason}",
             )
             item_work_dir = source_work_dir / f"{index}-{upstream.arch}"
             item_work_dir.mkdir(parents=True, exist_ok=True)
@@ -224,6 +282,73 @@ def repackage_all(
     _emit(on_event, kind="lock_write_start", message=f"Writing {LOCK_PATH}")
     write_lock(lock, LOCK_PATH)
     return lock
+
+
+def _find_cached_artifact(
+    *,
+    previous_lock: LockFile | None,
+    source: SourceConfig,
+    upstream: UpstreamConfig,
+    version: str,
+    artifact_rel: Path,
+) -> CacheLookupResult:
+    if previous_lock is None:
+        return CacheLookupResult(artifact=None, reason="no previous lock")
+    previous_source = previous_lock.sources.get(source.id)
+    if previous_source is None:
+        return CacheLookupResult(artifact=None, reason="source not in previous lock")
+    if previous_source.template != source.template:
+        return CacheLookupResult(artifact=None, reason="template changed")
+    if previous_source.package != source.package:
+        return CacheLookupResult(artifact=None, reason="package changed")
+
+    artifact_path_str = artifact_rel.as_posix()
+    for artifact in previous_source.artifacts:
+        if _artifact_matches_config(
+            artifact=artifact,
+            source=source,
+            upstream=upstream,
+            version=version,
+            artifact_path_str=artifact_path_str,
+        ):
+            artifact_abs = ROOT / artifact.path
+            if not artifact_abs.exists():
+                return CacheLookupResult(artifact=None, reason="artifact missing")
+            digest = sha256_file(artifact_abs)
+            if digest != artifact.sha256:
+                return CacheLookupResult(artifact=None, reason="artifact digest changed")
+            return CacheLookupResult(
+                artifact=attrs.evolve(artifact, suites=tuple(sorted(upstream.suites))),
+                reason="hit",
+            )
+    return CacheLookupResult(artifact=None, reason="artifact not in previous lock")
+
+
+def _artifact_matches_config(
+    *,
+    artifact: ArtifactFact,
+    source: SourceConfig,
+    upstream: UpstreamConfig,
+    version: str,
+    artifact_path_str: str,
+) -> bool:
+    if artifact.path != artifact_path_str:
+        return False
+    if artifact.package != source.package:
+        return False
+    if artifact.version != version:
+        return False
+    if artifact.arch != upstream.arch:
+        return False
+    if artifact.upstream_version != upstream.version:
+        return False
+    if artifact.revision != upstream.revision:
+        return False
+    if artifact.upstream.url != upstream.url:
+        return False
+    if upstream.sha256 is not None and artifact.upstream.sha256 != upstream.sha256:
+        return False
+    return True
 
 
 def _emit(

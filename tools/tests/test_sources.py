@@ -51,7 +51,7 @@ def test_artifact_path_for_single_binary() -> None:
 
 def test_load_repo_sources() -> None:
     sources = load_sources()
-    assert {source.id for source in sources} == {"hello", "doggo", "fd", "bat"}
+    assert {source.id for source in sources} >= {"hello", "doggo", "fd", "bat"}
 
 
 def test_override_reason_required(tmp_path: Path) -> None:

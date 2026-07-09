@@ -27,7 +27,7 @@ def test_repackage_reports_progress_events() -> None:
     kinds = {event.kind for event in events}
     assert "source_start" in kinds
     assert "upstream_start" in kinds
-    assert "fetch_start" in kinds
+    assert "cache_hit" in kinds or "fetch_start" in kinds
     assert "artifact_done" in kinds
     assert any(event.package == "edgeapt-hello" for event in events)
     artifact_done = next(event for event in events if event.kind == "artifact_done")

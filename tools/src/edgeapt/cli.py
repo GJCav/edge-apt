@@ -157,6 +157,8 @@ def repackage() -> None:
                     advance=1,
                 )
             elif event.kind in {
+                "cache_hit",
+                "cache_miss",
                 "source_start",
                 "fetch_start",
                 "extract_start",
@@ -250,6 +252,10 @@ def _format_repackage_log(event: RepackageEvent) -> str:
         return _format_repackage_field("Extract", event.message)
     if event.kind == "inspect_deb_start":
         return _format_repackage_field("Inspect", "upstream deb control")
+    if event.kind == "cache_hit":
+        return _format_repackage_field("Cache", "hit")
+    if event.kind == "cache_miss":
+        return _format_repackage_field("Cache", event.message)
     return event.message
 
 
