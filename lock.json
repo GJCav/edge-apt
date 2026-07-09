@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-09T06:44:36Z",
+  "generated_at": "2026-07-09T08:02:01Z",
   "schema": "edgeapt.lock/v1",
   "sources": {
     "bat": {
@@ -53,7 +53,6 @@
           "sha256": "sha256:3f5825ae4bc9d5ea59387a41b9005a514e591ca5169cf55c85c5ba81e5efe509",
           "size": 8409102,
           "suites": [
-            "focal",
             "jammy",
             "noble",
             "resolute"
@@ -70,12 +69,12 @@
         }
       ],
       "e2e_command": [
-        "difftastic",
+        "difft",
         "--version"
       ],
       "package": "difftastic",
       "source_file": "sources/difftastic.yaml",
-      "source_sha256": "sha256:0c7d08176118416de2f75575c389ce837fca907c1833e7b45ff55f8683966804",
+      "source_sha256": "sha256:62e097365cca4194c4493b5b0a661e9b6ccd5dfe8b4eb3e4ec7991fc4c06f6aa",
       "template": "edgeapt.single_binary/v1"
     },
     "doggo": {
@@ -193,7 +192,6 @@
           "sha256": "sha256:c9ff7ee3113f039c21c3ff31e8e2b71d1cc51a2c3e6c39face36e3cf25fe8788",
           "size": 16947844,
           "suites": [
-            "focal",
             "jammy",
             "noble",
             "resolute"
@@ -215,7 +213,7 @@
       ],
       "package": "helix",
       "source_file": "sources/helix.yaml",
-      "source_sha256": "sha256:75e89fa43da277d9ac88189130996732ecec2a49d1bcbe58f6f3171eb1c1c0a3",
+      "source_sha256": "sha256:a2c9c3bcc056b932c9b9ce580666672304091b194dceef62cdc49e3bd6f106e9",
       "template": "edgeapt.deb_upstream/v1"
     },
     "hello": {
@@ -250,6 +248,82 @@
       "source_file": "sources/hello.yaml",
       "source_sha256": "sha256:f21214559cd8a145d35bf4e08fe674701edd4a2b08c2d53cc61951e46e7ca30d",
       "template": "edgeapt.single_binary/v1"
+    },
+    "yq": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T07:26:48Z",
+          "package": "yq",
+          "path": "packages/yq/yq_4.53.3-1_amd64.deb",
+          "revision": 1,
+          "sha256": "sha256:e3acfc7666192cacef177fcb1cd80bbea034ba87008ea5f9cb56fbcb7614f629",
+          "size": 4562602,
+          "suites": [
+            "focal",
+            "jammy",
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DEC3BD5BDF69CD\"",
+            "last_modified": "Sat, 06 Jun 2026 11:18:39 GMT",
+            "sha256": "sha256:fa52a4e758c63d38299163fbdd1edfb4c4963247918bf9c1c5d31d84789eded4",
+            "size": 13750434,
+            "url": "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
+          },
+          "upstream_version": "v4.53.3",
+          "version": "4.53.3-1"
+        }
+      ],
+      "e2e_command": [
+        "yq",
+        "--version"
+      ],
+      "package": "yq",
+      "source_file": "sources/yq.yaml",
+      "source_sha256": "sha256:2e9489c8c59bbe707d59235acc944768791d88e04e5bc124ebfa7ed311fb075d",
+      "template": "edgeapt.single_binary/v1"
+    },
+    "zoxide": {
+      "artifacts": [
+        {
+          "arch": "amd64",
+          "created_at": "2026-07-09T07:20:52Z",
+          "deb_control": {
+            "architecture": "amd64",
+            "package": "zoxide",
+            "version": "0.10.0-1"
+          },
+          "package": "zoxide",
+          "path": "packages/zoxide/zoxide_0.10.0-1_amd64.deb",
+          "sha256": "sha256:975880c327a8bf4e31e8596313243a4ae342f16afa9bb7d78a6e641bd8cc9dba",
+          "size": 481904,
+          "suites": [
+            "focal",
+            "jammy",
+            "noble",
+            "resolute"
+          ],
+          "upstream": {
+            "etag": "\"0x8DED9C8A8D95730\"",
+            "last_modified": "Sat, 04 Jul 2026 12:34:58 GMT",
+            "sha256": "sha256:975880c327a8bf4e31e8596313243a4ae342f16afa9bb7d78a6e641bd8cc9dba",
+            "size": 481904,
+            "url": "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide_0.10.0-1_amd64.deb"
+          },
+          "upstream_version": "0.10.0-1",
+          "version": "0.10.0-1"
+        }
+      ],
+      "e2e_command": [
+        "zoxide",
+        "--version"
+      ],
+      "package": "zoxide",
+      "source_file": "sources/zoxide.yaml",
+      "source_sha256": "sha256:c39c7c9ffee27fb042cfff065bf24b141c0d7b4ba48128f8b6fe92bbf0e04a17",
+      "template": "edgeapt.deb_upstream/v1"
     }
   }
 }

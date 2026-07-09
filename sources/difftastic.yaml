@@ -1,7 +1,7 @@
 template: edgeapt.single_binary/v1
 id: difftastic
 package: difftastic
-e2e_command: [difftastic, --version]
+e2e_command: [difft, --version]
 
 repackage:
   type: nfpm
@@ -14,6 +14,6 @@ upstream:
   - version: v0.69.0
     revision: 1
     arch: amd64
-    suites: [focal, jammy, noble, resolute]
+    suites: [jammy, noble, resolute]
     url: "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-gnu.tar.gz"
     extract_path: difft

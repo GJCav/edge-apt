@@ -1,0 +1,12 @@
+template: edgeapt.deb_upstream/v1
+id: zoxide
+package: zoxide
+e2e_command: [zoxide, --version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer latest release from upstream instead of Ubuntu packaged version."
+
+upstream:
+  - version: 0.10.0-1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide_0.10.0-1_amd64.deb"

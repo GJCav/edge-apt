@@ -1,0 +1,20 @@
+template: edgeapt.single_binary/v1
+id: yq
+package: yq
+e2e_command: [yq, --version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer latest release from upstream instead of Ubuntu packaged version."
+
+repackage:
+  type: nfpm
+  install_path: /usr/bin/yq
+  metadata:
+    description: "yq is a portable command-line YAML, JSON, XML, CSV, TOML, HCL and properties processor."
+    homepage: "https://github.com/mikefarah/yq"
+
+upstream:
+  - version: v4.53.3
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
