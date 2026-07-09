@@ -3,6 +3,7 @@ from __future__ import annotations
 import shutil
 import tarfile
 import urllib.request
+import zipfile
 from email.message import Message
 from pathlib import Path
 from urllib.parse import urlparse
@@ -65,13 +66,33 @@ def prepare_single_binary(downloaded: Path, upstream: UpstreamConfig, work_dir: 
     if extract_dir.exists():
         shutil.rmtree(extract_dir)
     extract_dir.mkdir(parents=True, exist_ok=True)
+    candidate = _safe_extract_path(extract_dir, upstream.extract_path)
     if tarfile.is_tarfile(downloaded):
         with tarfile.open(downloaded) as archive:
             archive.extractall(extract_dir, filter="data")
+    elif zipfile.is_zipfile(downloaded):
+        with zipfile.ZipFile(downloaded) as archive:
+            try:
+                info = archive.getinfo(upstream.extract_path)
+            except KeyError as exc:
+                raise ValidationError(
+                    f"extract_path not found in archive: {upstream.extract_path}"
+                ) from exc
+            if info.is_dir():
+                raise ValidationError(f"extract_path is a directory: {upstream.extract_path}")
+            candidate.parent.mkdir(parents=True, exist_ok=True)
+            with archive.open(info) as source, candidate.open("wb") as target:
+                shutil.copyfileobj(source, target)
     else:
-        raise ValidationError("extract_path is only supported for tar archives")
+        raise ValidationError("extract_path is only supported for tar or zip archives")
 
-    candidate = extract_dir / upstream.extract_path
     if not candidate.exists() or not candidate.is_file():
         raise ValidationError(f"extract_path not found in archive: {upstream.extract_path}")
+    return candidate
+
+
+def _safe_extract_path(extract_dir: Path, member: str) -> Path:
+    candidate = extract_dir / member
+    if not candidate.resolve().is_relative_to(extract_dir.resolve()):
+        raise ValidationError(f"extract_path escapes archive extraction directory: {member}")
     return candidate
