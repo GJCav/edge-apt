@@ -29,11 +29,15 @@ SUITE_RE = re.compile(r"^[a-z][a-z0-9-]*$")
 DEBIAN_VERSION_RE = re.compile(r"^[A-Za-z0-9.+:~][A-Za-z0-9.+:~_-]*$")
 
 
-def load_sources(sources_dir: Path = SOURCES_DIR) -> tuple[SourceConfig, ...]:
+def load_sources(
+    sources_dir: Path = SOURCES_DIR,
+    *,
+    root: Path = ROOT,
+) -> tuple[SourceConfig, ...]:
     if not sources_dir.exists():
         return ()
     sources = [
-        load_source(path)
+        load_source(path, root=root)
         for path in sorted(sources_dir.glob("*.yaml"))
         if path.is_file()
     ]
@@ -44,7 +48,7 @@ def load_sources(sources_dir: Path = SOURCES_DIR) -> tuple[SourceConfig, ...]:
     return tuple(sources)
 
 
-def load_source(path: Path) -> SourceConfig:
+def load_source(path: Path, *, root: Path = ROOT) -> SourceConfig:
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
         raise ValidationError(f"{path}: source must be a YAML mapping")
@@ -80,7 +84,7 @@ def load_source(path: Path) -> SourceConfig:
         id=source_id,
         package=package,
         e2e_command=tuple(e2e_command),
-        source_file=relative_to_root(path, ROOT),
+        source_file=relative_to_root(path, root),
         repackage=repackage,
         upstream=upstream,
         allow_ubuntu_package_override=allow_ubuntu_package_override,

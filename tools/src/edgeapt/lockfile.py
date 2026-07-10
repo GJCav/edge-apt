@@ -8,8 +8,11 @@ from edgeapt.constants import LOCK_PATH, LOCK_SCHEMA
 from edgeapt.models import (
     ArtifactFact,
     DebControlFact,
+    DebKey,
+    LockedPublication,
     LockFile,
-    SourceLock,
+    PublishKey,
+    SourceProvenance,
     UpstreamFact,
 )
 from edgeapt.util import read_json, write_json
@@ -19,62 +22,45 @@ def load_lock(path: Path = LOCK_PATH) -> LockFile | None:
     if not path.exists():
         return None
     raw = read_json(path)
-    if raw.get("schema") != LOCK_SCHEMA:
-        raise ValueError(f"Unsupported lock schema in {path}: {raw.get('schema')}")
-    sources_raw_obj = raw.get("sources", {})
-    if not isinstance(sources_raw_obj, dict):
-        raise ValueError("lock sources must be an object")
-    sources_raw = cast(dict[str, object], sources_raw_obj)
-    sources: dict[str, SourceLock] = {}
-    for source_id, value in sources_raw.items():
-        if not isinstance(value, dict):
-            raise ValueError("invalid lock source entry")
-        sources[source_id] = _source_lock_from_json(cast(dict[str, Any], value))
-    generated_at = raw.get("generated_at")
-    if not isinstance(generated_at, str):
-        raise ValueError("lock generated_at must be a string")
-    return LockFile(schema=LOCK_SCHEMA, generated_at=generated_at, sources=sources)
+    schema = raw.get("schema")
+    if schema != LOCK_SCHEMA:
+        raise ValueError(
+            f"Unsupported lock schema in {path}: {schema}; regenerate lock.json"
+        )
+    generated_at = _expect_str(raw, "generated_at")
+    plan_digest = _expect_str(raw, "plan_digest")
+    artifacts = tuple(
+        sorted(
+            (_artifact_from_json(item) for item in _expect_object_array(raw, "artifacts")),
+            key=lambda item: item.deb_key,
+        )
+    )
+    publications = tuple(
+        sorted(
+            (
+                _publication_from_json(item)
+                for item in _expect_object_array(raw, "publications")
+            ),
+            key=lambda item: item.key,
+        )
+    )
+    return LockFile(
+        schema=LOCK_SCHEMA,
+        generated_at=generated_at,
+        plan_digest=plan_digest,
+        artifacts=artifacts,
+        publications=publications,
+    )
 
 
 def write_lock(lock: LockFile, path: Path = LOCK_PATH) -> None:
     write_json(path, lock.to_json())
 
 
-def _source_lock_from_json(data: Mapping[str, Any]) -> SourceLock:
-    artifacts_raw_obj = data.get("artifacts")
-    if not isinstance(artifacts_raw_obj, list):
-        raise ValueError("source artifacts must be an array")
-    artifacts_raw = cast(list[object], artifacts_raw_obj)
-    artifacts: list[ArtifactFact] = []
-    for item in artifacts_raw:
-        if not isinstance(item, dict):
-            raise ValueError("artifact must be an object")
-        artifacts.append(_artifact_from_json(cast(dict[str, Any], item)))
-    return SourceLock(
-        source_file=_expect_str(data, "source_file"),
-        source_sha256=_expect_str(data, "source_sha256"),
-        template=_expect_str(data, "template"),
-        package=_expect_str(data, "package"),
-        e2e_command=_expect_str_tuple(data, "e2e_command"),
-        artifacts=tuple(artifacts),
-    )
-
-
 def _artifact_from_json(data: Mapping[str, Any]) -> ArtifactFact:
-    upstream_raw = data.get("upstream")
-    if not isinstance(upstream_raw, dict):
-        raise ValueError("artifact upstream must be an object")
-    suites_raw_obj = data.get("suites")
-    if not isinstance(suites_raw_obj, list):
-        raise ValueError("artifact suites must be a string array")
-    suites_raw = cast(list[object], suites_raw_obj)
-    suites: list[str] = []
-    for item in suites_raw:
-        if not isinstance(item, str):
-            raise ValueError("artifact suites must be a string array")
-        suites.append(item)
-    deb_control = None
+    upstream = _expect_object(data, "upstream")
     deb_control_raw = data.get("deb_control")
+    deb_control = None
     if isinstance(deb_control_raw, dict):
         deb_control_data = cast(dict[str, Any], deb_control_raw)
         deb_control = DebControlFact(
@@ -85,18 +71,64 @@ def _artifact_from_json(data: Mapping[str, Any]) -> ArtifactFact:
     revision_raw = data.get("revision")
     revision = revision_raw if isinstance(revision_raw, int) else None
     return ArtifactFact(
-        package=_expect_str(data, "package"),
-        version=_expect_str(data, "version"),
+        deb_key=_deb_key_from_json(_expect_object(data, "deb_key")),
+        build_plan_digest=_expect_str(data, "build_plan_digest"),
         upstream_version=_expect_str(data, "upstream_version"),
         revision=revision,
-        arch=_expect_str(data, "arch"),
-        suites=tuple(suites),
         path=_expect_str(data, "path"),
         sha256=_expect_str(data, "sha256"),
         size=_expect_int(data, "size"),
-        upstream=_upstream_from_json(cast(dict[str, Any], upstream_raw)),
+        upstream=_upstream_from_json(upstream),
         deb_control=deb_control,
         created_at=_expect_str(data, "created_at"),
+    )
+
+
+def _publication_from_json(data: Mapping[str, Any]) -> LockedPublication:
+    provenance = tuple(
+        sorted(
+            _provenance_from_json(item)
+            for item in _expect_object_array(data, "provenance")
+        )
+    )
+    commands_raw = data.get("e2e_commands")
+    if not isinstance(commands_raw, list) or not commands_raw:
+        raise ValueError("lock field e2e_commands must be a non-empty array")
+    command_items = cast(list[object], commands_raw)
+    commands = tuple(
+        sorted(_str_tuple(item, "e2e_commands") for item in command_items)
+    )
+    return LockedPublication(
+        key=_publish_key_from_json(_expect_object(data, "key")),
+        artifact=_deb_key_from_json(_expect_object(data, "artifact")),
+        provenance=provenance,
+        e2e_commands=commands,
+    )
+
+
+def _deb_key_from_json(data: Mapping[str, Any]) -> DebKey:
+    return DebKey(
+        package=_expect_str(data, "package"),
+        deb_version=_expect_str(data, "deb_version"),
+        arch=_expect_str(data, "arch"),
+    )
+
+
+def _publish_key_from_json(data: Mapping[str, Any]) -> PublishKey:
+    return PublishKey(
+        suite=_expect_str(data, "suite"),
+        component=_expect_str(data, "component"),
+        package=_expect_str(data, "package"),
+        deb_version=_expect_str(data, "deb_version"),
+        arch=_expect_str(data, "arch"),
+    )
+
+
+def _provenance_from_json(data: Mapping[str, Any]) -> SourceProvenance:
+    return SourceProvenance(
+        source_id=_expect_str(data, "source_id"),
+        source_file=_expect_str(data, "source_file"),
+        upstream_index=_expect_int(data, "upstream_index"),
     )
 
 
@@ -108,6 +140,25 @@ def _upstream_from_json(data: Mapping[str, Any]) -> UpstreamFact:
         etag=_optional_str(data, "etag"),
         last_modified=_optional_str(data, "last_modified"),
     )
+
+
+def _expect_object(data: Mapping[str, Any], key: str) -> dict[str, Any]:
+    value = data.get(key)
+    if not isinstance(value, dict):
+        raise ValueError(f"lock field {key} must be an object")
+    return cast(dict[str, Any], value)
+
+
+def _expect_object_array(data: Mapping[str, Any], key: str) -> tuple[dict[str, Any], ...]:
+    value = data.get(key)
+    if not isinstance(value, list):
+        raise ValueError(f"lock field {key} must be an array")
+    result: list[dict[str, Any]] = []
+    for item in cast(list[object], value):
+        if not isinstance(item, dict):
+            raise ValueError(f"lock field {key} must contain objects")
+        result.append(cast(dict[str, Any], item))
+    return tuple(result)
 
 
 def _expect_str(data: Mapping[str, Any], key: str) -> str:
@@ -133,14 +184,12 @@ def _expect_int(data: Mapping[str, Any], key: str) -> int:
     return value
 
 
-def _expect_str_tuple(data: Mapping[str, Any], key: str) -> tuple[str, ...]:
-    value = data.get(key)
+def _str_tuple(value: object, key: str) -> tuple[str, ...]:
     if not isinstance(value, list) or not value:
-        raise ValueError(f"lock field {key} must be a non-empty string array")
-    value_list = cast(list[object], value)
+        raise ValueError(f"lock field {key} must contain non-empty string arrays")
     result: list[str] = []
-    for item in value_list:
+    for item in cast(list[object], value):
         if not isinstance(item, str) or item == "":
-            raise ValueError(f"lock field {key} must be a non-empty string array")
+            raise ValueError(f"lock field {key} must contain non-empty string arrays")
         result.append(item)
     return tuple(result)

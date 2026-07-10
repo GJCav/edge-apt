@@ -39,6 +39,7 @@ include = ["src", "tests"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "-m 'not integration and not e2e'"
 markers = [
     "integration: requires local external tools or network",
     "e2e: requires docker and a generated local repository",

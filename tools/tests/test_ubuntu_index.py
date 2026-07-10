@@ -5,14 +5,15 @@ from pathlib import Path
 import pytest
 
 from edgeapt.errors import ValidationError
-from edgeapt.models import SourceConfig
-from edgeapt.models import UpstreamConfig
+from edgeapt.models import Publication
+from edgeapt.planner import build_repo_plan
 from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
 from edgeapt.ubuntu_index import load_ubuntu_index
 from edgeapt.ubuntu_index import parse_packages_index
 from edgeapt.ubuntu_index import refresh_ubuntu_index
 from edgeapt.ubuntu_index import UbuntuIndexRefreshEvent
 from edgeapt.util import write_json
+from tests.factories import make_source
 
 
 def test_parse_packages_index() -> None:
@@ -84,32 +85,33 @@ def test_refresh_ubuntu_index_reports_component_downloads(
 
 def test_conflict_check_requires_cached_index(tmp_path: Path) -> None:
     with pytest.raises(ValidationError, match="refresh-ubuntu-index"):
-        ensure_no_ubuntu_package_conflicts([_source(package="fd")], index_dir=tmp_path)
+        ensure_no_ubuntu_package_conflicts(_publications(package="fd"), index_dir=tmp_path)
 
 
 def test_conflict_check_blocks_unapproved_package(tmp_path: Path) -> None:
     _write_index(tmp_path, packages=["fd"])
     with pytest.raises(ValidationError, match="package 'fd' exists"):
-        ensure_no_ubuntu_package_conflicts([_source(package="fd")], index_dir=tmp_path)
+        ensure_no_ubuntu_package_conflicts(_publications(package="fd"), index_dir=tmp_path)
 
 
 def test_conflict_check_allows_explicit_override(tmp_path: Path) -> None:
     _write_index(tmp_path, packages=["fd"])
     ensure_no_ubuntu_package_conflicts(
-        [
-            _source(
-                package="fd",
-                allow_ubuntu_package_override=True,
-                override_reason="Use upstream release.",
-            )
-        ],
+        _publications(
+            package="fd",
+            allow_ubuntu_package_override=True,
+            override_reason="Use upstream release.",
+        ),
         index_dir=tmp_path,
     )
 
 
 def test_conflict_check_ignores_non_conflicting_package(tmp_path: Path) -> None:
     _write_index(tmp_path, packages=["fd"])
-    ensure_no_ubuntu_package_conflicts([_source(package="edgeapt-hello")], index_dir=tmp_path)
+    ensure_no_ubuntu_package_conflicts(
+        _publications(package="edgeapt-hello"),
+        index_dir=tmp_path,
+    )
 
 
 def test_load_ubuntu_index_allows_legacy_cache_without_base_url(tmp_path: Path) -> None:
@@ -120,31 +122,24 @@ def test_load_ubuntu_index_allows_legacy_cache_without_base_url(tmp_path: Path) 
     assert index.base_url is None
 
 
-def _source(
+def _publications(
     *,
     package: str,
     allow_ubuntu_package_override: bool = False,
     override_reason: str | None = None,
-) -> SourceConfig:
-    return SourceConfig(
-        template="edgeapt.single_binary/v1",
-        id=package.replace(".", "-"),
+) -> tuple[Publication, ...]:
+    source = make_source(
+        source_id=package.replace(".", "-"),
         package=package,
+        template="edgeapt.deb_upstream/v1",
+        version="0.1.0",
+        revision=None,
+        suites=("jammy",),
         e2e_command=(package,),
-        source_file=f"sources/{package}.yaml",
-        repackage=None,
-        upstream=(
-            UpstreamConfig(
-                version="v0.1.0",
-                revision=1,
-                arch="amd64",
-                suites=("jammy",),
-                url="tests/fixtures/hello-world",
-            ),
-        ),
         allow_ubuntu_package_override=allow_ubuntu_package_override,
         override_reason=override_reason,
     )
+    return build_repo_plan((source,)).publications
 
 
 def _write_index(tmp_path: Path, *, packages: list[str]) -> None:

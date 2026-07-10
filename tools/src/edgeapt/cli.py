@@ -22,6 +22,7 @@ from edgeapt.config import load_config
 from edgeapt.e2e import run_e2e, E2EEvent
 from edgeapt.errors import EdgeAptError
 from edgeapt.keyring import check_signing_key, ensure_test_key
+from edgeapt.planner import build_repo_plan
 from edgeapt.repackage import prune_packages, repackage_all, PruneResult, RepackageEvent
 from edgeapt.repo import generate_repo
 from edgeapt.sources import load_sources
@@ -56,24 +57,31 @@ def guide() -> None:
 def validate(skip_ubuntu_conflicts: bool = False) -> None:
     """Validate sources/*.yaml."""
     sources = load_sources(SOURCES_DIR)
+    plan = build_repo_plan(sources)
     if not skip_ubuntu_conflicts:
-        ensure_no_ubuntu_package_conflicts(sources)
-    table = Table(title="EdgeAPT Sources")
-    table.add_column("id")
-    table.add_column("template")
+        ensure_no_ubuntu_package_conflicts(plan.publications)
+    table = Table(title="EdgeAPT Publications")
+    table.add_column("suite")
+    table.add_column("component")
     table.add_column("package")
-    table.add_column("ubuntu override")
-    table.add_column("upstreams", justify="right")
-    for source in sources:
+    table.add_column("version")
+    table.add_column("arch")
+    table.add_column("sources")
+    for publication in plan.publications:
         table.add_row(
-            source.id,
-            source.template,
-            source.package,
-            "yes" if source.allow_ubuntu_package_override else "no",
-            str(len(source.upstream)),
+            publication.key.suite,
+            publication.key.component,
+            publication.key.package,
+            publication.key.deb_version,
+            publication.key.arch,
+            ", ".join(item.source_id for item in publication.provenance),
         )
     console.print(table)
-    console.print(f"[green]Validated {len(sources)} source(s).[/green]")
+    console.print(
+        f"[green]Validated {len(sources)} source(s), "
+        f"{len(plan.builds)} build(s), "
+        f"{len(plan.publications)} publication(s).[/green]"
+    )
 
 
 def refresh_ubuntu_index() -> None:
@@ -145,7 +153,7 @@ def repackage(
 ) -> None:
     """Run upstream repackaging and write packages/ plus lock.json."""
     sources = load_sources(SOURCES_DIR)
-    total_artifacts = sum(len(source.upstream) for source in sources)
+    total_artifacts = len(build_repo_plan(sources).builds)
     with Progress(
         TextColumn("[progress.description]{task.description}"),
         TextColumn("[progress.percentage]{task.completed}/{task.total}"),
@@ -178,10 +186,10 @@ def repackage(
         lock = repackage_all(on_event=on_event)
         progress.update(task_id, description="Repackaging complete")
 
-    artifact_count = sum(len(source_lock.artifacts) for source_lock in lock.sources.values())
+    artifact_count = len(lock.artifacts)
     console.print(f"[green]Wrote {LOCK_PATH}[/green]")
     console.print(
-        f"[green]Processed {len(lock.sources)} source(s), "
+        f"[green]Processed {len(sources)} source(s), "
         f"{artifact_count} artifact(s).[/green]"
     )
     if prune:
@@ -203,6 +211,9 @@ def e2e(
     suite: str | None = None,
     source: str | None = None,
     package: str | None = None,
+    jobs: int = 4,
+    apt_cache: bool = True,
+    clear_apt_cache: bool = False,
 ) -> None:
     """Run Docker apt install tests against the local test repo."""
 
@@ -217,20 +228,31 @@ def e2e(
                 )
             )
         elif event.kind == "test_start":
+            prefix = f"({event.suite}/{event.arch})"
             console.print(
                 "\n".join(
                     [
-                        _format_repackage_field("Package", f"{event.package} {event.version}"),
-                        _format_repackage_field("Command", " ".join(event.command)),
+                        f"{prefix} Package: {event.package} {event.version}",
+                        f"{prefix} Command: {' '.join(event.command)}",
                     ]
                 )
             )
         elif event.kind == "test_pass":
-            console.print(_format_repackage_field("Result", "[green]pass[/green]"))
+            console.print(
+                f"({event.suite}/{event.arch}) Result: [green]pass[/green]"
+            )
         elif event.kind == "test_skip":
             console.print(_format_repackage_field("Skip", event.message))
 
-    result = run_e2e(suite=suite, source=source, package=package, on_event=on_event)
+    result = run_e2e(
+        suite=suite,
+        source=source,
+        package=package,
+        jobs=jobs,
+        apt_cache=apt_cache,
+        clear_apt_cache=clear_apt_cache,
+        on_event=on_event,
+    )
     console.print(
         f"[green]E2E passed: {result.tested} test(s), "
         f"{result.groups} group(s), {result.skipped} skipped.[/green]"

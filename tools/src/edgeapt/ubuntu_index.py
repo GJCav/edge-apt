@@ -19,7 +19,7 @@ from edgeapt.constants import (
     UBUNTU_INDEX_DIR,
 )
 from edgeapt.errors import ValidationError
-from edgeapt.models import SourceConfig
+from edgeapt.models import Publication
 from edgeapt.util import write_json
 
 @attrs.define(kw_only=True, frozen=True)
@@ -160,40 +160,49 @@ def load_ubuntu_index(
 
 
 def find_ubuntu_package_conflicts(
-    sources: Iterable[SourceConfig],
+    publications: Iterable[Publication],
     *,
     index_dir: Path = UBUNTU_INDEX_DIR,
 ) -> tuple[PackageConflict, ...]:
     indexes: dict[tuple[str, str], UbuntuPackageIndex] = {}
     conflicts: list[PackageConflict] = []
-    for source in sources:
-        source_suites = sorted(
-            {suite for upstream in source.upstream for suite in upstream.suites}
-        )
-        for suite in source_suites:
-            key = (suite, "amd64")
-            index = indexes.get(key)
-            if index is None:
-                index = load_ubuntu_index(suite=suite, arch="amd64", index_dir=index_dir)
-                indexes[key] = index
-            if source.package in index.packages and not source.allow_ubuntu_package_override:
+    for publication in publications:
+        key = (publication.key.suite, "amd64")
+        index = indexes.get(key)
+        if index is None:
+            index = load_ubuntu_index(
+                suite=publication.key.suite,
+                arch="amd64",
+                index_dir=index_dir,
+            )
+            indexes[key] = index
+        if (
+            publication.key.package in index.packages
+            and not publication.allow_ubuntu_package_override
+        ):
+            for provenance in publication.provenance:
                 conflicts.append(
                     PackageConflict(
-                        source_id=source.id,
-                        source_file=source.source_file,
-                        package=source.package,
-                        suite=suite,
+                        source_id=provenance.source_id,
+                        source_file=provenance.source_file,
+                        package=publication.key.package,
+                        suite=publication.key.suite,
                     )
                 )
-    return tuple(sorted(conflicts, key=lambda item: (item.source_id, item.suite)))
+    return tuple(
+        sorted(
+            set(conflicts),
+            key=lambda item: (item.source_id, item.suite, item.package),
+        )
+    )
 
 
 def ensure_no_ubuntu_package_conflicts(
-    sources: Iterable[SourceConfig],
+    publications: Iterable[Publication],
     *,
     index_dir: Path = UBUNTU_INDEX_DIR,
 ) -> None:
-    conflicts = find_ubuntu_package_conflicts(sources, index_dir=index_dir)
+    conflicts = find_ubuntu_package_conflicts(publications, index_dir=index_dir)
     if not conflicts:
         return
     lines = [

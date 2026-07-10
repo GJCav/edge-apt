@@ -59,19 +59,11 @@ def write_install_page(
 
 
 def _published_suites(lock: LockFile) -> tuple[str, ...]:
-    suites: set[str] = set()
-    for source_lock in lock.sources.values():
-        for artifact in source_lock.artifacts:
-            suites.update(artifact.suites)
-    return tuple(sorted(suites))
+    return tuple(sorted({publication.key.suite for publication in lock.publications}))
 
 
 def _published_arches(lock: LockFile) -> tuple[str, ...]:
-    arches: set[str] = set()
-    for source_lock in lock.sources.values():
-        for artifact in source_lock.artifacts:
-            arches.add(artifact.arch)
-    return tuple(sorted(arches))
+    return tuple(sorted({publication.key.arch for publication in lock.publications}))
 
 
 def _render_index_html(context: InstallPageContext) -> str:

@@ -4,14 +4,26 @@ import signal
 import socket
 import subprocess
 import sys
+import fcntl
+import shutil
+import threading
 import time
 import uuid
 from collections import defaultdict
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Callable, Generator, Iterable, Sequence
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import contextmanager
+from pathlib import Path
 
 import attrs
 
-from edgeapt.constants import LOCK_PATH, ROOT, SUPPORTED_E2E_ARCHES, TEST_PUBLIC_DIR
+from edgeapt.constants import (
+    E2E_APT_CACHE_DIR,
+    LOCK_PATH,
+    ROOT,
+    SUPPORTED_E2E_ARCHES,
+    TEST_PUBLIC_DIR,
+)
 from edgeapt.errors import CommandError, ValidationError
 from edgeapt.keyring import profile_public_keyring
 from edgeapt.lockfile import load_lock
@@ -30,10 +42,14 @@ E2E_SUITE_IMAGES = {
 class E2ETestCase:
     suite: str
     arch: str
-    source_id: str
+    source_ids: tuple[str, ...]
     package: str
     version: str
-    command: tuple[str, ...]
+    commands: tuple[tuple[str, ...], ...]
+
+    @property
+    def source_id(self) -> str:
+        return self.source_ids[0]
 
 
 @attrs.define(kw_only=True, frozen=True)
@@ -80,8 +96,15 @@ def run_e2e(
     suite: str | None = None,
     source: str | None = None,
     package: str | None = None,
+    jobs: int = 4,
+    apt_cache: bool = True,
+    clear_apt_cache: bool = False,
     on_event: Callable[[E2EEvent], None] | None = None,
 ) -> E2ERunResult:
+    if jobs < 1:
+        raise ValidationError("jobs must be a positive integer")
+    if clear_apt_cache and not apt_cache:
+        raise ValidationError("clear_apt_cache cannot be used with apt_cache disabled")
     require_executable("docker")
     test_keyring = profile_public_keyring("test")
     if not test_keyring.exists():
@@ -114,7 +137,7 @@ def run_e2e(
                 source_id=case.source_id,
                 package=case.package,
                 version=case.version,
-                command=case.command,
+                command=case.commands[0],
                 message=f"Skipping unsupported e2e architecture: {case.arch}",
             )
         else:
@@ -140,19 +163,51 @@ def run_e2e(
         stderr=subprocess.DEVNULL,
         text=True,
     )
+    if clear_apt_cache:
+        for group in groups:
+            clear_e2e_apt_cache(group.suite, group.arch)
+
     tested = 0
     try:
         time.sleep(1)
         if server.poll() is not None:
             raise CommandError("local HTTP server failed to start")
-        for group in groups:
-            _run_group(
-                group=group,
-                port=port,
-                test_keyring=test_keyring.resolve().as_posix(),
-                on_event=on_event,
-            )
-            tested += len(group.cases)
+        callback_lock = threading.Lock()
+
+        def synchronized_event(event: E2EEvent) -> None:
+            if on_event is None:
+                return
+            with callback_lock:
+                on_event(event)
+
+        failures: list[tuple[E2EGroup, Exception]] = []
+        with ThreadPoolExecutor(max_workers=min(jobs, len(groups))) as executor:
+            futures = {
+                executor.submit(
+                    _run_group,
+                    group=group,
+                    port=port,
+                    test_keyring=test_keyring.resolve().as_posix(),
+                    apt_cache=apt_cache,
+                    on_event=synchronized_event,
+                ): group
+                for group in groups
+            }
+            for future in as_completed(futures):
+                group = futures[future]
+                try:
+                    future.result()
+                    tested += len(group.cases)
+                except Exception as exc:
+                    failures.append((group, exc))
+        if failures:
+            lines = ["E2E group failure(s):"]
+            for group, exc in sorted(
+                failures,
+                key=lambda item: (_suite_rank(item[0].suite), item[0].arch),
+            ):
+                lines.append(f"\n[{group.suite}/{group.arch}]\n{exc}")
+            raise CommandError("\n".join(lines))
     finally:
         _terminate(server)
     return E2ERunResult(groups=len(groups), tested=tested, skipped=skipped)
@@ -168,26 +223,24 @@ def build_e2e_test_cases(
     if suite_filter is not None and suite_filter not in E2E_SUITE_IMAGES:
         raise ValidationError(f"unsupported e2e suite: {suite_filter}")
     cases: list[E2ETestCase] = []
-    for source_id in sorted(lock.sources):
-        if source_filter is not None and source_id != source_filter:
+    for publication in lock.publications:
+        source_ids = tuple(item.source_id for item in publication.provenance)
+        if source_filter is not None and source_filter not in source_ids:
             continue
-        source_lock = lock.sources[source_id]
-        if not source_lock.e2e_command:
-            raise ValidationError(f"{source_id}: missing e2e_command in lock.json")
-        artifacts = sorted(
-            source_lock.artifacts,
-            key=lambda artifact: (artifact.package, artifact.version, artifact.arch),
+        if package_filter is not None and publication.key.package != package_filter:
+            continue
+        if suite_filter is not None and publication.key.suite != suite_filter:
+            continue
+        _validate_suite_has_image(publication.key.suite)
+        artifact = lock.artifact_for(publication.artifact)
+        cases.append(
+            _case_from_artifact(
+                source_ids,
+                publication.e2e_commands,
+                publication.key.suite,
+                artifact,
+            )
         )
-        for artifact in artifacts:
-            if package_filter is not None and artifact.package != package_filter:
-                continue
-            for suite in _sort_suites(artifact.suites):
-                if suite_filter is not None and suite != suite_filter:
-                    continue
-                _validate_suite_has_image(suite)
-                cases.append(
-                    _case_from_artifact(source_id, source_lock.e2e_command, suite, artifact)
-                )
     return tuple(cases)
 
 
@@ -230,7 +283,7 @@ def docker_install_args(container_id: str, case: E2ETestCase) -> tuple[str, ...]
 
 
 def docker_e2e_command_args(container_id: str, case: E2ETestCase) -> tuple[str, ...]:
-    return ("docker", "exec", container_id, *case.command)
+    return ("docker", "exec", container_id, *case.commands[0])
 
 
 def _run_group(
@@ -238,6 +291,7 @@ def _run_group(
     group: E2EGroup,
     port: int,
     test_keyring: str,
+    apt_cache: bool,
     on_event: Callable[[E2EEvent], None] | None,
 ) -> None:
     _emit(
@@ -250,8 +304,8 @@ def _run_group(
     )
     context = E2ECommandContext(stage="docker-run", suite=group.suite, arch=group.arch)
     container_name = f"edgeapt-e2e-{group.suite}-{group.arch}-{uuid.uuid4().hex[:12]}"
-    container = _run_checked(
-        (
+    with _apt_cache_lock(group.suite, group.arch, enabled=apt_cache) as cache_dir:
+        run_args = [
             "docker",
             "run",
             "--detach",
@@ -262,64 +316,85 @@ def _run_group(
             "host",
             "-v",
             f"{test_keyring}:/edgeapt-key.gpg:ro",
-            group.image,
-            "sleep",
-            "infinity",
-        ),
-        context,
-    ).stdout.strip()
-    try:
-        _run_checked(
-            (
-                "docker",
-                "exec",
-                container,
-                "bash",
-                "-lc",
-                _setup_script(suite=group.suite, arch=group.arch, port=port),
-            ),
-            E2ECommandContext(stage="setup", suite=group.suite, arch=group.arch),
-        )
-        for case in group.cases:
-            _emit(
-                on_event,
-                kind="test_start",
-                suite=case.suite,
-                arch=case.arch,
-                image=group.image,
-                source_id=case.source_id,
-                package=case.package,
-                version=case.version,
-                command=case.command,
-                message=f"Testing {case.package} {case.version}",
+        ]
+        if cache_dir is not None:
+            run_args.extend(
+                ["-v", f"{cache_dir.resolve()}:/var/cache/apt/archives"]
             )
+        run_args.extend([group.image, "sleep", "infinity"])
+        container = _run_checked(tuple(run_args), context).stdout.strip()
+        try:
             _run_checked(
-                docker_install_args(container, case),
-                _context_for_case(stage="install", case=case),
+                (
+                    "docker",
+                    "exec",
+                    container,
+                    "bash",
+                    "-lc",
+                    _setup_script(suite=group.suite, arch=group.arch, port=port),
+                ),
+                E2ECommandContext(stage="setup", suite=group.suite, arch=group.arch),
             )
-            _run_checked(
-                docker_e2e_command_args(container, case),
-                _context_for_case(stage="e2e-command", case=case),
+            for case in group.cases:
+                _run_checked(
+                    docker_install_args(container, case),
+                    _context_for_case(stage="install", case=case),
+                )
+                for command in case.commands:
+                    _emit(
+                        on_event,
+                        kind="test_start",
+                        suite=case.suite,
+                        arch=case.arch,
+                        image=group.image,
+                        source_id=case.source_id,
+                        package=case.package,
+                        version=case.version,
+                        command=command,
+                        message=f"Testing {case.package} {case.version}",
+                    )
+                    _run_checked(
+                        ("docker", "exec", container, *command),
+                        _context_for_case(
+                            stage="e2e-command",
+                            case=case,
+                            command=command,
+                        ),
+                    )
+                    _emit(
+                        on_event,
+                        kind="test_pass",
+                        suite=case.suite,
+                        arch=case.arch,
+                        image=group.image,
+                        source_id=case.source_id,
+                        package=case.package,
+                        version=case.version,
+                        command=command,
+                        message=f"Passed {case.package} {case.version}",
+                    )
+        finally:
+            if cache_dir is not None:
+                subprocess.run(
+                    [
+                        "docker",
+                        "exec",
+                        container,
+                        "chmod",
+                        "-R",
+                        "a+rwX",
+                        "/var/cache/apt/archives",
+                    ],
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+            subprocess.run(
+                ["docker", "rm", "-f", container],
+                check=False,
+                capture_output=True,
+                text=True,
             )
-            _emit(
-                on_event,
-                kind="test_pass",
-                suite=case.suite,
-                arch=case.arch,
-                image=group.image,
-                source_id=case.source_id,
-                package=case.package,
-                version=case.version,
-                command=case.command,
-                message=f"Passed {case.package} {case.version}",
-            )
-    finally:
-        subprocess.run(
-            ["docker", "rm", "-f", container],
-            check=False,
-            capture_output=True,
-            text=True,
-        )
 
 
 def _run_checked(
@@ -341,8 +416,12 @@ def _setup_script(*, suite: str, arch: str, port: int) -> str:
     return f"""
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get install -y ca-certificates
+rm -f /etc/apt/apt.conf.d/docker-clean
+cat > /etc/apt/apt.conf.d/99edgeapt-keep-cache <<'EOF'
+Binary::apt::APT::Keep-Downloaded-Packages "true";
+Binary::apt-get::APT::Keep-Downloaded-Packages "true";
+EOF
+install -d -m 0755 /var/cache/apt/archives/partial
 install -d -m 0755 /etc/apt/keyrings
 cp /edgeapt-key.gpg /etc/apt/keyrings/edgeapt-test-archive-keyring.gpg
 cat > /etc/apt/sources.list.d/edgeapt.list <<'EOF'
@@ -353,22 +432,27 @@ apt-get update
 
 
 def _case_from_artifact(
-    source_id: str,
-    command: tuple[str, ...],
+    source_ids: tuple[str, ...],
+    commands: tuple[tuple[str, ...], ...],
     suite: str,
     artifact: ArtifactFact,
 ) -> E2ETestCase:
     return E2ETestCase(
         suite=suite,
         arch=artifact.arch,
-        source_id=source_id,
+        source_ids=source_ids,
         package=artifact.package,
         version=artifact.version,
-        command=command,
+        commands=commands,
     )
 
 
-def _context_for_case(*, stage: str, case: E2ETestCase) -> E2ECommandContext:
+def _context_for_case(
+    *,
+    stage: str,
+    case: E2ETestCase,
+    command: tuple[str, ...] = (),
+) -> E2ECommandContext:
     return E2ECommandContext(
         stage=stage,
         suite=case.suite,
@@ -376,8 +460,39 @@ def _context_for_case(*, stage: str, case: E2ETestCase) -> E2ECommandContext:
         source_id=case.source_id,
         package=case.package,
         version=case.version,
-        command=case.command,
+        command=command,
     )
+
+
+def clear_e2e_apt_cache(suite: str, arch: str) -> None:
+    with _apt_cache_lock(suite, arch, enabled=True) as cache_dir:
+        if cache_dir is None:
+            return
+        shutil.rmtree(cache_dir)
+        cache_dir.mkdir(parents=True, exist_ok=True)
+
+
+@contextmanager
+def _apt_cache_lock(
+    suite: str,
+    arch: str,
+    *,
+    enabled: bool,
+) -> Generator[Path | None, None, None]:
+    if not enabled:
+        yield None
+        return
+    group_dir = E2E_APT_CACHE_DIR / f"{suite}-{arch}"
+    cache_dir = group_dir / "archives"
+    group_dir.mkdir(parents=True, exist_ok=True)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    lock_path = group_dir / ".lock"
+    with lock_path.open("a+", encoding="utf-8") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        try:
+            yield cache_dir
+        finally:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
 
 def _format_failure(
@@ -409,10 +524,6 @@ def _format_failure(
     if stderr:
         lines.extend(["stderr:", stderr])
     return "\n".join(lines)
-
-
-def _sort_suites(suites: Iterable[str]) -> tuple[str, ...]:
-    return tuple(sorted(suites, key=_suite_rank))
 
 
 def _suite_rank(suite: str) -> int:

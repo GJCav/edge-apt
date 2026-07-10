@@ -4,25 +4,39 @@ from pathlib import Path
 
 import pytest
 
-from edgeapt.constants import LOCK_PATH, PACKAGES_DIR
+from edgeapt.constants import ProjectPaths
 from edgeapt.repackage import repackage_all, RepackageEvent
+from tests.factories import write_hello_source
 
 
 @pytest.mark.integration
-def test_repackage_writes_lock_and_packages() -> None:
-    lock = repackage_all()
-    assert LOCK_PATH.exists()
-    assert "hello" in lock.sources
-    assert lock.sources["hello"].e2e_command == ("edgeapt-hello",)
-    assert (PACKAGES_DIR / "hello" / "edgeapt-hello_0.1.0-1_amd64.deb").exists()
-    assert all(Path(artifact.path).suffix == ".deb" for source in lock.sources.values() for artifact in source.artifacts)
+def test_repackage_writes_lock_and_packages(tmp_path: Path) -> None:
+    paths = ProjectPaths(tmp_path)
+    write_hello_source(tmp_path)
+
+    lock = repackage_all(paths=paths)
+
+    assert paths.lock_path.exists()
+    assert any(
+        publication.key.package == "edgeapt-hello"
+        and publication.e2e_commands == (("edgeapt-hello",),)
+        for publication in lock.publications
+    )
+    assert (
+        paths.packages_dir
+        / "edgeapt-hello"
+        / "edgeapt-hello_0.1.0-1_amd64.deb"
+    ).exists()
+    assert all(Path(artifact.path).suffix == ".deb" for artifact in lock.artifacts)
 
 
 @pytest.mark.integration
-def test_repackage_reports_progress_events() -> None:
+def test_repackage_reports_progress_events(tmp_path: Path) -> None:
+    paths = ProjectPaths(tmp_path)
+    write_hello_source(tmp_path)
     events: list[RepackageEvent] = []
 
-    repackage_all(on_event=events.append)
+    repackage_all(on_event=events.append, paths=paths)
 
     kinds = {event.kind for event in events}
     assert "source_start" in kinds

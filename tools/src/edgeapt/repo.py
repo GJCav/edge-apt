@@ -8,19 +8,17 @@ from typing import Any
 import attrs
 
 from edgeapt.constants import (
-    COMPONENT,
-    LOCK_PATH,
-    PUBLIC_DIR,
-    ROOT,
+    PROJECT_PATHS,
+    ProjectPaths,
     STATIC_ASSET_SIZE_LIMIT_BYTES,
-    TEST_PUBLIC_DIR,
-    TMP_DIR,
 )
 from edgeapt.errors import ValidationError
 from edgeapt.install_page import write_install_page
 from edgeapt.keyring import load_signing_key, SigningKey
 from edgeapt.lockfile import load_lock
 from edgeapt.models import ArtifactFact
+from edgeapt.planner import build_repo_plan
+from edgeapt.sources import load_sources
 from edgeapt.util import require_executable, run, write_json
 
 
@@ -35,16 +33,20 @@ class RepoGenerationResult:
 def generate_repo(
     *,
     profile: str,
+    paths: ProjectPaths = PROJECT_PATHS,
 ) -> RepoGenerationResult:
     require_executable("aptly")
     require_executable("gpg")
-    output_dir, signing_key = _resolve_profile(profile=profile)
-    lock = load_lock(LOCK_PATH)
+    output_dir, signing_key = _resolve_profile(profile=profile, paths=paths)
+    lock = load_lock(paths.lock_path)
     if lock is None:
         raise ValueError("lock.json does not exist; run repackage first")
+    current_plan = build_repo_plan(load_sources(paths.sources_dir, root=paths.root))
+    if current_plan.plan_digest != lock.plan_digest:
+        raise ValidationError("sources changed since lock.json; run repackage first")
 
-    aptly_root = TMP_DIR / f"aptly-{profile}"
-    aptly_config = TMP_DIR / f"aptly-{profile}.conf"
+    aptly_root = paths.tmp_dir / f"aptly-{profile}"
+    aptly_config = paths.tmp_dir / f"aptly-{profile}.conf"
     if aptly_root.exists():
         shutil.rmtree(aptly_root)
     if output_dir.exists():
@@ -70,26 +72,28 @@ def generate_repo(
     }
     write_json(aptly_config, config)
 
-    artifacts_by_suite: dict[str, list[ArtifactFact]] = defaultdict(list)
-    for source_lock in lock.sources.values():
-        for artifact in source_lock.artifacts:
-            for suite in artifact.suites:
-                artifacts_by_suite[suite].append(artifact)
+    artifacts_by_target: dict[tuple[str, str], list[ArtifactFact]] = defaultdict(list)
+    for publication in lock.publications:
+        target = (publication.key.suite, publication.key.component)
+        artifacts_by_target[target].append(lock.artifact_for(publication.artifact))
 
-    for suite in sorted(artifacts_by_suite):
-        repo_name = f"edgeapt-{suite}"
+    for suite, component in sorted(artifacts_by_target):
+        repo_name = f"edgeapt-{suite}-{component}"
         snapshot_name = f"{repo_name}-snapshot"
         _aptly(
             aptly_config,
             "repo",
             "create",
             f"-distribution={suite}",
-            f"-component={COMPONENT}",
+            f"-component={component}",
             "-architectures=amd64,arm64",
             repo_name,
         )
         package_paths = sorted(
-            {str((ROOT / artifact.path).resolve()) for artifact in artifacts_by_suite[suite]}
+            {
+                str((paths.root / artifact.path).resolve())
+                for artifact in artifacts_by_target[(suite, component)]
+            }
         )
         if package_paths:
             _aptly(aptly_config, "repo", "add", repo_name, *package_paths)
@@ -103,7 +107,7 @@ def generate_repo(
             f"-gpg-key={signing_key.fingerprint}",
             "-architectures=amd64,arm64",
             f"-distribution={suite}",
-            f"-component={COMPONENT}",
+            f"-component={component}",
             snapshot_name,
             "filesystem:local:",
         )
@@ -147,11 +151,15 @@ def check_static_asset_size_limit(
     raise ValidationError("\n".join(lines))
 
 
-def _resolve_profile(*, profile: str) -> tuple[Path, SigningKey]:
+def _resolve_profile(
+    *,
+    profile: str,
+    paths: ProjectPaths,
+) -> tuple[Path, SigningKey]:
     if profile == "test":
-        return TEST_PUBLIC_DIR, load_signing_key(profile)
+        return paths.test_public_dir, load_signing_key(profile)
     if profile == "prod":
-        return PUBLIC_DIR, load_signing_key(profile)
+        return paths.public_dir, load_signing_key(profile)
     raise ValidationError("profile must be either test or prod")
 
 

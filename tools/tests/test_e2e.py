@@ -1,46 +1,38 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
-from edgeapt.constants import LOCK_SCHEMA
 from edgeapt.e2e import build_e2e_test_cases
+from edgeapt.e2e import clear_e2e_apt_cache
 from edgeapt.e2e import docker_e2e_command_args
 from edgeapt.e2e import docker_install_args
 from edgeapt.e2e import E2ETestCase
 from edgeapt.e2e import group_e2e_test_cases
+from edgeapt.e2e import run_e2e
 from edgeapt.errors import ValidationError
-from edgeapt.models import ArtifactFact
-from edgeapt.models import LockFile
-from edgeapt.models import SourceLock
-from edgeapt.models import UpstreamFact
+from tests.factories import make_artifact
+from tests.factories import make_deb_key
+from tests.factories import make_lock
+from tests.factories import make_publication
 
 
 def test_e2e_matrix_groups_by_suite_then_arch_then_source() -> None:
-    lock = LockFile(
-        schema=LOCK_SCHEMA,
-        generated_at="2026-07-05T00:00:00Z",
-        sources={
-            "doggo": _source_lock(
-                source_id="doggo",
-                package="doggo",
-                command=("doggo", "--version"),
-                artifact=_artifact(
-                    package="doggo",
-                    version="1.1.7-1",
-                    suites=("resolute", "focal"),
-                ),
-            ),
-            "hello": _source_lock(
+    doggo = make_deb_key(package="doggo", deb_version="1.1.7-1")
+    hello = make_deb_key(package="edgeapt-hello", deb_version="0.1.0-1")
+    lock = make_lock(
+        artifacts=(make_artifact(deb_key=doggo), make_artifact(deb_key=hello)),
+        publications=(
+            make_publication(deb_key=doggo, suite="resolute", source_id="doggo"),
+            make_publication(deb_key=doggo, suite="focal", source_id="doggo"),
+            make_publication(
+                deb_key=hello,
+                suite="jammy",
                 source_id="hello",
-                package="edgeapt-hello",
-                command=("edgeapt-hello",),
-                artifact=_artifact(
-                    package="edgeapt-hello",
-                    version="0.1.0-1",
-                    suites=("jammy",),
-                ),
+                commands=(("edgeapt-hello",),),
             ),
-        },
+        ),
     )
 
     groups = group_e2e_test_cases(build_e2e_test_cases(lock))
@@ -55,31 +47,15 @@ def test_e2e_matrix_groups_by_suite_then_arch_then_source() -> None:
 
 
 def test_e2e_matrix_filters_by_suite_source_and_package() -> None:
-    lock = LockFile(
-        schema=LOCK_SCHEMA,
-        generated_at="2026-07-05T00:00:00Z",
-        sources={
-            "doggo": _source_lock(
-                source_id="doggo",
-                package="doggo",
-                command=("doggo", "--version"),
-                artifact=_artifact(
-                    package="doggo",
-                    version="1.1.7-1",
-                    suites=("focal", "noble"),
-                ),
-            ),
-            "hello": _source_lock(
-                source_id="hello",
-                package="edgeapt-hello",
-                command=("edgeapt-hello",),
-                artifact=_artifact(
-                    package="edgeapt-hello",
-                    version="0.1.0-1",
-                    suites=("noble",),
-                ),
-            ),
-        },
+    doggo = make_deb_key(package="doggo", deb_version="1.1.7-1")
+    hello = make_deb_key(package="edgeapt-hello", deb_version="0.1.0-1")
+    lock = make_lock(
+        artifacts=(make_artifact(deb_key=doggo), make_artifact(deb_key=hello)),
+        publications=(
+            make_publication(deb_key=doggo, suite="focal", source_id="doggo"),
+            make_publication(deb_key=doggo, suite="noble", source_id="doggo"),
+            make_publication(deb_key=hello, suite="noble", source_id="hello"),
+        ),
     )
 
     cases = build_e2e_test_cases(
@@ -95,14 +71,7 @@ def test_e2e_matrix_filters_by_suite_source_and_package() -> None:
 
 
 def test_e2e_install_uses_package_version_pin() -> None:
-    case = E2ETestCase(
-        suite="noble",
-        arch="amd64",
-        source_id="doggo",
-        package="doggo",
-        version="1.1.7-1",
-        command=("doggo", "--version"),
-    )
+    case = _case()
 
     assert docker_install_args("container-id", case) == (
         "docker",
@@ -118,14 +87,7 @@ def test_e2e_install_uses_package_version_pin() -> None:
 
 
 def test_e2e_command_uses_argv() -> None:
-    case = E2ETestCase(
-        suite="noble",
-        arch="amd64",
-        source_id="doggo",
-        package="doggo",
-        version="1.1.7-1",
-        command=("doggo", "--version"),
-    )
+    case = _case()
 
     assert docker_e2e_command_args("container-id", case) == (
         "docker",
@@ -137,49 +99,59 @@ def test_e2e_command_uses_argv() -> None:
 
 
 def test_e2e_rejects_unknown_suite_filter() -> None:
-    lock = LockFile(schema=LOCK_SCHEMA, generated_at="2026-07-05T00:00:00Z", sources={})
-
     with pytest.raises(ValidationError, match="unsupported e2e suite"):
-        build_e2e_test_cases(lock, suite_filter="unknown")
+        build_e2e_test_cases(make_lock(), suite_filter="unknown")
 
 
-def _source_lock(
-    *,
-    source_id: str,
-    package: str,
-    command: tuple[str, ...],
-    artifact: ArtifactFact,
-) -> SourceLock:
-    return SourceLock(
-        source_file=f"sources/{source_id}.yaml",
-        source_sha256="sha256:source",
-        template="edgeapt.single_binary/v1",
-        package=package,
-        e2e_command=command,
-        artifacts=(artifact,),
+def test_e2e_keeps_multiple_commands_in_one_install_case() -> None:
+    key = make_deb_key(package="foo")
+    lock = make_lock(
+        artifacts=(make_artifact(deb_key=key),),
+        publications=(
+            make_publication(
+                deb_key=key,
+                commands=(("foo", "--version"), ("foo", "--help")),
+            ),
+        ),
     )
 
+    cases = build_e2e_test_cases(lock)
 
-def _artifact(
-    *,
-    package: str,
-    version: str,
-    suites: tuple[str, ...],
-) -> ArtifactFact:
-    return ArtifactFact(
-        package=package,
-        version=version,
-        upstream_version=version,
-        revision=1,
+    assert len(cases) == 1
+    assert cases[0].commands == (("foo", "--version"), ("foo", "--help"))
+
+
+def test_e2e_rejects_invalid_jobs_before_starting_docker() -> None:
+    with pytest.raises(ValidationError, match="jobs must be a positive integer"):
+        run_e2e(jobs=0)
+
+
+def test_e2e_rejects_clear_cache_when_cache_is_disabled() -> None:
+    with pytest.raises(ValidationError, match="clear_apt_cache"):
+        run_e2e(apt_cache=False, clear_apt_cache=True)
+
+
+def test_clear_e2e_apt_cache_removes_archives(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr("edgeapt.e2e.E2E_APT_CACHE_DIR", tmp_path)
+    archive = tmp_path / "noble-amd64" / "archives" / "package.deb"
+    archive.parent.mkdir(parents=True)
+    archive.write_bytes(b"package")
+
+    clear_e2e_apt_cache("noble", "amd64")
+
+    assert not archive.exists()
+    assert archive.parent.exists()
+
+
+def _case() -> E2ETestCase:
+    return E2ETestCase(
+        suite="noble",
         arch="amd64",
-        suites=suites,
-        path=f"packages/{package}/{package}_{version}_amd64.deb",
-        sha256="sha256:artifact",
-        size=10,
-        upstream=UpstreamFact(
-            url="https://example.invalid/package.deb",
-            sha256="sha256:upstream",
-            size=10,
-        ),
-        created_at="2026-07-05T00:00:00Z",
+        source_ids=("doggo",),
+        package="doggo",
+        version="1.1.7-1",
+        commands=(("doggo", "--version"),),
     )

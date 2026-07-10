@@ -1,34 +1,34 @@
 from __future__ import annotations
 
-import shutil
 from pathlib import Path
 
 import pytest
 
-from edgeapt.constants import PUBLIC_DIR, TEST_PUBLIC_DIR
+from edgeapt.constants import ProjectPaths
 from edgeapt.errors import ValidationError
 from edgeapt.keyring import ensure_test_key
 from edgeapt.repo import check_static_asset_size_limit
 from edgeapt.repo import generate_repo
 from edgeapt.repackage import repackage_all
 from edgeapt.util import run
+from tests.factories import write_hello_source
 
 
 @pytest.mark.integration
-def test_generate_repo_writes_signed_metadata() -> None:
+def test_generate_repo_writes_signed_metadata(tmp_path: Path) -> None:
+    paths = ProjectPaths(tmp_path)
+    write_hello_source(tmp_path)
     ensure_test_key()
-    repackage_all()
-    if PUBLIC_DIR.exists():
-        shutil.rmtree(PUBLIC_DIR)
-    result = generate_repo(profile="test")
-    assert result.output_dir == TEST_PUBLIC_DIR
+    repackage_all(paths=paths)
+    result = generate_repo(profile="test", paths=paths)
+    assert result.output_dir == paths.test_public_dir
 
-    inrelease = TEST_PUBLIC_DIR / "dists" / "noble" / "InRelease"
-    release = TEST_PUBLIC_DIR / "dists" / "noble" / "Release"
-    release_gpg = TEST_PUBLIC_DIR / "dists" / "noble" / "Release.gpg"
-    index_html = TEST_PUBLIC_DIR / "index.html"
-    public_ascii = TEST_PUBLIC_DIR / "edgeapt.asc"
-    public_keyring = TEST_PUBLIC_DIR / "edgeapt.gpg"
+    inrelease = paths.test_public_dir / "dists" / "noble" / "InRelease"
+    release = paths.test_public_dir / "dists" / "noble" / "Release"
+    release_gpg = paths.test_public_dir / "dists" / "noble" / "Release.gpg"
+    index_html = paths.test_public_dir / "index.html"
+    public_ascii = paths.test_public_dir / "edgeapt.asc"
+    public_keyring = paths.test_public_dir / "edgeapt.gpg"
 
     assert inrelease.exists()
     assert release.exists()
@@ -37,7 +37,7 @@ def test_generate_repo_writes_signed_metadata() -> None:
     assert index_html.exists()
     assert public_ascii.exists()
     assert public_keyring.exists()
-    assert not PUBLIC_DIR.exists()
+    assert not paths.public_dir.exists()
     html = index_html.read_text(encoding="utf-8")
     assert "Use DEB822 source format" in html
     assert "Types: deb" in html

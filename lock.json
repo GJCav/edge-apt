@@ -1,471 +1,1496 @@
 {
-  "generated_at": "2026-07-09T08:58:04Z",
-  "schema": "edgeapt.lock/v1",
-  "sources": {
-    "bat": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T06:44:36Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "bat",
-            "version": "0.25.0"
-          },
-          "package": "bat",
-          "path": "packages/bat/bat_0.25.0_amd64.deb",
-          "sha256": "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc",
-          "size": 2631980,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DD2F4FA8B04F10\"",
-            "last_modified": "Tue, 07 Jan 2025 19:15:33 GMT",
-            "sha256": "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc",
-            "size": 2631980,
-            "url": "https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb"
-          },
-          "upstream_version": "0.25.0",
-          "version": "0.25.0"
-        }
-      ],
-      "e2e_command": [
-        "bat",
-        "--version"
-      ],
-      "package": "bat",
-      "source_file": "sources/bat.yaml",
-      "source_sha256": "sha256:e3b0d3749bb63182f9890695b16f6c6c6fe889842250571c1ebf2b842589ac2f",
-      "template": "edgeapt.deb_upstream/v1"
+  "artifacts": [
+    {
+      "build_plan_digest": "sha256:36a626c28d6dcf955d49c51083dcfa4637fbb30a1046f551131476569895b3e1",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "bat",
+        "version": "0.25.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.25.0",
+        "package": "bat"
+      },
+      "path": "packages/bat/bat_0.25.0_amd64.deb",
+      "sha256": "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc",
+      "size": 2631980,
+      "upstream": {
+        "etag": "\"0x8DD2F4FA8B04F10\"",
+        "last_modified": "Tue, 07 Jan 2025 19:15:33 GMT",
+        "sha256": "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc",
+        "size": 2631980,
+        "url": "https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb"
+      },
+      "upstream_version": "0.25.0"
     },
-    "chezmoi": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T08:58:04Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "chezmoi",
-            "version": "2.47.1"
-          },
-          "package": "chezmoi",
-          "path": "packages/chezmoi/chezmoi_2.47.1_amd64.deb",
-          "sha256": "sha256:fe212a9a4e3ac5340fffc4f8148b942a1577554b70fafb9bbe08503fb5cd8863",
-          "size": 12376256,
-          "suites": [
-            "focal"
-          ],
-          "upstream": {
-            "etag": "\"0x8DC3B205E4820D7\"",
-            "last_modified": "Sun, 03 Mar 2024 01:22:18 GMT",
-            "sha256": "sha256:fe212a9a4e3ac5340fffc4f8148b942a1577554b70fafb9bbe08503fb5cd8863",
-            "size": 12376256,
-            "url": "https://github.com/twpayne/chezmoi/releases/download/v2.47.1/chezmoi_2.47.1_linux_amd64.deb"
-          },
-          "upstream_version": "2.47.1",
-          "version": "2.47.1"
-        },
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T08:52:52Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "chezmoi",
-            "version": "2.71.0"
-          },
-          "package": "chezmoi",
-          "path": "packages/chezmoi/chezmoi_2.71.0_amd64.deb",
-          "sha256": "sha256:a8880a1b01e877c3e5da250b9f882ce9fa39962686d75f436fa21e021fa092b1",
-          "size": 15594610,
-          "suites": [
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DEDC802886632A\"",
-            "last_modified": "Tue, 07 Jul 2026 23:33:32 GMT",
-            "sha256": "sha256:a8880a1b01e877c3e5da250b9f882ce9fa39962686d75f436fa21e021fa092b1",
-            "size": 15594610,
-            "url": "https://github.com/twpayne/chezmoi/releases/download/v2.71.0/chezmoi_2.71.0_linux_amd64.deb"
-          },
-          "upstream_version": "2.71.0",
-          "version": "2.71.0"
-        }
-      ],
-      "e2e_command": [
-        "chezmoi",
-        "--version"
-      ],
-      "package": "chezmoi",
-      "source_file": "sources/chezmoi.yaml",
-      "source_sha256": "sha256:db59de1267035ae8ae008fb83e07bd381c961a934c56de883c9e5dced399c9db",
-      "template": "edgeapt.deb_upstream/v1"
+    {
+      "build_plan_digest": "sha256:170b8e69284aeee434930acde299f1f4d979d90d8f4216b917e44f236f54ab6d",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "chezmoi",
+        "version": "2.47.1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "2.47.1",
+        "package": "chezmoi"
+      },
+      "path": "packages/chezmoi/chezmoi_2.47.1_amd64.deb",
+      "sha256": "sha256:fe212a9a4e3ac5340fffc4f8148b942a1577554b70fafb9bbe08503fb5cd8863",
+      "size": 12376256,
+      "upstream": {
+        "etag": "\"0x8DC3B205E4820D7\"",
+        "last_modified": "Sun, 03 Mar 2024 01:22:18 GMT",
+        "sha256": "sha256:fe212a9a4e3ac5340fffc4f8148b942a1577554b70fafb9bbe08503fb5cd8863",
+        "size": 12376256,
+        "url": "https://github.com/twpayne/chezmoi/releases/download/v2.47.1/chezmoi_2.47.1_linux_amd64.deb"
+      },
+      "upstream_version": "2.47.1"
     },
-    "difftastic": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T06:44:36Z",
-          "package": "difftastic",
-          "path": "packages/difftastic/difftastic_0.69.0-1_amd64.deb",
-          "revision": 1,
-          "sha256": "sha256:3f5825ae4bc9d5ea59387a41b9005a514e591ca5169cf55c85c5ba81e5efe509",
-          "size": 8409102,
-          "suites": [
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DEA6FB2C9F246F\"",
-            "last_modified": "Thu, 30 Apr 2026 20:58:04 GMT",
-            "sha256": "sha256:038db96a0e8fce69f2554e33e04ff75fbf6f96ea45cb4edb9ed6203a2c4750ff",
-            "size": 12401737,
-            "url": "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-gnu.tar.gz"
-          },
-          "upstream_version": "v0.69.0",
-          "version": "0.69.0-1"
-        }
-      ],
-      "e2e_command": [
-        "difft",
-        "--version"
-      ],
-      "package": "difftastic",
-      "source_file": "sources/difftastic.yaml",
-      "source_sha256": "sha256:62e097365cca4194c4493b5b0a661e9b6ccd5dfe8b4eb3e4ec7991fc4c06f6aa",
-      "template": "edgeapt.single_binary/v1"
+    {
+      "build_plan_digest": "sha256:72690f7fb3aab95530a4c7769abe37dff9697f29f7feea05730ae80f359715b3",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "chezmoi",
+        "version": "2.71.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "2.71.0",
+        "package": "chezmoi"
+      },
+      "path": "packages/chezmoi/chezmoi_2.71.0_amd64.deb",
+      "sha256": "sha256:a8880a1b01e877c3e5da250b9f882ce9fa39962686d75f436fa21e021fa092b1",
+      "size": 15594610,
+      "upstream": {
+        "etag": "\"0x8DEDC802886632A\"",
+        "last_modified": "Tue, 07 Jul 2026 23:33:32 GMT",
+        "sha256": "sha256:a8880a1b01e877c3e5da250b9f882ce9fa39962686d75f436fa21e021fa092b1",
+        "size": 15594610,
+        "url": "https://github.com/twpayne/chezmoi/releases/download/v2.71.0/chezmoi_2.71.0_linux_amd64.deb"
+      },
+      "upstream_version": "2.71.0"
     },
-    "doggo": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T06:44:36Z",
-          "package": "doggo",
-          "path": "packages/doggo/doggo_1.1.7-1_amd64.deb",
-          "revision": 1,
-          "sha256": "sha256:97b6b4eb62963f63e61559edb43142ad3f6ba1a4fba3eda9fb5bae02f00750bd",
-          "size": 4724408,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DEBA4AD9A1316F\"",
-            "last_modified": "Mon, 25 May 2026 10:46:17 GMT",
-            "sha256": "sha256:a908d045dbda977482927fd90ee1ab2020115fbf0905b93c7d6ef40d357b5392",
-            "size": 5779683,
-            "url": "https://github.com/mr-karan/doggo/releases/download/v1.1.7/doggo_1.1.7_Linux_x86_64.tar.gz"
-          },
-          "upstream_version": "v1.1.7",
-          "version": "1.1.7-1"
-        },
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T06:44:36Z",
-          "package": "doggo",
-          "path": "packages/doggo/doggo_1.2.0-1_amd64.deb",
-          "revision": 1,
-          "sha256": "sha256:d8b77be54b6239e0a4e3d9758e30a7d6a978f0474db2554989f835f40736c348",
-          "size": 4725882,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DED0F753DA9488\"",
-            "last_modified": "Tue, 23 Jun 2026 07:16:21 GMT",
-            "sha256": "sha256:aa6760e7f163958e7626420447385ab938fdc127983edaceb121f809bd3e2bca",
-            "size": 5781657,
-            "url": "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-linux-x86_64.tar.gz"
-          },
-          "upstream_version": "v1.2.0",
-          "version": "1.2.0-1"
-        }
-      ],
-      "e2e_command": [
-        "doggo",
-        "--version"
-      ],
-      "package": "doggo",
-      "source_file": "sources/doggo.yaml",
-      "source_sha256": "sha256:e5b80ae8a38a35cf00210be395e143d4eb8b1a5d152cfc75592534f519d81c54",
-      "template": "edgeapt.single_binary/v1"
+    {
+      "build_plan_digest": "sha256:cd85e6cfb851413f5ae1d5cfca9044acb3f81c186454e8bbbccd7459bfda626b",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.69.0-1",
+        "package": "difftastic"
+      },
+      "path": "packages/difftastic/difftastic_0.69.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:3f5825ae4bc9d5ea59387a41b9005a514e591ca5169cf55c85c5ba81e5efe509",
+      "size": 8409102,
+      "upstream": {
+        "etag": "\"0x8DEA6FB2C9F246F\"",
+        "last_modified": "Thu, 30 Apr 2026 20:58:04 GMT",
+        "sha256": "sha256:038db96a0e8fce69f2554e33e04ff75fbf6f96ea45cb4edb9ed6203a2c4750ff",
+        "size": 12401737,
+        "url": "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "v0.69.0"
     },
-    "fd": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T06:44:36Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "fd",
-            "version": "10.4.1"
-          },
-          "package": "fd",
-          "path": "packages/fd/fd_10.4.1_amd64.deb",
-          "sha256": "sha256:fa4dee2b27ea61bdd0f41716304d0a2668cec244c8dc8f0ef26967613d47907c",
-          "size": 1397558,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DE7CEF1DDFBE84\"",
-            "last_modified": "Sun, 08 Mar 2026 08:45:57 GMT",
-            "sha256": "sha256:fa4dee2b27ea61bdd0f41716304d0a2668cec244c8dc8f0ef26967613d47907c",
-            "size": 1397558,
-            "url": "https://github.com/sharkdp/fd/releases/download/v10.4.1/fd_10.4.1_amd64.deb"
-          },
-          "upstream_version": "10.4.1",
-          "version": "10.4.1"
-        }
-      ],
-      "e2e_command": [
-        "fd",
-        "--version"
-      ],
-      "package": "fd",
-      "source_file": "sources/fd.yaml",
-      "source_sha256": "sha256:a51b68c50672a76d5fe553f1b17748ab0bb0cb49f5f839325b3c68ce903e6ffd",
-      "template": "edgeapt.deb_upstream/v1"
+    {
+      "build_plan_digest": "sha256:cac75d8b417131b73f4cb4bf3b691e34a09f5ea9067aa432be673d5537711f9e",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.1.7-1",
+        "package": "doggo"
+      },
+      "path": "packages/doggo/doggo_1.1.7-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:97b6b4eb62963f63e61559edb43142ad3f6ba1a4fba3eda9fb5bae02f00750bd",
+      "size": 4724408,
+      "upstream": {
+        "etag": "\"0x8DEBA4AD9A1316F\"",
+        "last_modified": "Mon, 25 May 2026 10:46:17 GMT",
+        "sha256": "sha256:a908d045dbda977482927fd90ee1ab2020115fbf0905b93c7d6ef40d357b5392",
+        "size": 5779683,
+        "url": "https://github.com/mr-karan/doggo/releases/download/v1.1.7/doggo_1.1.7_Linux_x86_64.tar.gz"
+      },
+      "upstream_version": "v1.1.7"
     },
-    "helix": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T06:44:36Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "helix",
-            "version": "25.7.1-1"
-          },
-          "package": "helix",
-          "path": "packages/helix/helix_25.7.1-1_amd64.deb",
-          "sha256": "sha256:c9ff7ee3113f039c21c3ff31e8e2b71d1cc51a2c3e6c39face36e3cf25fe8788",
-          "size": 16947844,
-          "suites": [
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DDC60DA2180F7C\"",
-            "last_modified": "Fri, 18 Jul 2025 15:13:21 GMT",
-            "sha256": "sha256:c9ff7ee3113f039c21c3ff31e8e2b71d1cc51a2c3e6c39face36e3cf25fe8788",
-            "size": 16947844,
-            "url": "https://github.com/helix-editor/helix/releases/download/25.07.1/helix_25.7.1-1_amd64.deb"
-          },
-          "upstream_version": "25.7.1-1",
-          "version": "25.7.1-1"
-        }
-      ],
-      "e2e_command": [
-        "hx",
-        "--version"
-      ],
-      "package": "helix",
-      "source_file": "sources/helix.yaml",
-      "source_sha256": "sha256:a2c9c3bcc056b932c9b9ce580666672304091b194dceef62cdc49e3bd6f106e9",
-      "template": "edgeapt.deb_upstream/v1"
+    {
+      "build_plan_digest": "sha256:0318b671703136726e7b3736430189f89ada45e48b64f08a1e6830e8b1f94b1f",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.2.0-1",
+        "package": "doggo"
+      },
+      "path": "packages/doggo/doggo_1.2.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:d8b77be54b6239e0a4e3d9758e30a7d6a978f0474db2554989f835f40736c348",
+      "size": 4725882,
+      "upstream": {
+        "etag": "\"0x8DED0F753DA9488\"",
+        "last_modified": "Tue, 23 Jun 2026 07:16:21 GMT",
+        "sha256": "sha256:aa6760e7f163958e7626420447385ab938fdc127983edaceb121f809bd3e2bca",
+        "size": 5781657,
+        "url": "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-linux-x86_64.tar.gz"
+      },
+      "upstream_version": "v1.2.0"
     },
-    "hello": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T06:44:36Z",
-          "package": "edgeapt-hello",
-          "path": "packages/hello/edgeapt-hello_0.1.0-1_amd64.deb",
-          "revision": 1,
-          "sha256": "sha256:876fe78dedecc156bf938428bf23f3e0d21d4af19766b60c58c8949b5f8c101a",
-          "size": 608,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "sha256": "sha256:74443048b52bf2be3b0f003a8f37592551d316c6c7c28b1a110ee6f879ef4130",
-            "size": 39,
-            "url": "tests/fixtures/hello-world"
-          },
-          "upstream_version": "v0.1.0",
-          "version": "0.1.0-1"
-        }
-      ],
-      "e2e_command": [
-        "edgeapt-hello"
-      ],
-      "package": "edgeapt-hello",
-      "source_file": "sources/hello.yaml",
-      "source_sha256": "sha256:f21214559cd8a145d35bf4e08fe674701edd4a2b08c2d53cc61951e46e7ca30d",
-      "template": "edgeapt.single_binary/v1"
+    {
+      "build_plan_digest": "sha256:3ea32584477a1aab0c4b533066d04e1401d7c42fbfb35b6a0a14e6ef87958127",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello"
+      },
+      "path": "packages/edgeapt-hello/edgeapt-hello_0.1.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:876fe78dedecc156bf938428bf23f3e0d21d4af19766b60c58c8949b5f8c101a",
+      "size": 608,
+      "upstream": {
+        "sha256": "sha256:74443048b52bf2be3b0f003a8f37592551d316c6c7c28b1a110ee6f879ef4130",
+        "size": 39,
+        "url": "tests/fixtures/hello-world"
+      },
+      "upstream_version": "v0.1.0"
     },
-    "mihomo": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T08:36:07Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "mihomo",
-            "version": "1.19.28"
-          },
-          "package": "mihomo",
-          "path": "packages/mihomo/mihomo_1.19.28_amd64.deb",
-          "sha256": "sha256:8b3341e8d3341a6d96d7c8289c05f06ef9e3331ecb82f6ecc515932409730a90",
-          "size": 17992832,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DEDC88B0081895\"",
-            "last_modified": "Wed, 08 Jul 2026 00:34:36 GMT",
-            "sha256": "sha256:8b3341e8d3341a6d96d7c8289c05f06ef9e3331ecb82f6ecc515932409730a90",
-            "size": 17992832,
-            "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v3-v1.19.28.deb"
-          },
-          "upstream_version": "1.19.28",
-          "version": "1.19.28"
-        }
-      ],
-      "e2e_command": [
-        "mihomo",
-        "-v"
-      ],
-      "package": "mihomo",
-      "source_file": "sources/mihomo.yaml",
-      "source_sha256": "sha256:a65ceb8a3257a66bc9be4f1b016f25b538e600b69b9a6ca4f41e6e19363edec6",
-      "template": "edgeapt.deb_upstream/v1"
+    {
+      "build_plan_digest": "sha256:213a0880fcd6e70c4fc77ec8280e44fa4426e08deeee76225a112e6bf42595aa",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "fd",
+        "version": "10.4.1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "10.4.1",
+        "package": "fd"
+      },
+      "path": "packages/fd/fd_10.4.1_amd64.deb",
+      "sha256": "sha256:fa4dee2b27ea61bdd0f41716304d0a2668cec244c8dc8f0ef26967613d47907c",
+      "size": 1397558,
+      "upstream": {
+        "etag": "\"0x8DE7CEF1DDFBE84\"",
+        "last_modified": "Sun, 08 Mar 2026 08:45:57 GMT",
+        "sha256": "sha256:fa4dee2b27ea61bdd0f41716304d0a2668cec244c8dc8f0ef26967613d47907c",
+        "size": 1397558,
+        "url": "https://github.com/sharkdp/fd/releases/download/v10.4.1/fd_10.4.1_amd64.deb"
+      },
+      "upstream_version": "10.4.1"
     },
-    "yazi": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T08:41:19Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "yazi",
-            "version": "26.5.6-1"
-          },
-          "package": "yazi",
-          "path": "packages/yazi/yazi_26.5.6-1_amd64.deb",
-          "sha256": "sha256:51ed35d7be4e9a33aa4d8a983849395bd38377cd0e03e8e7b96b3f0557c6cfad",
-          "size": 7281040,
-          "suites": [
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DEAAD3D8812D50\"",
-            "last_modified": "Tue, 05 May 2026 18:26:38 GMT",
-            "sha256": "sha256:51ed35d7be4e9a33aa4d8a983849395bd38377cd0e03e8e7b96b3f0557c6cfad",
-            "size": 7281040,
-            "url": "https://github.com/sxyazi/yazi/releases/download/v26.5.6/yazi-x86_64-unknown-linux-gnu.deb"
-          },
-          "upstream_version": "26.5.6-1",
-          "version": "26.5.6-1"
-        }
-      ],
-      "e2e_command": [
-        "yazi",
-        "--version"
-      ],
-      "package": "yazi",
-      "source_file": "sources/yazi.yaml",
-      "source_sha256": "sha256:5efc18570dbf07efd943bb37528035c3d92d455c55956e49c43e3c232e12acef",
-      "template": "edgeapt.deb_upstream/v1"
+    {
+      "build_plan_digest": "sha256:7edb912cf29a60c3a1bd49a0b3ef1c2d738fbdd3bf26157d1d09101a742b0853",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "helix",
+        "version": "25.7.1-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "25.7.1-1",
+        "package": "helix"
+      },
+      "path": "packages/helix/helix_25.7.1-1_amd64.deb",
+      "sha256": "sha256:c9ff7ee3113f039c21c3ff31e8e2b71d1cc51a2c3e6c39face36e3cf25fe8788",
+      "size": 16947844,
+      "upstream": {
+        "etag": "\"0x8DDC60DA2180F7C\"",
+        "last_modified": "Fri, 18 Jul 2025 15:13:21 GMT",
+        "sha256": "sha256:c9ff7ee3113f039c21c3ff31e8e2b71d1cc51a2c3e6c39face36e3cf25fe8788",
+        "size": 16947844,
+        "url": "https://github.com/helix-editor/helix/releases/download/25.07.1/helix_25.7.1-1_amd64.deb"
+      },
+      "upstream_version": "25.7.1-1"
     },
-    "yq": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T07:26:48Z",
-          "package": "yq",
-          "path": "packages/yq/yq_4.53.3-1_amd64.deb",
-          "revision": 1,
-          "sha256": "sha256:e3acfc7666192cacef177fcb1cd80bbea034ba87008ea5f9cb56fbcb7614f629",
-          "size": 4562602,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DEC3BD5BDF69CD\"",
-            "last_modified": "Sat, 06 Jun 2026 11:18:39 GMT",
-            "sha256": "sha256:fa52a4e758c63d38299163fbdd1edfb4c4963247918bf9c1c5d31d84789eded4",
-            "size": 13750434,
-            "url": "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
-          },
-          "upstream_version": "v4.53.3",
-          "version": "4.53.3-1"
-        }
-      ],
-      "e2e_command": [
-        "yq",
-        "--version"
-      ],
-      "package": "yq",
-      "source_file": "sources/yq.yaml",
-      "source_sha256": "sha256:2e9489c8c59bbe707d59235acc944768791d88e04e5bc124ebfa7ed311fb075d",
-      "template": "edgeapt.single_binary/v1"
+    {
+      "build_plan_digest": "sha256:90976c80e68676ae9385e4eabbaeb02c6d828bde2a01fcc3b32725b25b5d958e",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "mihomo",
+        "version": "1.19.28"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.19.28",
+        "package": "mihomo"
+      },
+      "path": "packages/mihomo/mihomo_1.19.28_amd64.deb",
+      "sha256": "sha256:8b3341e8d3341a6d96d7c8289c05f06ef9e3331ecb82f6ecc515932409730a90",
+      "size": 17992832,
+      "upstream": {
+        "etag": "\"0x8DEDC88B0081895\"",
+        "last_modified": "Wed, 08 Jul 2026 00:34:36 GMT",
+        "sha256": "sha256:8b3341e8d3341a6d96d7c8289c05f06ef9e3331ecb82f6ecc515932409730a90",
+        "size": 17992832,
+        "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v3-v1.19.28.deb"
+      },
+      "upstream_version": "1.19.28"
     },
-    "zoxide": {
-      "artifacts": [
-        {
-          "arch": "amd64",
-          "created_at": "2026-07-09T07:20:52Z",
-          "deb_control": {
-            "architecture": "amd64",
-            "package": "zoxide",
-            "version": "0.10.0-1"
-          },
-          "package": "zoxide",
-          "path": "packages/zoxide/zoxide_0.10.0-1_amd64.deb",
-          "sha256": "sha256:975880c327a8bf4e31e8596313243a4ae342f16afa9bb7d78a6e641bd8cc9dba",
-          "size": 481904,
-          "suites": [
-            "focal",
-            "jammy",
-            "noble",
-            "resolute"
-          ],
-          "upstream": {
-            "etag": "\"0x8DED9C8A8D95730\"",
-            "last_modified": "Sat, 04 Jul 2026 12:34:58 GMT",
-            "sha256": "sha256:975880c327a8bf4e31e8596313243a4ae342f16afa9bb7d78a6e641bd8cc9dba",
-            "size": 481904,
-            "url": "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide_0.10.0-1_amd64.deb"
-          },
-          "upstream_version": "0.10.0-1",
-          "version": "0.10.0-1"
-        }
-      ],
-      "e2e_command": [
-        "zoxide",
-        "--version"
-      ],
-      "package": "zoxide",
-      "source_file": "sources/zoxide.yaml",
-      "source_sha256": "sha256:c39c7c9ffee27fb042cfff065bf24b141c0d7b4ba48128f8b6fe92bbf0e04a17",
-      "template": "edgeapt.deb_upstream/v1"
+    {
+      "build_plan_digest": "sha256:16cf88a5cebf1910328ca842d61a0275fb95ebc94c6f3b439153651cbab3d530",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "yazi",
+        "version": "26.5.6-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "26.5.6-1",
+        "package": "yazi"
+      },
+      "path": "packages/yazi/yazi_26.5.6-1_amd64.deb",
+      "sha256": "sha256:51ed35d7be4e9a33aa4d8a983849395bd38377cd0e03e8e7b96b3f0557c6cfad",
+      "size": 7281040,
+      "upstream": {
+        "etag": "\"0x8DEAAD3D8812D50\"",
+        "last_modified": "Tue, 05 May 2026 18:26:38 GMT",
+        "sha256": "sha256:51ed35d7be4e9a33aa4d8a983849395bd38377cd0e03e8e7b96b3f0557c6cfad",
+        "size": 7281040,
+        "url": "https://github.com/sxyazi/yazi/releases/download/v26.5.6/yazi-x86_64-unknown-linux-gnu.deb"
+      },
+      "upstream_version": "26.5.6-1"
+    },
+    {
+      "build_plan_digest": "sha256:fb00d52997ebd949e8a11854bb668996f62017933fdaf130cbf2c0f682283f7f",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "4.53.3-1",
+        "package": "yq"
+      },
+      "path": "packages/yq/yq_4.53.3-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:e3acfc7666192cacef177fcb1cd80bbea034ba87008ea5f9cb56fbcb7614f629",
+      "size": 4562602,
+      "upstream": {
+        "etag": "\"0x8DEC3BD5BDF69CD\"",
+        "last_modified": "Sat, 06 Jun 2026 11:18:39 GMT",
+        "sha256": "sha256:fa52a4e758c63d38299163fbdd1edfb4c4963247918bf9c1c5d31d84789eded4",
+        "size": 13750434,
+        "url": "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
+      },
+      "upstream_version": "v4.53.3"
+    },
+    {
+      "build_plan_digest": "sha256:6e7083d567abc5249a99f2ddbb84f0dc38a5cad15aad76224282ba07e6b2f994",
+      "created_at": "2026-07-10T14:45:14Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "zoxide",
+        "version": "0.10.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide"
+      },
+      "path": "packages/zoxide/zoxide_0.10.0-1_amd64.deb",
+      "sha256": "sha256:975880c327a8bf4e31e8596313243a4ae342f16afa9bb7d78a6e641bd8cc9dba",
+      "size": 481904,
+      "upstream": {
+        "etag": "\"0x8DED9C8A8D95730\"",
+        "last_modified": "Sat, 04 Jul 2026 12:34:58 GMT",
+        "sha256": "sha256:975880c327a8bf4e31e8596313243a4ae342f16afa9bb7d78a6e641bd8cc9dba",
+        "size": 481904,
+        "url": "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide_0.10.0-1_amd64.deb"
+      },
+      "upstream_version": "0.10.0-1"
     }
-  }
+  ],
+  "generated_at": "2026-07-10T14:59:56Z",
+  "plan_digest": "sha256:f0bbd236cd394b4b4febfc639e800bfdbb903745b04a7de9f4b246ba5f1f5c94",
+  "publications": [
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.25.0",
+        "package": "bat"
+      },
+      "e2e_commands": [
+        [
+          "bat",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.25.0",
+        "package": "bat",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/bat.yaml",
+          "source_id": "bat",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.47.1",
+        "package": "chezmoi"
+      },
+      "e2e_commands": [
+        [
+          "chezmoi",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.47.1",
+        "package": "chezmoi",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/chezmoi.yaml",
+          "source_id": "chezmoi",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.1.7-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.1.7-1",
+        "package": "doggo",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.2.0-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 1
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello"
+      },
+      "e2e_commands": [
+        [
+          "edgeapt-hello"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/hello.yaml",
+          "source_id": "hello",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.1",
+        "package": "fd"
+      },
+      "e2e_commands": [
+        [
+          "fd",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/fd.yaml",
+          "source_id": "fd",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.28",
+        "package": "mihomo"
+      },
+      "e2e_commands": [
+        [
+          "mihomo",
+          "-v"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/mihomo.yaml",
+          "source_id": "mihomo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "4.53.3-1",
+        "package": "yq"
+      },
+      "e2e_commands": [
+        [
+          "yq",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.53.3-1",
+        "package": "yq",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/yq.yaml",
+          "source_id": "yq",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide"
+      },
+      "e2e_commands": [
+        [
+          "zoxide",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide",
+        "suite": "focal"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/zoxide.yaml",
+          "source_id": "zoxide",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.25.0",
+        "package": "bat"
+      },
+      "e2e_commands": [
+        [
+          "bat",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.25.0",
+        "package": "bat",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/bat.yaml",
+          "source_id": "bat",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.71.0",
+        "package": "chezmoi"
+      },
+      "e2e_commands": [
+        [
+          "chezmoi",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.71.0",
+        "package": "chezmoi",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/chezmoi.yaml",
+          "source_id": "chezmoi",
+          "upstream_index": 1
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.69.0-1",
+        "package": "difftastic"
+      },
+      "e2e_commands": [
+        [
+          "difft",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.69.0-1",
+        "package": "difftastic",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/difftastic.yaml",
+          "source_id": "difftastic",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.1.7-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.1.7-1",
+        "package": "doggo",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.2.0-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 1
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello"
+      },
+      "e2e_commands": [
+        [
+          "edgeapt-hello"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/hello.yaml",
+          "source_id": "hello",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.1",
+        "package": "fd"
+      },
+      "e2e_commands": [
+        [
+          "fd",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/fd.yaml",
+          "source_id": "fd",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "25.7.1-1",
+        "package": "helix"
+      },
+      "e2e_commands": [
+        [
+          "hx",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "25.7.1-1",
+        "package": "helix",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/helix.yaml",
+          "source_id": "helix",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.28",
+        "package": "mihomo"
+      },
+      "e2e_commands": [
+        [
+          "mihomo",
+          "-v"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/mihomo.yaml",
+          "source_id": "mihomo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "4.53.3-1",
+        "package": "yq"
+      },
+      "e2e_commands": [
+        [
+          "yq",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.53.3-1",
+        "package": "yq",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/yq.yaml",
+          "source_id": "yq",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide"
+      },
+      "e2e_commands": [
+        [
+          "zoxide",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide",
+        "suite": "jammy"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/zoxide.yaml",
+          "source_id": "zoxide",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.25.0",
+        "package": "bat"
+      },
+      "e2e_commands": [
+        [
+          "bat",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.25.0",
+        "package": "bat",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/bat.yaml",
+          "source_id": "bat",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.71.0",
+        "package": "chezmoi"
+      },
+      "e2e_commands": [
+        [
+          "chezmoi",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.71.0",
+        "package": "chezmoi",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/chezmoi.yaml",
+          "source_id": "chezmoi",
+          "upstream_index": 1
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.69.0-1",
+        "package": "difftastic"
+      },
+      "e2e_commands": [
+        [
+          "difft",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.69.0-1",
+        "package": "difftastic",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/difftastic.yaml",
+          "source_id": "difftastic",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.1.7-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.1.7-1",
+        "package": "doggo",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.2.0-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 1
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello"
+      },
+      "e2e_commands": [
+        [
+          "edgeapt-hello"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/hello.yaml",
+          "source_id": "hello",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.1",
+        "package": "fd"
+      },
+      "e2e_commands": [
+        [
+          "fd",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/fd.yaml",
+          "source_id": "fd",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "25.7.1-1",
+        "package": "helix"
+      },
+      "e2e_commands": [
+        [
+          "hx",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "25.7.1-1",
+        "package": "helix",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/helix.yaml",
+          "source_id": "helix",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.28",
+        "package": "mihomo"
+      },
+      "e2e_commands": [
+        [
+          "mihomo",
+          "-v"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/mihomo.yaml",
+          "source_id": "mihomo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "26.5.6-1",
+        "package": "yazi"
+      },
+      "e2e_commands": [
+        [
+          "yazi",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "26.5.6-1",
+        "package": "yazi",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/yazi.yaml",
+          "source_id": "yazi",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "4.53.3-1",
+        "package": "yq"
+      },
+      "e2e_commands": [
+        [
+          "yq",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.53.3-1",
+        "package": "yq",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/yq.yaml",
+          "source_id": "yq",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide"
+      },
+      "e2e_commands": [
+        [
+          "zoxide",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide",
+        "suite": "noble"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/zoxide.yaml",
+          "source_id": "zoxide",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.25.0",
+        "package": "bat"
+      },
+      "e2e_commands": [
+        [
+          "bat",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.25.0",
+        "package": "bat",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/bat.yaml",
+          "source_id": "bat",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.71.0",
+        "package": "chezmoi"
+      },
+      "e2e_commands": [
+        [
+          "chezmoi",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.71.0",
+        "package": "chezmoi",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/chezmoi.yaml",
+          "source_id": "chezmoi",
+          "upstream_index": 1
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.69.0-1",
+        "package": "difftastic"
+      },
+      "e2e_commands": [
+        [
+          "difft",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.69.0-1",
+        "package": "difftastic",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/difftastic.yaml",
+          "source_id": "difftastic",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.1.7-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.1.7-1",
+        "package": "doggo",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.2.0-1",
+        "package": "doggo"
+      },
+      "e2e_commands": [
+        [
+          "doggo",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/doggo.yaml",
+          "source_id": "doggo",
+          "upstream_index": 1
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello"
+      },
+      "e2e_commands": [
+        [
+          "edgeapt-hello"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.1.0-1",
+        "package": "edgeapt-hello",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/hello.yaml",
+          "source_id": "hello",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.1",
+        "package": "fd"
+      },
+      "e2e_commands": [
+        [
+          "fd",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/fd.yaml",
+          "source_id": "fd",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "25.7.1-1",
+        "package": "helix"
+      },
+      "e2e_commands": [
+        [
+          "hx",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "25.7.1-1",
+        "package": "helix",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/helix.yaml",
+          "source_id": "helix",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.28",
+        "package": "mihomo"
+      },
+      "e2e_commands": [
+        [
+          "mihomo",
+          "-v"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/mihomo.yaml",
+          "source_id": "mihomo",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "26.5.6-1",
+        "package": "yazi"
+      },
+      "e2e_commands": [
+        [
+          "yazi",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "26.5.6-1",
+        "package": "yazi",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/yazi.yaml",
+          "source_id": "yazi",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "4.53.3-1",
+        "package": "yq"
+      },
+      "e2e_commands": [
+        [
+          "yq",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.53.3-1",
+        "package": "yq",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/yq.yaml",
+          "source_id": "yq",
+          "upstream_index": 0
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide"
+      },
+      "e2e_commands": [
+        [
+          "zoxide",
+          "--version"
+        ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.10.0-1",
+        "package": "zoxide",
+        "suite": "resolute"
+      },
+      "provenance": [
+        {
+          "source_file": "sources/zoxide.yaml",
+          "source_id": "zoxide",
+          "upstream_index": 0
+        }
+      ]
+    }
+  ],
+  "schema": "edgeapt.lock/v2"
 }

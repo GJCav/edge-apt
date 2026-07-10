@@ -12,7 +12,7 @@ import attrs
 
 from edgeapt.constants import ROOT
 from edgeapt.errors import ValidationError
-from edgeapt.models import UpstreamConfig, UpstreamFact
+from edgeapt.models import FetchSpec, UpstreamFact
 from edgeapt.util import file_size, sha256_file
 
 
@@ -22,34 +22,39 @@ class DownloadResult:
     fact: UpstreamFact
 
 
-def fetch_upstream(upstream: UpstreamConfig, destination: Path) -> DownloadResult:
+def fetch_upstream(
+    fetch: FetchSpec,
+    destination: Path,
+    *,
+    root: Path = ROOT,
+) -> DownloadResult:
     destination.parent.mkdir(parents=True, exist_ok=True)
     headers = Message()
-    parsed = urlparse(upstream.url)
+    parsed = urlparse(fetch.url)
     if parsed.scheme in {"http", "https"}:
-        with urllib.request.urlopen(upstream.url) as response:
+        with urllib.request.urlopen(fetch.url) as response:
             destination.write_bytes(response.read())
             headers = response.headers
     elif parsed.scheme == "file":
         shutil.copy2(Path(parsed.path), destination)
     elif parsed.scheme == "":
-        source_path = Path(upstream.url)
+        source_path = Path(fetch.url)
         if not source_path.is_absolute():
-            source_path = ROOT / source_path
+            source_path = root / source_path
         shutil.copy2(source_path, destination)
     else:
-        raise ValidationError(f"unsupported URL scheme: {upstream.url}")
+        raise ValidationError(f"unsupported URL scheme: {fetch.url}")
 
     digest = sha256_file(destination)
-    if upstream.sha256 is not None and upstream.sha256 != digest:
+    if fetch.sha256 is not None and fetch.sha256 != digest:
         raise ValidationError(
-            f"sha256 mismatch for {upstream.url}: expected {upstream.sha256}, got {digest}"
+            f"sha256 mismatch for {fetch.url}: expected {fetch.sha256}, got {digest}"
         )
 
     return DownloadResult(
         path=destination,
         fact=UpstreamFact(
-            url=upstream.url,
+            url=fetch.url,
             sha256=digest,
             size=file_size(destination),
             etag=headers.get("ETag"),
@@ -58,28 +63,32 @@ def fetch_upstream(upstream: UpstreamConfig, destination: Path) -> DownloadResul
     )
 
 
-def prepare_single_binary(downloaded: Path, upstream: UpstreamConfig, work_dir: Path) -> Path:
-    if upstream.extract_path is None:
+def prepare_single_binary(
+    downloaded: Path,
+    extract_path: str | None,
+    work_dir: Path,
+) -> Path:
+    if extract_path is None:
         return downloaded
 
     extract_dir = work_dir / "extract"
     if extract_dir.exists():
         shutil.rmtree(extract_dir)
     extract_dir.mkdir(parents=True, exist_ok=True)
-    candidate = _safe_extract_path(extract_dir, upstream.extract_path)
+    candidate = _safe_extract_path(extract_dir, extract_path)
     if tarfile.is_tarfile(downloaded):
         with tarfile.open(downloaded) as archive:
             archive.extractall(extract_dir, filter="data")
     elif zipfile.is_zipfile(downloaded):
         with zipfile.ZipFile(downloaded) as archive:
             try:
-                info = archive.getinfo(upstream.extract_path)
+                info = archive.getinfo(extract_path)
             except KeyError as exc:
                 raise ValidationError(
-                    f"extract_path not found in archive: {upstream.extract_path}"
+                    f"extract_path not found in archive: {extract_path}"
                 ) from exc
             if info.is_dir():
-                raise ValidationError(f"extract_path is a directory: {upstream.extract_path}")
+                raise ValidationError(f"extract_path is a directory: {extract_path}")
             candidate.parent.mkdir(parents=True, exist_ok=True)
             with archive.open(info) as source, candidate.open("wb") as target:
                 shutil.copyfileobj(source, target)
@@ -87,7 +96,7 @@ def prepare_single_binary(downloaded: Path, upstream: UpstreamConfig, work_dir: 
         raise ValidationError("extract_path is only supported for tar or zip archives")
 
     if not candidate.exists() or not candidate.is_file():
-        raise ValidationError(f"extract_path not found in archive: {upstream.extract_path}")
+        raise ValidationError(f"extract_path not found in archive: {extract_path}")
     return candidate
 
 
