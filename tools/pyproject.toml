@@ -16,6 +16,7 @@ dependencies = [
 guide = "edgeapt.cli:guide_main"
 refresh-ubuntu-index = "edgeapt.cli:refresh_ubuntu_index_main"
 validate = "edgeapt.cli:validate_main"
+plan-digest = "edgeapt.cli:plan_digest_main"
 init-test-key = "edgeapt.cli:init_test_key_main"
 check-key = "edgeapt.cli:check_key_main"
 repackage = "edgeapt.cli:repackage_main"

@@ -6,6 +6,7 @@ import tempfile
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Literal
 
 import attrs
 
@@ -59,14 +60,19 @@ class PruneResult:
 @attrs.define(kw_only=True, frozen=True)
 class RepackageResult:
     lock: LockFile
+    mode: RepackageMode
     source_count: int
     build_count: int
     publication_count: int
 
 
+RepackageMode = Literal["locked", "update-lock"]
+
+
 def repackage_project(
     on_event: Callable[[RepackageEvent], None] | None = None,
     *,
+    mode: RepackageMode = "update-lock",
     project: EdgeAptProject | None = None,
 ) -> RepackageResult:
     active_project = project or create_project(ROOT)
@@ -74,6 +80,13 @@ def repackage_project(
     planning = compile_project_plan(active_project)
     plan = planning.plan
     previous_lock = load_lock(paths.lock_path)
+    if mode == "locked":
+        if previous_lock is None:
+            raise ValidationError("lock.json does not exist; run repackage --mode update-lock")
+        if previous_lock.plan_digest != plan.plan_digest:
+            raise ValidationError(
+                "sources changed since lock.json; run repackage --mode update-lock"
+            )
     previous_artifacts = (
         {artifact.deb_key: artifact for artifact in previous_lock.artifacts}
         if previous_lock is not None
@@ -99,6 +112,7 @@ def repackage_project(
             _execute_build(
                 build=build,
                 previous=previous_artifacts.get(build.deb_key),
+                locked=mode == "locked",
                 now=now,
                 on_event=on_event,
                 project=active_project,
@@ -113,17 +127,22 @@ def repackage_project(
         )
         for publication in plan.publications
     )
-    lock = LockFile(
-        schema=LOCK_SCHEMA,
-        generated_at=now,
-        plan_digest=plan.plan_digest,
-        artifacts=tuple(sorted(artifacts, key=lambda item: item.deb_key)),
-        publications=publications,
-    )
-    _emit(on_event, kind="lock_write_start", message=f"Writing {paths.lock_path}")
-    write_lock(lock, paths.lock_path)
+    if mode == "locked":
+        assert previous_lock is not None
+        lock = previous_lock
+    else:
+        lock = LockFile(
+            schema=LOCK_SCHEMA,
+            generated_at=now,
+            plan_digest=plan.plan_digest,
+            artifacts=tuple(sorted(artifacts, key=lambda item: item.deb_key)),
+            publications=publications,
+        )
+        _emit(on_event, kind="lock_write_start", message=f"Writing {paths.lock_path}")
+        write_lock(lock, paths.lock_path)
     return RepackageResult(
         lock=lock,
+        mode=mode,
         source_count=planning.source_count,
         build_count=len(plan.builds),
         publication_count=len(plan.publications),
@@ -134,6 +153,7 @@ def _execute_build(
     *,
     build: BuildUnit,
     previous: ArtifactFact | None,
+    locked: bool,
     now: str,
     on_event: Callable[[RepackageEvent], None] | None,
     project: EdgeAptProject,
@@ -246,7 +266,6 @@ def _execute_build(
     )
     actual_control = project.deb_tools.read_control(result.candidate_deb)
     _validate_candidate_control(build=build, control=actual_control)
-    _install_artifact(result.candidate_deb, artifact_abs, root=paths.root)
 
     artifact = ArtifactFact(
         deb_key=key,
@@ -254,11 +273,25 @@ def _execute_build(
         upstream_version=result.upstream_version,
         revision=result.revision,
         path=artifact_rel,
-        sha256=sha256_file(artifact_abs),
-        size=file_size(artifact_abs),
+        sha256=sha256_file(result.candidate_deb),
+        size=file_size(result.candidate_deb),
         upstream=result.upstream,
         deb_control=actual_control,
         created_at=now,
+    )
+    if locked:
+        if previous is None:
+            raise ValidationError(
+                f"artifact missing from lock for DebKey ({key.package}, "
+                f"{key.deb_version}, {key.arch}); run repackage --mode update-lock"
+            )
+        _validate_locked_artifact(expected=previous, actual=artifact)
+        artifact = previous
+    _install_artifact(
+        result.candidate_deb,
+        artifact_abs,
+        root=paths.root,
+        replace=locked,
     )
     _emit_done(
         on_event,
@@ -267,6 +300,43 @@ def _execute_build(
         url=result.upstream.url,
     )
     return artifact
+
+
+def _validate_locked_artifact(
+    *,
+    expected: ArtifactFact,
+    actual: ArtifactFact,
+) -> None:
+    expected_data = _locked_artifact_data(expected)
+    actual_data = _locked_artifact_data(actual)
+    if actual_data == expected_data:
+        return
+    key = expected.deb_key
+    differences = ", ".join(
+        field
+        for field in expected_data
+        if expected_data[field] != actual_data[field]
+    )
+    raise ValidationError(
+        f"rebuilt artifact does not match lock for DebKey ({key.package}, "
+        f"{key.deb_version}, {key.arch}): {differences}"
+    )
+
+
+def _locked_artifact_data(artifact: ArtifactFact) -> dict[str, object]:
+    return {
+        "deb_key": artifact.deb_key,
+        "build_plan_digest": artifact.build_plan_digest,
+        "upstream_version": artifact.upstream_version,
+        "revision": artifact.revision,
+        "path": artifact.path,
+        "sha256": artifact.sha256,
+        "size": artifact.size,
+        "upstream_url": artifact.upstream.url,
+        "upstream_sha256": artifact.upstream.sha256,
+        "upstream_size": artifact.upstream.size,
+        "deb_control": artifact.deb_control,
+    }
 
 
 def _validate_candidate_control(
@@ -428,18 +498,28 @@ def _emit(
     )
 
 
-def _install_artifact(candidate: Path, destination: Path, *, root: Path) -> None:
+def _install_artifact(
+    candidate: Path,
+    destination: Path,
+    *,
+    root: Path,
+    replace: bool = False,
+) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     if destination.exists():
         existing = sha256_file(destination)
         incoming = sha256_file(candidate)
         if existing != incoming:
-            rel = relative_to_root(destination, root)
-            raise ValidationError(
-                f"artifact already exists with different content: {rel}; "
-                "use a different deb_version"
-            )
-        return
+            if replace:
+                destination.unlink()
+            else:
+                rel = relative_to_root(destination, root)
+                raise ValidationError(
+                    f"artifact already exists with different content: {rel}; "
+                    "use a different deb_version"
+                )
+        else:
+            return
     descriptor, temporary_name = tempfile.mkstemp(
         dir=destination.parent,
         prefix=f".{destination.name}.",

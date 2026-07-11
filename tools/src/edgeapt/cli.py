@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
 import cyclopts
 from rich.console import Console
@@ -32,6 +32,7 @@ from edgeapt.workflows.repackage import (
     RepackageEvent,
 )
 from edgeapt.workflows.validate import validate_project
+from edgeapt.workflows.planning import compile_project_plan
 
 console = Console()
 PROJECT = create_project(ROOT)
@@ -47,14 +48,14 @@ def guide() -> None:
     table.add_row("Test", "Key", "uv run check-key --profile test")
     table.add_row("Test", "Index", "uv run refresh-ubuntu-index")
     table.add_row("Test", "Validate", "uv run validate")
-    table.add_row("Test", "Repackage", "uv run repackage")
+    table.add_row("Test", "Repackage", "uv run repackage --mode update-lock")
     table.add_row("Test", "Generate", "uv run generate --profile test")
     table.add_row("Test", "Verify", "uv run e2e")
     table.add_section()
     table.add_row("Prod", "Key", "uv run check-key --profile prod")
     table.add_row("Prod", "Index", "uv run refresh-ubuntu-index")
     table.add_row("Prod", "Validate", "uv run validate")
-    table.add_row("Prod", "Repackage", "uv run repackage")
+    table.add_row("Prod", "Repackage", "uv run repackage --mode locked")
     table.add_row("Prod", "Generate", "uv run generate --profile prod")
     table.add_row("Prod", "Deploy", "uv run deploy")
     console.print(table)
@@ -89,6 +90,11 @@ def validate(skip_ubuntu_conflicts: bool = False) -> None:
         f"{len(plan.builds)} build(s), "
         f"{len(plan.publications)} publication(s).[/green]"
     )
+
+
+def plan_digest() -> None:
+    """Print the canonical repository plan digest for automation."""
+    print(compile_project_plan(PROJECT).plan.plan_digest)
 
 
 def refresh_ubuntu_index() -> None:
@@ -155,6 +161,7 @@ def check_key(profile: str = "test") -> None:
 
 
 def repackage(
+    mode: Literal["locked", "update-lock"] = "update-lock",
     prune: bool = False,
     dry_run: Annotated[bool, cyclopts.Parameter(alias="-n")] = False,
 ) -> None:
@@ -194,11 +201,14 @@ def repackage(
             else:
                 progress.update(task_id, description=event.message)
 
-        result = repackage_project(on_event=on_event, project=PROJECT)
+        result = repackage_project(on_event=on_event, mode=mode, project=PROJECT)
         progress.update(task_id, description="Repackaging complete")
 
     artifact_count = len(result.lock.artifacts)
-    console.print(f"[green]Wrote {LOCK_PATH}[/green]")
+    if result.mode == "locked":
+        console.print(f"[green]Verified {LOCK_PATH}[/green]")
+    else:
+        console.print(f"[green]Wrote {LOCK_PATH}[/green]")
     console.print(
         f"[green]Processed {result.source_count} source(s), "
         f"{artifact_count} artifact(s).[/green]"
@@ -376,6 +386,10 @@ def guide_main() -> None:
 
 def validate_main() -> None:
     _run_cli(validate)
+
+
+def plan_digest_main() -> None:
+    _run_cli(plan_digest)
 
 
 def refresh_ubuntu_index_main() -> None:
