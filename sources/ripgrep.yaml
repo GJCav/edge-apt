@@ -1,0 +1,14 @@
+template: edgeapt.deb_upstream/v1
+id: ripgrep
+package: ripgrep
+e2e_commands:
+  - [rg, --version]
+allow_ubuntu_package_override: true
+override_reason: "Use the latest upstream ripgrep release instead of the Ubuntu packaged version."
+
+upstream:
+  - version: 15.1.0-1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb"
+    sha256: "sha256:62ce186675c71edbc7c48a67dc36f986974551354d6ce63726adc2d85aad802c"

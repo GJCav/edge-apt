@@ -460,6 +460,57 @@
       "upstream_version": "1.74.4"
     },
     {
+      "build_plan_digest": "sha256:aa981b10269665f13b7ba5ef51ea19dc20ff5ced2b35d26baa7a23445fdf9cf6",
+      "created_at": "2026-07-11T14:00:09Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "ripgrep",
+        "version": "15.1.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep"
+      },
+      "path": "packages/ripgrep/ripgrep_15.1.0-1_amd64.deb",
+      "sha256": "sha256:62ce186675c71edbc7c48a67dc36f986974551354d6ce63726adc2d85aad802c",
+      "size": 1704160,
+      "upstream": {
+        "etag": "\"0x8DE116851E76E72\"",
+        "last_modified": "Wed, 22 Oct 2025 12:41:28 GMT",
+        "sha256": "sha256:62ce186675c71edbc7c48a67dc36f986974551354d6ce63726adc2d85aad802c",
+        "size": 1704160,
+        "url": "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb"
+      },
+      "upstream_version": "15.1.0-1"
+    },
+    {
+      "build_plan_digest": "sha256:a64e354481e9cb82f1199fe3a5b83e6768990052d9be8da6893b6091fb87c211",
+      "created_at": "2026-07-11T13:56:59Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "tokei-musl",
+        "version": "14.0.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl"
+      },
+      "path": "packages/tokei-musl/tokei-musl_14.0.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:79570fcce5abd9f509b28811ea0ac3cb0b687e13938959b5d4f7ef9519c5d28b",
+      "size": 1295660,
+      "upstream": {
+        "etag": "\"0x8DE47D901926B6C\"",
+        "last_modified": "Tue, 30 Dec 2025 19:24:09 GMT",
+        "sha256": "sha256:88b120d91185aae4b5de80cf4a32b5da6a74f179b6a68528074ad6320b69b25f",
+        "size": 1566592,
+        "url": "https://github.com/cargo-bins/cargo-quickinstall/releases/download/tokei-14.0.0/tokei-14.0.0-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v14.0.0"
+    },
+    {
       "build_plan_digest": "sha256:182b162977358b21a9bf5de7cfad1674ee3dae574a0fedf525d7f9850d855710",
       "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
@@ -588,8 +639,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-11T13:44:47Z",
-  "plan_digest": "sha256:adb0a8f6ad981e8cf69c94663e50adb2eaba4ad2765a1346456161c017f44b88",
+  "generated_at": "2026-07-11T14:00:09Z",
+  "plan_digest": "sha256:3892ef536ef36d88220bf7ed63e7e2ced37ea3f58575a4c9a321a7a3004391d7",
   "publications": [
     {
       "artifact": {
@@ -964,6 +1015,64 @@
         "component": "main",
         "deb_version": "1.74.4",
         "package": "rclone",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl",
         "suite": "focal"
       }
     },
@@ -1543,6 +1652,64 @@
         "component": "main",
         "deb_version": "1.74.4",
         "package": "rclone",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl",
         "suite": "jammy"
       }
     },
@@ -2155,6 +2322,64 @@
         "component": "main",
         "deb_version": "1.74.4",
         "package": "rclone",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl",
         "suite": "noble"
       }
     },
@@ -2796,6 +3021,64 @@
         "component": "main",
         "deb_version": "1.74.4",
         "package": "rclone",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.1.0-1",
+        "package": "ripgrep",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "14.0.0-1",
+        "package": "tokei-musl",
         "suite": "resolute"
       }
     },

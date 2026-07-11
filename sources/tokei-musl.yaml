@@ -1,0 +1,20 @@
+template: edgeapt.single_binary/v1
+id: tokei-musl
+package: tokei-musl
+e2e_commands:
+  - [tokei, --version]
+
+repackage:
+  install_path: /usr/bin/tokei
+  metadata:
+    description: "Count code quickly and accurately (musl build)."
+    homepage: "https://github.com/XAMPPRocky/tokei"
+
+upstream:
+  - version: v14.0.0
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/cargo-bins/cargo-quickinstall/releases/download/tokei-14.0.0/tokei-14.0.0-x86_64-unknown-linux-musl.tar.gz"
+    sha256: "sha256:88b120d91185aae4b5de80cf4a32b5da6a74f179b6a68528074ad6320b69b25f"
+    extract_path: tokei
