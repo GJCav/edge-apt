@@ -1,0 +1,13 @@
+template: edgeapt.deb_upstream/v1
+id: ov
+package: ov
+e2e_commands:
+  - [ov, --version]
+allow_ubuntu_package_override: false
+
+upstream:
+  - version: 1:0.53.0
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/noborus/ov/releases/download/v0.53.0/ov_0.53.0_amd64.deb"
+    sha256: "sha256:bd1c4a2103d90182ae242798fdd2f0f271077c63a68bfe7aeb89fa18f0b10d22"

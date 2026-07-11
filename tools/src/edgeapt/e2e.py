@@ -32,7 +32,8 @@ from edgeapt.domain.artifacts import ArtifactFact
 from edgeapt.domain.lock import LockFile
 from edgeapt.infrastructure.lock_store import load_lock
 from edgeapt.infrastructure.signing import profile_public_keyring
-from edgeapt.util import require_executable
+from edgeapt.package_manifest import PACKAGE_MANIFEST_SCHEMA
+from edgeapt.util import read_json, require_executable
 
 E2E_SUITE_IMAGES = {
     "focal": "ubuntu:20.04",
@@ -119,6 +120,7 @@ def run_e2e(
     lock = load_lock(LOCK_PATH)
     if lock is None:
         raise ValidationError("lock.json does not exist; run `uv run repackage` first")
+    validate_e2e_repository(lock, TEST_PUBLIC_DIR / "packages.json")
 
     cases = build_e2e_test_cases(
         lock,
@@ -195,6 +197,23 @@ def run_e2e(
                 lines.append(f"\n[{group.suite}/{group.arch}]\n{exc}")
             raise CommandError("\n".join(lines))
     return E2ERunResult(groups=len(groups), tested=tested, skipped=skipped)
+
+
+def validate_e2e_repository(lock: LockFile, manifest_path: Path) -> None:
+    try:
+        manifest = read_json(manifest_path)
+    except (OSError, ValueError) as error:
+        raise ValidationError(
+            "invalid test repository output; run `uv run generate --profile test`"
+        ) from error
+    if (
+        manifest.get("schema") != PACKAGE_MANIFEST_SCHEMA
+        or manifest.get("profile") != "test"
+        or manifest.get("generated_at") != lock.generated_at
+    ):
+        raise ValidationError(
+            "test repository is stale; run `uv run generate --profile test`"
+        )
 
 
 def build_e2e_test_cases(

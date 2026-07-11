@@ -1,0 +1,20 @@
+template: edgeapt.single_binary/v1
+id: argc
+package: argc
+e2e_commands:
+  - [argc, --argc-version]
+
+repackage:
+  install_path: /usr/bin/argc
+  metadata:
+    description: "A Bash CLI framework and Bash-based command runner."
+    homepage: "https://github.com/sigoden/argc"
+
+upstream:
+  - version: v1.24.0
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/sigoden/argc/releases/download/v1.24.0/argc-v1.24.0-x86_64-unknown-linux-musl.tar.gz"
+    sha256: "sha256:92e2c30ef078e0a66855b5bdd389cefa7ac6ef4c1fe0b177f3f0bf639891aa72"
+    extract_path: argc

@@ -1,0 +1,19 @@
+template: edgeapt.single_binary/v1
+id: zellij
+package: zellij
+e2e_commands:
+  - [zellij, --version]
+
+repackage:
+  install_path: /usr/bin/zellij
+  metadata:
+    description: "A terminal workspace with batteries included."
+    homepage: "https://github.com/zellij-org/zellij"
+
+upstream:
+  - version: v0.44.3
+    revision: 2
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/zellij-org/zellij/releases/download/v0.44.3/zellij-x86_64-unknown-linux-musl.tar.gz"
+    extract_path: zellij

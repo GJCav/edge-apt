@@ -1,6 +1,32 @@
 {
   "artifacts": [
     {
+      "build_plan_digest": "sha256:48b88ebb8fb6a0ec996b313f8069807d13064e7ed919e49b1f0d72841862fabd",
+      "created_at": "2026-07-11T12:37:27Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "argc",
+        "version": "1.24.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.24.0-1",
+        "package": "argc"
+      },
+      "path": "packages/argc/argc_1.24.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:3b1746c80d5f4ab7c7dc72a53ca5fccb3e8b46f82dd35f2b17d3a420e17b5a83",
+      "size": 516990,
+      "upstream": {
+        "etag": "\"0x8DEB620FE942C59\"",
+        "last_modified": "Wed, 20 May 2026 03:36:35 GMT",
+        "sha256": "sha256:92e2c30ef078e0a66855b5bdd389cefa7ac6ef4c1fe0b177f3f0bf639891aa72",
+        "size": 594541,
+        "url": "https://github.com/sigoden/argc/releases/download/v1.24.0/argc-v1.24.0-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v1.24.0"
+    },
+    {
       "build_plan_digest": "sha256:36a626c28d6dcf955d49c51083dcfa4637fbb30a1046f551131476569895b3e1",
       "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
@@ -279,6 +305,57 @@
       "upstream_version": "0.8.1"
     },
     {
+      "build_plan_digest": "sha256:2e6aa44498af321b25f936c8f540de1ad45336e07118aff8a22e78fd84d3d895",
+      "created_at": "2026-07-11T12:16:21Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "ov",
+        "version": "1:0.53.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1:0.53.0",
+        "package": "ov"
+      },
+      "path": "packages/ov/ov_1:0.53.0_amd64.deb",
+      "sha256": "sha256:bd1c4a2103d90182ae242798fdd2f0f271077c63a68bfe7aeb89fa18f0b10d22",
+      "size": 6350786,
+      "upstream": {
+        "etag": "\"0x8DEBA289FBFE241\"",
+        "last_modified": "Mon, 25 May 2026 06:41:17 GMT",
+        "sha256": "sha256:bd1c4a2103d90182ae242798fdd2f0f271077c63a68bfe7aeb89fa18f0b10d22",
+        "size": 6350786,
+        "url": "https://github.com/noborus/ov/releases/download/v0.53.0/ov_0.53.0_amd64.deb"
+      },
+      "upstream_version": "1:0.53.0"
+    },
+    {
+      "build_plan_digest": "sha256:c49133dc6f7f87263539876516a98cdc7998b58051608c6c91677c32a90ad0cd",
+      "created_at": "2026-07-11T12:10:54Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "prek",
+        "version": "0.4.9-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.4.9-1",
+        "package": "prek"
+      },
+      "path": "packages/prek/prek_0.4.9-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:55e19688475ac9efc5cdc703073d5087dcdc5c6ebed3f8144f0aee73f1427794",
+      "size": 4617460,
+      "upstream": {
+        "etag": "\"0x8DEDF3C56F94FB3\"",
+        "last_modified": "Sat, 11 Jul 2026 11:05:38 GMT",
+        "sha256": "sha256:3548b731f3fb150b31030aebb74a539f52c8feec2ad96f674904633c3a1b7d6c",
+        "size": 5967970,
+        "url": "https://github.com/j178/prek/releases/download/v0.4.9/prek-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "v0.4.9"
+    },
+    {
       "build_plan_digest": "sha256:da419172c2e6e5e166c5da67ce443b52ee0132d60227b36131d00341e4c5f773",
       "created_at": "2026-07-11T08:07:29Z",
       "deb_control": {
@@ -381,6 +458,32 @@
       "upstream_version": "v4.53.3"
     },
     {
+      "build_plan_digest": "sha256:91bb0ae6e42adddc0bfe2c2d9524b8a3ec2b58b9748c3d07731add112eaacb14",
+      "created_at": "2026-07-11T12:37:27Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "zellij",
+        "version": "0.44.3-2"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.44.3-2",
+        "package": "zellij"
+      },
+      "path": "packages/zellij/zellij_0.44.3-2_amd64.deb",
+      "revision": 2,
+      "sha256": "sha256:349b144d3875dd498b3243e400062b3894e0bb26840a1571961e448e0cf7c38f",
+      "size": 11117508,
+      "upstream": {
+        "etag": "\"0x8DEB0C5FE2854E0\"",
+        "last_modified": "Wed, 13 May 2026 08:02:35 GMT",
+        "sha256": "sha256:0f7c346788627f506c0a28296517768633cff24fc822a739f8264b640ecad751",
+        "size": 18260479,
+        "url": "https://github.com/zellij-org/zellij/releases/download/v0.44.3/zellij-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v0.44.3"
+    },
+    {
       "build_plan_digest": "sha256:6e7083d567abc5249a99f2ddbb84f0dc38a5cad15aad76224282ba07e6b2f994",
       "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
@@ -406,12 +509,41 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-11T09:20:10Z",
-  "plan_digest": "sha256:fee4ffdddeebdad884f5d7918ab85a08e4669c055cba008a6ea118bd57863eba",
+  "generated_at": "2026-07-11T12:42:33Z",
+  "plan_digest": "sha256:94d6c972a5e8992211e0cf61902dc74c4a279225e444d28db9370959298ac0f2",
   "publications": [
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.24.0-1",
+        "package": "argc"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "argc",
+              "--argc-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/argc.yaml",
+            "source_id": "argc",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.24.0-1",
+        "package": "argc",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.25.0",
         "package": "bat"
       },
@@ -614,6 +746,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.4.9-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.9-1",
+        "package": "prek",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.74.4",
         "package": "rclone"
       },
@@ -672,6 +833,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.44.3-2",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.44.3-2",
+        "package": "zellij",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.10.0-1",
         "package": "zoxide"
       },
@@ -696,6 +886,35 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide",
         "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.24.0-1",
+        "package": "argc"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "argc",
+              "--argc-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/argc.yaml",
+            "source_id": "argc",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.24.0-1",
+        "package": "argc",
+        "suite": "jammy"
       }
     },
     {
@@ -984,6 +1203,64 @@
         "component": "main",
         "deb_version": "0.8.1-1",
         "package": "ouch",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1:0.53.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.53.0",
+        "package": "ov",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.4.9-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.9-1",
+        "package": "prek",
         "suite": "jammy"
       }
     },
@@ -1081,6 +1358,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.44.3-2",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.44.3-2",
+        "package": "zellij",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.10.0-1",
         "package": "zoxide"
       },
@@ -1105,6 +1411,35 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide",
         "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.24.0-1",
+        "package": "argc"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "argc",
+              "--argc-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/argc.yaml",
+            "source_id": "argc",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.24.0-1",
+        "package": "argc",
+        "suite": "noble"
       }
     },
     {
@@ -1393,6 +1728,64 @@
         "component": "main",
         "deb_version": "0.8.1-1",
         "package": "ouch",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1:0.53.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.53.0",
+        "package": "ov",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.4.9-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.9-1",
+        "package": "prek",
         "suite": "noble"
       }
     },
@@ -1519,6 +1912,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.44.3-2",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.44.3-2",
+        "package": "zellij",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.10.0-1",
         "package": "zoxide"
       },
@@ -1543,6 +1965,35 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide",
         "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.24.0-1",
+        "package": "argc"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "argc",
+              "--argc-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/argc.yaml",
+            "source_id": "argc",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.24.0-1",
+        "package": "argc",
+        "suite": "resolute"
       }
     },
     {
@@ -1837,6 +2288,64 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1:0.53.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.53.0",
+        "package": "ov",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.4.9-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.9-1",
+        "package": "prek",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.74.4",
         "package": "rclone"
       },
@@ -1951,6 +2460,35 @@
         "component": "main",
         "deb_version": "4.53.3-1",
         "package": "yq",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.44.3-2",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.44.3-2",
+        "package": "zellij",
         "suite": "resolute"
       }
     },

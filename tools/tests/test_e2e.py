@@ -11,7 +11,10 @@ from edgeapt.e2e import docker_install_args
 from edgeapt.e2e import E2ETestCase
 from edgeapt.e2e import group_e2e_test_cases
 from edgeapt.e2e import run_e2e
+from edgeapt.e2e import validate_e2e_repository
 from edgeapt.errors import ValidationError
+from edgeapt.package_manifest import PACKAGE_MANIFEST_SCHEMA
+from edgeapt.util import write_json
 from tests.factories import make_artifact
 from tests.factories import make_deb_key
 from tests.factories import make_lock
@@ -169,6 +172,39 @@ def test_clear_e2e_apt_cache_removes_archives(
 
     assert not archive.exists()
     assert archive.parent.exists()
+
+
+def test_e2e_rejects_stale_generated_repository(tmp_path: Path) -> None:
+    lock = make_lock()
+    manifest = tmp_path / "packages.json"
+    write_json(
+        manifest,
+        {
+            "schema": PACKAGE_MANIFEST_SCHEMA,
+            "profile": "test",
+            "generated_at": "2026-07-04T00:00:00Z",
+            "packages": [],
+        },
+    )
+
+    with pytest.raises(ValidationError, match="test repository is stale"):
+        validate_e2e_repository(lock, manifest)
+
+
+def test_e2e_accepts_repository_generated_from_current_lock(tmp_path: Path) -> None:
+    lock = make_lock()
+    manifest = tmp_path / "packages.json"
+    write_json(
+        manifest,
+        {
+            "schema": PACKAGE_MANIFEST_SCHEMA,
+            "profile": "test",
+            "generated_at": lock.generated_at,
+            "packages": [],
+        },
+    )
+
+    validate_e2e_repository(lock, manifest)
 
 
 def _case() -> E2ETestCase:
