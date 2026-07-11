@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "edgeapt-test",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "../tmp/public-test",
+    "binding": "ASSETS",
+    "not_found_handling": "none"
+  }
+}

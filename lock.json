@@ -279,6 +279,31 @@
       "upstream_version": "0.8.1"
     },
     {
+      "build_plan_digest": "sha256:da419172c2e6e5e166c5da67ce443b52ee0132d60227b36131d00341e4c5f773",
+      "created_at": "2026-07-11T08:07:29Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "rclone",
+        "version": "1.74.4"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.74.4",
+        "package": "rclone"
+      },
+      "path": "packages/rclone/rclone_1.74.4_amd64.deb",
+      "sha256": "sha256:a9da2eaa70428c6dcc5acbb0b7eac0faec4c61643e0b468d9fe09ddf79b7e929",
+      "size": 30005652,
+      "upstream": {
+        "etag": "\"0x8DEDD2039FF6060\"",
+        "last_modified": "Wed, 08 Jul 2026 18:39:21 GMT",
+        "sha256": "sha256:a9da2eaa70428c6dcc5acbb0b7eac0faec4c61643e0b468d9fe09ddf79b7e929",
+        "size": 30005652,
+        "url": "https://github.com/rclone/rclone/releases/download/v1.74.4/rclone-v1.74.4-linux-amd64.deb"
+      },
+      "upstream_version": "1.74.4"
+    },
+    {
       "build_plan_digest": "sha256:182b162977358b21a9bf5de7cfad1674ee3dae574a0fedf525d7f9850d855710",
       "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
@@ -381,8 +406,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-11T03:23:51Z",
-  "plan_digest": "sha256:03144937afc5cf535e0362b7baf41756d973ac4a6c154e55306b19ea3cbc7bfa",
+  "generated_at": "2026-07-11T08:07:29Z",
+  "plan_digest": "sha256:fee4ffdddeebdad884f5d7918ab85a08e4669c055cba008a6ea118bd57863eba",
   "publications": [
     {
       "artifact": {
@@ -583,6 +608,35 @@
         "component": "main",
         "deb_version": "1.19.28",
         "package": "mihomo",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.74.4",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.74.4",
+        "package": "rclone",
         "suite": "focal"
       }
     },
@@ -930,6 +984,35 @@
         "component": "main",
         "deb_version": "0.8.1-1",
         "package": "ouch",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.74.4",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.74.4",
+        "package": "rclone",
         "suite": "jammy"
       }
     },
@@ -1310,6 +1393,35 @@
         "component": "main",
         "deb_version": "0.8.1-1",
         "package": "ouch",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.74.4",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.74.4",
+        "package": "rclone",
         "suite": "noble"
       }
     },
@@ -1719,6 +1831,35 @@
         "component": "main",
         "deb_version": "0.8.1-1",
         "package": "ouch",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.74.4",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.74.4",
+        "package": "rclone",
         "suite": "resolute"
       }
     },

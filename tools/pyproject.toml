@@ -21,6 +21,7 @@ check-key = "edgeapt.cli:check_key_main"
 repackage = "edgeapt.cli:repackage_main"
 generate = "edgeapt.cli:generate_main"
 e2e = "edgeapt.cli:e2e_main"
+deploy = "edgeapt.cli:deploy_main"
 
 [dependency-groups]
 dev = [

@@ -4,6 +4,7 @@ from pathlib import Path
 
 import attrs
 
+from edgeapt.chunked_assets import ChunkedAssetFact, split_oversized_debs
 from edgeapt.constants import (
     ROOT,
     STATIC_ASSET_SIZE_LIMIT_BYTES,
@@ -26,6 +27,7 @@ class GenerateResult:
     profile: str
     index_html: Path
     package_manifest: Path
+    chunked_assets: tuple[ChunkedAssetFact, ...]
 
 
 def generate_repository(
@@ -61,6 +63,10 @@ def generate_repository(
         output_dir=output_dir,
         signing_key=signing_key,
     )
+    chunked_assets = split_oversized_debs(
+        output_dir=output_dir,
+        staging_dir=paths.tmp_dir / "chunked-assets",
+    )
     check_static_asset_size_limit(output_dir)
     return GenerateResult(
         output_dir=output_dir,
@@ -68,6 +74,7 @@ def generate_repository(
         profile=profile,
         index_html=install_page.index_html,
         package_manifest=package_manifest,
+        chunked_assets=chunked_assets,
     )
 
 

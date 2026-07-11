@@ -45,6 +45,7 @@ def test_generate_repo_writes_signed_metadata(tmp_path: Path) -> None:
     assert release_gpg.exists()
     assert result.index_html == index_html
     assert result.package_manifest == package_manifest
+    assert result.chunked_assets == ()
     assert index_html.exists()
     assert public_ascii.exists()
     assert public_keyring.exists()

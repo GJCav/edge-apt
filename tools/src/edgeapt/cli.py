@@ -6,7 +6,6 @@ from typing import Annotated
 
 import cyclopts
 from rich.console import Console
-from rich.panel import Panel
 from rich.progress import BarColumn, Progress, TextColumn, TimeElapsedColumn
 from rich.table import Table
 
@@ -20,6 +19,7 @@ from edgeapt.constants import (
 from edgeapt.config import load_config
 from edgeapt.e2e import run_e2e, E2EEvent
 from edgeapt.errors import EdgeAptError
+from edgeapt.infrastructure.cloudflare import deploy_cloudflare
 from edgeapt.infrastructure.signing import check_signing_key, ensure_test_key
 from edgeapt.infrastructure.ubuntu_index import refresh_ubuntu_indexes
 from edgeapt.infrastructure.ubuntu_index import UbuntuIndexRefreshEvent
@@ -40,22 +40,24 @@ PROJECT = create_project(ROOT)
 def guide() -> None:
     """Show the recommended EdgeAPT workflow."""
     table = Table(title="EdgeAPT Workflow")
+    table.add_column("Profile", style="bold")
     table.add_column("Phase", style="bold")
     table.add_column("Command")
-    table.add_row("Setup", "uv run init-test-key")
-    table.add_row("Setup", "uv run check-key --profile test")
-    table.add_row("Setup", "uv run refresh-ubuntu-index")
-    table.add_row("Validate", "uv run validate")
-    table.add_row("Repackage", "uv run repackage")
-    table.add_row("Generate", "uv run generate --profile test")
-    table.add_row("Verify", "uv run e2e")
+    table.add_row("Test", "Setup", "uv run init-test-key")
+    table.add_row("Test", "Key", "uv run check-key --profile test")
+    table.add_row("Test", "Index", "uv run refresh-ubuntu-index")
+    table.add_row("Test", "Validate", "uv run validate")
+    table.add_row("Test", "Repackage", "uv run repackage")
+    table.add_row("Test", "Generate", "uv run generate --profile test")
+    table.add_row("Test", "Verify", "uv run e2e")
+    table.add_section()
+    table.add_row("Prod", "Key", "uv run check-key --profile prod")
+    table.add_row("Prod", "Index", "uv run refresh-ubuntu-index")
+    table.add_row("Prod", "Validate", "uv run validate")
+    table.add_row("Prod", "Repackage", "uv run repackage")
+    table.add_row("Prod", "Generate", "uv run generate --profile prod")
+    table.add_row("Prod", "Deploy", "uv run deploy")
     console.print(table)
-    console.print(
-        Panel(
-            "uv run check-key --profile prod\nuv run generate --profile prod",
-            title="Production",
-        )
-    )
 
 
 def validate(skip_ubuntu_conflicts: bool = False) -> None:
@@ -221,7 +223,15 @@ def generate(profile: str = "test") -> None:
     )
     console.print(f"install page: {result.index_html}")
     console.print(f"package index: {result.package_manifest}")
+    console.print(f"chunked artifacts: {len(result.chunked_assets)}")
     console.print(f"signing key: {result.signing_key_fingerprint}")
+
+
+def deploy(dry_run: bool = False) -> None:
+    """Deploy the generated production repository and Cloudflare Worker."""
+    deploy_cloudflare(root=PROJECT.paths.root, dry_run=dry_run)
+    action = "Validated" if dry_run else "Deployed"
+    console.print(f"[green]{action} Cloudflare Worker and static assets.[/green]")
 
 
 def e2e(
@@ -390,6 +400,10 @@ def generate_main() -> None:
 
 def e2e_main() -> None:
     _run_cli(e2e)
+
+
+def deploy_main() -> None:
+    _run_cli(deploy)
 
 
 def _run_cli(command: Callable[..., object]) -> None:

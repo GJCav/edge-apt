@@ -4,6 +4,8 @@ tools/.venv/
 tools/.pytest_cache/
 tools/.ruff_cache/
 tools/.pyright/
+cloudflare/node_modules/
+cloudflare/.wrangler/
 __pycache__/
 *.pyc
 /keys/prod/sec.asc

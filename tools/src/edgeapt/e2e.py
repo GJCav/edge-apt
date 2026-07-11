@@ -1,19 +1,22 @@
 from __future__ import annotations
 
+import fcntl
+import os
+import shutil
 import signal
 import socket
 import subprocess
-import sys
-import fcntl
-import shutil
 import threading
 import time
+import urllib.error
+import urllib.request
 import uuid
 from collections import defaultdict
 from collections.abc import Callable, Generator, Iterable, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 from pathlib import Path
+from typing import TextIO
 
 import attrs
 
@@ -107,6 +110,7 @@ def run_e2e(
     if clear_apt_cache and not apt_cache:
         raise ValidationError("clear_apt_cache cannot be used with apt_cache disabled")
     require_executable("docker")
+    require_executable("pnpm")
     test_keyring = profile_public_keyring("test")
     if not test_keyring.exists():
         raise ValidationError(f"missing test keyring: {test_keyring}")
@@ -148,31 +152,12 @@ def run_e2e(
         raise ValidationError("no supported e2e test cases matched the selected filters")
 
     port = _free_port()
-    server = subprocess.Popen(
-        [
-            sys.executable,
-            "-m",
-            "http.server",
-            str(port),
-            "--bind",
-            "127.0.0.1",
-            "--directory",
-            str(TEST_PUBLIC_DIR),
-        ],
-        cwd=ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        text=True,
-    )
     if clear_apt_cache:
         for group in groups:
             clear_e2e_apt_cache(group.suite, group.arch)
 
     tested = 0
-    try:
-        time.sleep(1)
-        if server.poll() is not None:
-            raise CommandError("local HTTP server failed to start")
+    with _wrangler_server(port):
         callback_lock = threading.Lock()
 
         def synchronized_event(event: E2EEvent) -> None:
@@ -209,8 +194,6 @@ def run_e2e(
             ):
                 lines.append(f"\n[{group.suite}/{group.arch}]\n{exc}")
             raise CommandError("\n".join(lines))
-    finally:
-        _terminate(server)
     return E2ERunResult(groups=len(groups), tested=tested, skipped=skipped)
 
 
@@ -585,12 +568,72 @@ def _free_port() -> int:
         return int(sock.getsockname()[1])
 
 
+@contextmanager
+def _wrangler_server(port: int) -> Generator[None, None, None]:
+    log_path = ROOT / "tmp" / "e2e-wrangler.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("w+", encoding="utf-8") as log:
+        process = subprocess.Popen(
+            [
+                "pnpm",
+                "exec",
+                "wrangler",
+                "dev",
+                "--config",
+                "wrangler.test.jsonc",
+                "--ip",
+                "127.0.0.1",
+                "--port",
+                str(port),
+                "--log-level",
+                "warn",
+            ],
+            cwd=ROOT / "cloudflare",
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            text=True,
+            start_new_session=True,
+        )
+        try:
+            _wait_for_wrangler(process, port=port, log=log)
+            yield
+        finally:
+            _terminate(process)
+
+
+def _wait_for_wrangler(
+    process: subprocess.Popen[str],
+    *,
+    port: int,
+    log: TextIO,
+) -> None:
+    deadline = time.monotonic() + 30
+    url = f"http://127.0.0.1:{port}/packages.json"
+    while time.monotonic() < deadline:
+        if process.poll() is not None:
+            raise CommandError(_wrangler_failure("exited before startup", log))
+        try:
+            with urllib.request.urlopen(url, timeout=1) as response:
+                if response.status == 200:
+                    return
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.1)
+    raise CommandError(_wrangler_failure("did not become ready", log))
+
+
+def _wrangler_failure(message: str, log: TextIO) -> str:
+    log.flush()
+    log.seek(0)
+    output = log.read().strip()
+    return f"Wrangler {message}" + (f":\n{output}" if output else "")
+
+
 def _terminate(process: subprocess.Popen[str]) -> None:
     if process.poll() is not None:
         return
-    process.send_signal(signal.SIGTERM)
+    os.killpg(process.pid, signal.SIGTERM)
     try:
         process.wait(timeout=5)
     except subprocess.TimeoutExpired:
-        process.kill()
+        os.killpg(process.pid, signal.SIGKILL)
         process.wait()

@@ -1,0 +1,14 @@
+template: edgeapt.deb_upstream/v1
+id: rclone
+package: rclone
+e2e_commands:
+  - [rclone, version]
+allow_ubuntu_package_override: true
+override_reason: "Use the latest upstream rclone release instead of the Ubuntu packaged version."
+
+upstream:
+  - version: 1.74.4
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/rclone/rclone/releases/download/v1.74.4/rclone-v1.74.4-linux-amd64.deb"
+    sha256: "sha256:a9da2eaa70428c6dcc5acbb0b7eac0faec4c61643e0b468d9fe09ddf79b7e929"

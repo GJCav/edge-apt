@@ -1,0 +1,25 @@
+{
+  "name": "edgeapt-cloudflare",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.11.0",
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:test": "wrangler dev --config wrangler.test.jsonc",
+    "typegen": "wrangler types",
+    "typegen:check": "wrangler types --check",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p test/tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "test": "vitest run",
+    "check": "pnpm typegen:check && pnpm typecheck && pnpm test",
+    "deploy:dry": "wrangler deploy --dry-run",
+    "deploy:dry:test": "wrangler deploy --dry-run --config wrangler.test.jsonc",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.18.4",
+    "@types/node": "26.1.1",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10",
+    "wrangler": "4.110.0"
+  }
+}
