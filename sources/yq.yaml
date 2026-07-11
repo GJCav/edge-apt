@@ -6,7 +6,6 @@ allow_ubuntu_package_override: true
 override_reason: "Prefer latest release from upstream instead of Ubuntu packaged version."
 
 repackage:
-  type: nfpm
   install_path: /usr/bin/yq
   metadata:
     description: "yq is a portable command-line YAML, JSON, XML, CSV, TOML, HCL and properties processor."

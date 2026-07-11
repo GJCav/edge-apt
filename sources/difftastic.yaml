@@ -4,7 +4,6 @@ package: difftastic
 e2e_command: [difft, --version]
 
 repackage:
-  type: nfpm
   install_path: /usr/bin/difft
   metadata:
     description: "Difftastic is a structural diff tool that understands syntax."

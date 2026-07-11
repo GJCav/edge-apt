@@ -74,7 +74,6 @@ def make_source(
         if extract_path is not None:
             upstream["extract_path"] = extract_path
         raw["repackage"] = {
-            "type": "nfpm",
             "install_path": install_path,
             "metadata": {"description": package_name},
         }
@@ -186,7 +185,6 @@ def write_hello_source(root: Path) -> None:
                 "package: edgeapt-hello",
                 "e2e_command: [edgeapt-hello]",
                 "repackage:",
-                "  type: nfpm",
                 "  install_path: /usr/bin/edgeapt-hello",
                 "  metadata:",
                 '    description: "EdgeAPT test fixture"',

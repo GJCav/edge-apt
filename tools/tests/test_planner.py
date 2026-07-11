@@ -93,7 +93,7 @@ def test_current_sources_keep_expected_plan_digest() -> None:
     assert len(plan.builds) == 13
     assert len(plan.publications) == 44
     assert plan.plan_digest == (
-        "sha256:f0bbd236cd394b4b4febfc639e800bfdbb903745b04a7de9f4b246ba5f1f5c94"
+        "sha256:f445f6c576ff5e252c2962b308140b9f5ecc9ea39471cb906ad96b1618d7f6eb"
     )
 
 

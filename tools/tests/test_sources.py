@@ -55,7 +55,6 @@ e2e_command: [bad, --version]
 allow_ubuntu_package_override: true
 
 repackage:
-  type: nfpm
   install_path: /usr/bin/bad
   metadata:
     description: bad package

@@ -33,7 +33,7 @@ from tests.factories import make_document, make_source
         (
             "edgeapt.single_binary/v1",
             "v1.2.3",
-            "sha256:d1e11dd09e35196f478c9a6a77dbcbd45e3290a55ea1ec32a9d3340694b67f40",
+            "sha256:abf5f9945930d25ca942bcdee1de291c7186cb5981637fa1a3ee427d14b5cbd0",
         ),
         (
             "edgeapt.deb_upstream/v1",
@@ -81,6 +81,16 @@ def test_registry_rejects_duplicate_template_ids() -> None:
 
     with pytest.raises(ValueError, match="duplicate template id"):
         TemplateRegistry([template_type, template_type])
+
+
+def test_single_binary_rejects_removed_repackage_type() -> None:
+    source = make_source(template="edgeapt.single_binary/v1")
+    raw = source.model_dump()
+    repackage = cast(dict[str, object], raw["repackage"])
+    repackage["type"] = "nfpm"
+
+    with pytest.raises(PydanticValidationError, match="repackage.type"):
+        type(source).model_validate(raw)
 
 
 def test_fake_template_works_through_planner_and_repackage(tmp_path: Path) -> None:

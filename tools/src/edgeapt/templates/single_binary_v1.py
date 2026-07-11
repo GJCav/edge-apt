@@ -31,7 +31,6 @@ class SingleBinaryMetadataModel(BaseModel):
 class SingleBinaryRepackageModel(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
-    type: Literal["nfpm"]
     install_path: str = Field(min_length=1)
     metadata: SingleBinaryMetadataModel
 
@@ -82,7 +81,6 @@ class SingleBinaryMetadataSpec:
 
 @attrs.define(kw_only=True, frozen=True)
 class SingleBinaryRepackageSpec:
-    type: str
     install_path: str
     metadata: SingleBinaryMetadataSpec
 
@@ -90,7 +88,6 @@ class SingleBinaryRepackageSpec:
         return cast(
             JsonObject,
             {
-                "type": self.type,
                 "install_path": self.install_path,
                 "metadata": self.metadata.to_canonical_data(),
             },
@@ -134,7 +131,6 @@ class SingleBinaryV1(SourceTemplate):
 
     def plan(self, provenance: SourceProvenance) -> tuple[BuildIntent, ...]:
         repackage = SingleBinaryRepackageSpec(
-            type=self.repackage.type,
             install_path=self.repackage.install_path,
             metadata=SingleBinaryMetadataSpec(
                 description=self.repackage.metadata.description,

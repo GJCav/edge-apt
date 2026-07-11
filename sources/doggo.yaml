@@ -4,7 +4,6 @@ package: doggo
 e2e_command: [doggo, --version]
 
 repackage:
-  type: nfpm
   install_path: /usr/bin/doggo
   metadata:
     description: "Command-line DNS client for humans"

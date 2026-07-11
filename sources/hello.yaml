@@ -4,7 +4,6 @@ package: edgeapt-hello
 e2e_command: [edgeapt-hello]
 
 repackage:
-  type: nfpm
   install_path: /usr/bin/edgeapt-hello
   metadata:
     description: "EdgeAPT hello world fixture"
