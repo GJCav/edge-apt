@@ -55,7 +55,14 @@ class DefaultDebTools:
         root.chmod(0o755)
         os.utime(root, (source_date_epoch, source_date_epoch))
         run(
-            ["dpkg-deb", "--build", "--root-owner-group", root, output],
+            [
+                "dpkg-deb",
+                "--build",
+                "--root-owner-group",
+                "--threads-max=1",
+                root,
+                output,
+            ],
             env={"SOURCE_DATE_EPOCH": str(source_date_epoch)},
         )
 

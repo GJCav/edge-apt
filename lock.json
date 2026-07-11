@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "build_plan_digest": "sha256:48b88ebb8fb6a0ec996b313f8069807d13064e7ed919e49b1f0d72841862fabd",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "argc",
@@ -15,8 +15,8 @@
       },
       "path": "packages/argc/argc_1.24.0-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:3b1746c80d5f4ab7c7dc72a53ca5fccb3e8b46f82dd35f2b17d3a420e17b5a83",
-      "size": 516990,
+      "sha256": "sha256:5ebd5313857aba8c04d1d55dcddb8bd54fc89435600726cdea2e447c3eea4157",
+      "size": 517090,
       "upstream": {
         "etag": "\"0x8DEB620FE942C59\"",
         "last_modified": "Wed, 20 May 2026 03:36:35 GMT",
@@ -28,7 +28,7 @@
     },
     {
       "build_plan_digest": "sha256:4d7cb627897a8b53d7508356665e845669490393806088d1dc386d8948aa77da",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "bat",
@@ -53,7 +53,7 @@
     },
     {
       "build_plan_digest": "sha256:20716d5b5cec7602e68de5b8b7703d8b5e9333bcf3feb584eac7c6963279d676",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "chezmoi",
@@ -78,7 +78,7 @@
     },
     {
       "build_plan_digest": "sha256:fd6944cd512ed136773d412e8f511180d85fdabbeea36865d42cf61420d75daf",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "chezmoi",
@@ -103,7 +103,7 @@
     },
     {
       "build_plan_digest": "sha256:60879e8ec9b5f3afb30468aabbc452373797324bd9ead2f91b06d9370fb29799",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "difftastic",
@@ -116,8 +116,8 @@
       },
       "path": "packages/difftastic/difftastic_0.69.0-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:3f5825ae4bc9d5ea59387a41b9005a514e591ca5169cf55c85c5ba81e5efe509",
-      "size": 8409102,
+      "sha256": "sha256:967e0d85838c6ffa6bac9552ec4a2e1c78b473cb71ea8ef0a0b2fd982324fad4",
+      "size": 8408656,
       "upstream": {
         "etag": "\"0x8DEA6FB2C9F246F\"",
         "last_modified": "Thu, 30 Apr 2026 20:58:04 GMT",
@@ -129,7 +129,7 @@
     },
     {
       "build_plan_digest": "sha256:cb9b1584a0cd7bfc07a74412848528b1ceefea468b2bc50b60b3c2dc5ac5f577",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "difftastic-musl",
@@ -142,8 +142,8 @@
       },
       "path": "packages/difftastic-musl/difftastic-musl_0.69.0-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:a16fe9df3751244e481390d12bf0b81086a73d769825ae236c30b889dfec1ed4",
-      "size": 8467298,
+      "sha256": "sha256:9a4a6b90611e58778a36a2ae8c78b3a74baa7902342e53663effe54355d3be03",
+      "size": 8453490,
       "upstream": {
         "etag": "\"0x8DEA6FB4C90212F\"",
         "last_modified": "Thu, 30 Apr 2026 20:58:58 GMT",
@@ -155,7 +155,7 @@
     },
     {
       "build_plan_digest": "sha256:f74eee8e42a46a3a647ccdbb730cfffd9a74e71e5f45d130e8dc31596899ceaf",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "doggo",
@@ -168,8 +168,8 @@
       },
       "path": "packages/doggo/doggo_1.1.7-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:97b6b4eb62963f63e61559edb43142ad3f6ba1a4fba3eda9fb5bae02f00750bd",
-      "size": 4724408,
+      "sha256": "sha256:759c2bc1bed3bb9277ca880ff9bc4f1cc74f0cdd58a8312c7d8aef3be673835b",
+      "size": 4724342,
       "upstream": {
         "etag": "\"0x8DEBA4AD9A1316F\"",
         "last_modified": "Mon, 25 May 2026 10:46:17 GMT",
@@ -181,7 +181,7 @@
     },
     {
       "build_plan_digest": "sha256:43ebf271e6cafb804d8803b2555d8e68141471be5b6459dfe131c288ccd81554",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "doggo",
@@ -194,8 +194,8 @@
       },
       "path": "packages/doggo/doggo_1.2.0-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:d8b77be54b6239e0a4e3d9758e30a7d6a978f0474db2554989f835f40736c348",
-      "size": 4725882,
+      "sha256": "sha256:bcb78f481c038538b91b5d66556837db012743b1aa005beb241b000713b94219",
+      "size": 4726110,
       "upstream": {
         "etag": "\"0x8DED0F753DA9488\"",
         "last_modified": "Tue, 23 Jun 2026 07:16:21 GMT",
@@ -207,7 +207,7 @@
     },
     {
       "build_plan_digest": "sha256:fe8c7ff1b760e48b6ebdf154dfbbfc84cff757ebdf309cbc9500f2432b039e0a",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "edgeapt-hello",
@@ -220,8 +220,8 @@
       },
       "path": "packages/edgeapt-hello/edgeapt-hello_0.1.0-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:876fe78dedecc156bf938428bf23f3e0d21d4af19766b60c58c8949b5f8c101a",
-      "size": 608,
+      "sha256": "sha256:d41b291675cb28c192ff5621fe55d6bd3d6f97d85517b14b554cc0e0a3eb14bb",
+      "size": 606,
       "upstream": {
         "sha256": "sha256:74443048b52bf2be3b0f003a8f37592551d316c6c7c28b1a110ee6f879ef4130",
         "size": 39,
@@ -231,7 +231,7 @@
     },
     {
       "build_plan_digest": "sha256:185e53cf7503cab4eaa6226ee4d6551e85fcc1176049ca0c4d29cf9647b37b01",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "eza",
@@ -244,8 +244,8 @@
       },
       "path": "packages/eza/eza_0.23.5-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:5cac65f1f46cc1c840ee4da6e90d7e8a6d3ee0f2eef5f7e511ff518a602f428c",
-      "size": 1067914,
+      "sha256": "sha256:df1e0dff4091bb914a1cb1b7c14a2757c358c59601bcd3c4b43af0af2305789c",
+      "size": 1067388,
       "upstream": {
         "etag": "\"0x8DEDDA242591569\"",
         "last_modified": "Thu, 09 Jul 2026 10:10:10 GMT",
@@ -257,7 +257,7 @@
     },
     {
       "build_plan_digest": "sha256:13195f20feff4d1df0fd2e4313b61b00eb4ca6eb5ab1d9dddad92a601b71af93",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "fd",
@@ -282,7 +282,7 @@
     },
     {
       "build_plan_digest": "sha256:1257cadb1544083415fae7676e717e7f97a54ffcdae2bf69f510dcc484b91172",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "helix",
@@ -307,7 +307,7 @@
     },
     {
       "build_plan_digest": "sha256:e525f2fd79bef4e7513a8be7b076e28c44dea9e0135a68ae832431e2a9cb046a",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "mihomo-amd64-compatible",
@@ -320,8 +320,8 @@
       },
       "path": "packages/mihomo-amd64-compatible/mihomo-amd64-compatible_1.19.28-2_amd64.deb",
       "revision": 2,
-      "sha256": "sha256:992e4f1cf5574ea98da60e3cd4fa786b39d828784d4db3437d3d1aa45a7efd4e",
-      "size": 14073822,
+      "sha256": "sha256:877a11615afa7befc2dddbc204c4ce2a425a5b44b04c04beff77046f0d60f76c",
+      "size": 14074058,
       "upstream": {
         "etag": "\"0x8DEDC88B00B9716\"",
         "last_modified": "Wed, 08 Jul 2026 00:34:36 GMT",
@@ -333,7 +333,7 @@
     },
     {
       "build_plan_digest": "sha256:471e422a7caf13423eab258aead2760a0aa0dfeb6d605de795d53bee4a88f7c7",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "mihomo-amd64-v3",
@@ -346,8 +346,8 @@
       },
       "path": "packages/mihomo-amd64-v3/mihomo-amd64-v3_1.19.28-2_amd64.deb",
       "revision": 2,
-      "sha256": "sha256:961d355888a3c23a0aa7cc348b1b3e506770232f449d2de1696b39bbf831a5c0",
-      "size": 14054608,
+      "sha256": "sha256:1b4662c32ee2a2a99d660ad270d48f4bb8a7143e281e00abadee393a048bcffd",
+      "size": 14054432,
       "upstream": {
         "etag": "\"0x8DEDC88B0295E05\"",
         "last_modified": "Wed, 08 Jul 2026 00:34:36 GMT",
@@ -359,7 +359,7 @@
     },
     {
       "build_plan_digest": "sha256:f8149abc3c73299224566676b1282fa4a5cd09105ccf4da16b2aacd1df148f9b",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "ouch",
@@ -372,8 +372,8 @@
       },
       "path": "packages/ouch/ouch_0.8.1-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:2596bfa29361c97b3a71f4dcd580acfa4451b48ad6d071fdcbe0f293ff59d405",
-      "size": 2291656,
+      "sha256": "sha256:e503287ee4bace307b2264da071c19e0fddc1676b44d6ed176dc037839123311",
+      "size": 2291930,
       "upstream": {
         "etag": "\"0x8DED61CA5006BE6\"",
         "last_modified": "Mon, 29 Jun 2026 20:26:04 GMT",
@@ -385,7 +385,7 @@
     },
     {
       "build_plan_digest": "sha256:2e6aa44498af321b25f936c8f540de1ad45336e07118aff8a22e78fd84d3d895",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "ov",
@@ -410,7 +410,7 @@
     },
     {
       "build_plan_digest": "sha256:0bc5f259f564051b7653b7629bf96bede3e0ce7cf6649b1d2357897ce48bd281",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "prek",
@@ -423,8 +423,8 @@
       },
       "path": "packages/prek/prek_0.4.9-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:55e19688475ac9efc5cdc703073d5087dcdc5c6ebed3f8144f0aee73f1427794",
-      "size": 4617460,
+      "sha256": "sha256:bd0b5196198171121c5ac042bc752e9f803f41a10ca00b429e1653fe020b10c9",
+      "size": 4618616,
       "upstream": {
         "etag": "\"0x8DEDF3C56F94FB3\"",
         "last_modified": "Sat, 11 Jul 2026 11:05:38 GMT",
@@ -436,7 +436,7 @@
     },
     {
       "build_plan_digest": "sha256:da419172c2e6e5e166c5da67ce443b52ee0132d60227b36131d00341e4c5f773",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "rclone",
@@ -461,7 +461,7 @@
     },
     {
       "build_plan_digest": "sha256:aa981b10269665f13b7ba5ef51ea19dc20ff5ced2b35d26baa7a23445fdf9cf6",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "ripgrep",
@@ -486,7 +486,7 @@
     },
     {
       "build_plan_digest": "sha256:a64e354481e9cb82f1199fe3a5b83e6768990052d9be8da6893b6091fb87c211",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "tokei-musl",
@@ -499,8 +499,8 @@
       },
       "path": "packages/tokei-musl/tokei-musl_14.0.0-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:79570fcce5abd9f509b28811ea0ac3cb0b687e13938959b5d4f7ef9519c5d28b",
-      "size": 1295660,
+      "sha256": "sha256:f8a6dbd728fe6b1a0df155b3314206d78feb3060c1c273d6434b07e0d23691e9",
+      "size": 1295502,
       "upstream": {
         "etag": "\"0x8DE47D901926B6C\"",
         "last_modified": "Tue, 30 Dec 2025 19:24:09 GMT",
@@ -512,7 +512,7 @@
     },
     {
       "build_plan_digest": "sha256:182b162977358b21a9bf5de7cfad1674ee3dae574a0fedf525d7f9850d855710",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "uv",
@@ -525,8 +525,8 @@
       },
       "path": "packages/uv/uv_0.11.28-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:4a7b5b5e060baf68767301a8e5c1f71a59c1815641bc72d2f253b3f54a4b4692",
-      "size": 18617250,
+      "sha256": "sha256:6067061656983876828392dc817b5fe174a8a834d2bbc86ef165ddbcf2f22de4",
+      "size": 18617154,
       "upstream": {
         "etag": "\"079ad4908b90b40261c6d66ad0e3a05d-4\"",
         "last_modified": "Tue, 07 Jul 2026 23:14:36 GMT",
@@ -538,7 +538,7 @@
     },
     {
       "build_plan_digest": "sha256:6c6059c51cfc7517174e9f467dc1a817f2ee055acd7fa79f49c4658aa01075e2",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "yazi",
@@ -563,7 +563,7 @@
     },
     {
       "build_plan_digest": "sha256:1021d998d64c7b3bebb016b8d12549cd2daa14e8775f2975664bdc6c1c421d0f",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "yq",
@@ -576,8 +576,8 @@
       },
       "path": "packages/yq/yq_4.53.3-1_amd64.deb",
       "revision": 1,
-      "sha256": "sha256:e3acfc7666192cacef177fcb1cd80bbea034ba87008ea5f9cb56fbcb7614f629",
-      "size": 4562602,
+      "sha256": "sha256:ea32ccc8647608f19f37cb9d8c1725f2bfb57781c1b542b0d7d281de1b5a91fa",
+      "size": 4562648,
       "upstream": {
         "etag": "\"0x8DEC3BD5BDF69CD\"",
         "last_modified": "Sat, 06 Jun 2026 11:18:39 GMT",
@@ -589,7 +589,7 @@
     },
     {
       "build_plan_digest": "sha256:d050fc0d0e9c1bc058b9e54258a2f07ab0b27f236f5be74141b09870b89d1e25",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "zellij",
@@ -602,8 +602,8 @@
       },
       "path": "packages/zellij/zellij_0.44.3-2_amd64.deb",
       "revision": 2,
-      "sha256": "sha256:349b144d3875dd498b3243e400062b3894e0bb26840a1571961e448e0cf7c38f",
-      "size": 11117508,
+      "sha256": "sha256:0f9479f1a34079401f5b0f87826a336553b0d59711ac1e8be3102dd310ade1ff",
+      "size": 11137542,
       "upstream": {
         "etag": "\"0x8DEB0C5FE2854E0\"",
         "last_modified": "Wed, 13 May 2026 08:02:35 GMT",
@@ -615,7 +615,7 @@
     },
     {
       "build_plan_digest": "sha256:ca379e9ec31432e9993c66636896a5576dbb8c774bc0de9928419a8725608774",
-      "created_at": "2026-07-11T14:48:14Z",
+      "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "zoxide",
@@ -639,7 +639,7 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-11T14:48:14Z",
+  "generated_at": "2026-07-11T15:13:39Z",
   "plan_digest": "sha256:4cb9f48edc781cc3f6ea3e66440e65602c6773f1a125a92eefe1fdd8945d4601",
   "publications": [
     {
