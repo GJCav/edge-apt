@@ -34,12 +34,12 @@ from tests.factories import make_document, make_source
         (
             "edgeapt.single_binary/v1",
             "v1.2.3",
-            "sha256:abf5f9945930d25ca942bcdee1de291c7186cb5981637fa1a3ee427d14b5cbd0",
+            "sha256:83d3259b57dee66a9751bacaa4b39b7e38806781259ecf9ebe4035a6371fdf14",
         ),
         (
             "edgeapt.deb_upstream/v1",
             "1.2.3",
-            "sha256:31fe149af07422d1bcb1df46eb61671026fdedf9202e9125eecb51082a30c9be",
+            "sha256:33aae9164e82247e959265b8e897924dc1bff0aed642c57a78c074e279477b12",
         ),
     ],
 )
@@ -74,6 +74,25 @@ def test_template_contract_rejects_unknown_fields(template_id: str) -> None:
     raw["unknown"] = True
 
     with pytest.raises(PydanticValidationError, match="unknown"):
+        type(source).model_validate(raw)
+
+
+@pytest.mark.parametrize("template_id", DEFAULT_TEMPLATES.template_ids)
+def test_template_contract_requires_valid_sha256(template_id: str) -> None:
+    source = make_source(
+        template=template_id,
+        version="1.2.3" if template_id.endswith("deb_upstream/v1") else "v1.2.3",
+        revision=None if template_id.endswith("deb_upstream/v1") else 1,
+    )
+    raw = source.model_dump()
+    upstream = cast(list[dict[str, object]], raw["upstream"])
+    del upstream[0]["sha256"]
+
+    with pytest.raises(PydanticValidationError, match="sha256"):
+        type(source).model_validate(raw)
+
+    upstream[0]["sha256"] = "sha256:not-a-digest"
+    with pytest.raises(PydanticValidationError, match="sha256"):
         type(source).model_validate(raw)
 
 

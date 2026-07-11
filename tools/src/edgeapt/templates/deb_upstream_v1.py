@@ -28,7 +28,7 @@ class DebUpstreamModel(BaseModel):
     arch: str
     suites: tuple[str, ...] = Field(min_length=1)
     url: str = Field(min_length=1)
-    sha256: str | None = None
+    sha256: str = Field(pattern=r"^sha256:[0-9a-f]{64}$")
 
     @field_validator("version")
     @classmethod

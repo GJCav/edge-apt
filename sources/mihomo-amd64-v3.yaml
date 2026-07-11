@@ -16,4 +16,5 @@ upstream:
     arch: amd64
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v3-v1.19.28.gz"
+    sha256: "sha256:4348056413280635cfc674ce6b3e1f9d55e08a93e2940110ebf89fb31186b3b8"
     extract_path: mihomo-linux-amd64-v3

@@ -16,4 +16,5 @@ upstream:
     arch: amd64
     suites: [jammy, noble, resolute]
     url: "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-gnu.tar.gz"
+    sha256: "sha256:038db96a0e8fce69f2554e33e04ff75fbf6f96ea45cb4edb9ed6203a2c4750ff"
     extract_path: difft

@@ -16,3 +16,4 @@ upstream:
     arch: amd64
     suites: [focal, jammy, noble, resolute]
     url: tests/fixtures/hello-world
+    sha256: "sha256:74443048b52bf2be3b0f003a8f37592551d316c6c7c28b1a110ee6f879ef4130"

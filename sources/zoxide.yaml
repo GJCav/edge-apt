@@ -11,3 +11,4 @@ upstream:
     arch: amd64
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide_0.10.0-1_amd64.deb"
+    sha256: "sha256:975880c327a8bf4e31e8596313243a4ae342f16afa9bb7d78a6e641bd8cc9dba"

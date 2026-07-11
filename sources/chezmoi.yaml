@@ -9,8 +9,10 @@ upstream:
     arch: amd64
     suites: [focal]
     url: "https://github.com/twpayne/chezmoi/releases/download/v2.47.1/chezmoi_2.47.1_linux_amd64.deb"
+    sha256: "sha256:fe212a9a4e3ac5340fffc4f8148b942a1577554b70fafb9bbe08503fb5cd8863"
 
   - version: 2.71.0
     arch: amd64
     suites: [jammy, noble, resolute]
     url: "https://github.com/twpayne/chezmoi/releases/download/v2.71.0/chezmoi_2.71.0_linux_amd64.deb"
+    sha256: "sha256:a8880a1b01e877c3e5da250b9f882ce9fa39962686d75f436fa21e021fa092b1"

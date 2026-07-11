@@ -16,6 +16,7 @@ upstream:
     arch: amd64
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/mr-karan/doggo/releases/download/v1.1.7/doggo_1.1.7_Linux_x86_64.tar.gz"
+    sha256: "sha256:a908d045dbda977482927fd90ee1ab2020115fbf0905b93c7d6ef40d357b5392"
     extract_path: doggo_1.1.7_Linux_x86_64/doggo
   
   - version: v1.2.0
@@ -23,4 +24,5 @@ upstream:
     arch: amd64
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-linux-x86_64.tar.gz"
+    sha256: "sha256:aa6760e7f163958e7626420447385ab938fdc127983edaceb121f809bd3e2bca"
     extract_path: doggo

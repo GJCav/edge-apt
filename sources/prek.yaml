@@ -16,4 +16,5 @@ upstream:
     arch: amd64
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/j178/prek/releases/download/v0.4.9/prek-x86_64-unknown-linux-gnu.tar.gz"
+    sha256: "sha256:3548b731f3fb150b31030aebb74a539f52c8feec2ad96f674904633c3a1b7d6c"
     extract_path: prek-x86_64-unknown-linux-gnu/prek

@@ -66,6 +66,7 @@ upstream:
     arch: amd64
     suites: [jammy]
     url: tests/fixtures/hello-world
+    sha256: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 """,
     )
 
@@ -90,6 +91,7 @@ upstream:
     arch: amd64
     suites: [focal, jammy, noble, resolute]
     url: https://example.invalid/fd.deb
+    sha256: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 """,
     )
 

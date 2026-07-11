@@ -46,7 +46,7 @@ def make_source(
     suites: tuple[str, ...] = ("noble",),
     arch: str = "amd64",
     url: str = "https://example.invalid/foo",
-    sha256: str | None = None,
+    sha256: str = f"sha256:{'a' * 64}",
     extract_path: str | None = None,
     install_path: str = "/usr/bin/foo",
     e2e_commands: tuple[tuple[str, ...], ...] = (("foo", "--version"),),
@@ -60,8 +60,7 @@ def make_source(
         "suites": list(suites),
         "url": url,
     }
-    if sha256 is not None:
-        upstream["sha256"] = sha256
+    upstream["sha256"] = sha256
     raw: dict[str, object] = {
         "template": template,
         "id": source_id,
@@ -225,6 +224,7 @@ def write_hello_source(root: Path) -> None:
                 "    arch: amd64",
                 "    suites: [noble]",
                 f'    url: "{fixture}"',
+                "    sha256: sha256:74443048b52bf2be3b0f003a8f37592551d316c6c7c28b1a110ee6f879ef4130",
                 "",
             ]
         ),
