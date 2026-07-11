@@ -8,6 +8,7 @@ from edgeapt.e2e import build_e2e_test_cases
 from edgeapt.e2e import clear_e2e_apt_cache
 from edgeapt.e2e import docker_e2e_command_args
 from edgeapt.e2e import docker_install_args
+from edgeapt.e2e import docker_remove_args
 from edgeapt.e2e import E2ETestCase
 from edgeapt.e2e import group_e2e_test_cases
 from edgeapt.e2e import run_e2e
@@ -98,6 +99,22 @@ def test_e2e_command_uses_argv() -> None:
         "container-id",
         "doggo",
         "--version",
+    )
+
+
+def test_e2e_removes_package_after_validation() -> None:
+    case = _case()
+
+    assert docker_remove_args("container-id", case) == (
+        "docker",
+        "exec",
+        "container-id",
+        "env",
+        "DEBIAN_FRONTEND=noninteractive",
+        "apt-get",
+        "remove",
+        "-y",
+        "doggo",
     )
 
 

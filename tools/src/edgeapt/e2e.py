@@ -299,6 +299,20 @@ def docker_e2e_command_args(container_id: str, case: E2ETestCase) -> tuple[str, 
     return ("docker", "exec", container_id, *case.commands[0])
 
 
+def docker_remove_args(container_id: str, case: E2ETestCase) -> tuple[str, ...]:
+    return (
+        "docker",
+        "exec",
+        container_id,
+        "env",
+        "DEBIAN_FRONTEND=noninteractive",
+        "apt-get",
+        "remove",
+        "-y",
+        case.package,
+    )
+
+
 def _run_group(
     *,
     group: E2EGroup,
@@ -349,43 +363,52 @@ def _run_group(
                 E2ECommandContext(stage="setup", suite=group.suite, arch=group.arch),
             )
             for case in group.cases:
-                _run_checked(
-                    docker_install_args(container, case),
-                    _context_for_case(stage="install", case=case),
-                )
-                for command in case.commands:
-                    _emit(
-                        on_event,
-                        kind="test_start",
-                        suite=case.suite,
-                        arch=case.arch,
-                        image=group.image,
-                        source_id=case.source_id,
-                        package=case.package,
-                        version=case.version,
-                        command=command,
-                        message=f"Testing {case.package} {case.version}",
-                    )
+                installed = False
+                try:
                     _run_checked(
-                        ("docker", "exec", container, *command),
-                        _context_for_case(
-                            stage="e2e-command",
-                            case=case,
+                        docker_install_args(container, case),
+                        _context_for_case(stage="install", case=case),
+                    )
+                    installed = True
+                    for command in case.commands:
+                        _emit(
+                            on_event,
+                            kind="test_start",
+                            suite=case.suite,
+                            arch=case.arch,
+                            image=group.image,
+                            source_id=case.source_id,
+                            package=case.package,
+                            version=case.version,
                             command=command,
-                        ),
-                    )
-                    _emit(
-                        on_event,
-                        kind="test_pass",
-                        suite=case.suite,
-                        arch=case.arch,
-                        image=group.image,
-                        source_id=case.source_id,
-                        package=case.package,
-                        version=case.version,
-                        command=command,
-                        message=f"Passed {case.package} {case.version}",
-                    )
+                            message=f"Testing {case.package} {case.version}",
+                        )
+                        _run_checked(
+                            ("docker", "exec", container, *command),
+                            _context_for_case(
+                                stage="e2e-command",
+                                case=case,
+                                command=command,
+                            ),
+                        )
+                        _emit(
+                            on_event,
+                            kind="test_pass",
+                            suite=case.suite,
+                            arch=case.arch,
+                            image=group.image,
+                            source_id=case.source_id,
+                            package=case.package,
+                            version=case.version,
+                            command=command,
+                            message=f"Passed {case.package} {case.version}",
+                        )
+                finally:
+                    if installed:
+                        _run_checked(
+                            docker_remove_args(container, case),
+                            _context_for_case(stage="remove", case=case),
+                        )
         finally:
             if cache_dir is not None:
                 subprocess.run(
