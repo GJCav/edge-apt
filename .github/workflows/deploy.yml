@@ -80,8 +80,9 @@ jobs:
         uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           path: packages
-          key: edgeapt-packages-${{ runner.os }}-${{ steps.plan.outputs.digest }}
+          key: edgeapt-packages-${{ runner.os }}-${{ steps.plan.outputs.digest }}-${{ hashFiles('lock.json') }}
           restore-keys: |
+            edgeapt-packages-${{ runner.os }}-${{ steps.plan.outputs.digest }}-
             edgeapt-packages-${{ runner.os }}-
 
       - name: Build signed production repository
@@ -98,7 +99,7 @@ jobs:
         uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5
         with:
           path: packages
-          key: edgeapt-packages-${{ runner.os }}-${{ steps.plan.outputs.digest }}
+          key: edgeapt-packages-${{ runner.os }}-${{ steps.plan.outputs.digest }}-${{ hashFiles('lock.json') }}
 
       - name: Deploy Worker and static assets
         working-directory: tools
