@@ -4,11 +4,17 @@ from pathlib import Path
 
 import pytest
 
-from edgeapt.constants import ROOT
+from edgeapt.constants import ROOT, SOURCES_DIR
 from edgeapt.errors import ValidationError
-from edgeapt.models import SourceConfig, UpstreamConfig
-from edgeapt.sources import artifact_path, artifact_version, load_source, load_sources
-from edgeapt.sources import normalize_debian_version, validate_arch, validate_id
+from edgeapt.infrastructure.source_loader import (
+    load_source_document,
+    load_source_documents,
+)
+from edgeapt.templates.common import (
+    normalize_debian_version,
+    validate_arch,
+    validate_id,
+)
 
 
 def test_normalize_debian_version_strips_v_prefix() -> None:
@@ -20,43 +26,27 @@ def test_normalize_debian_version_strips_v_prefix() -> None:
 def test_validate_id_and_arch() -> None:
     validate_id("hello-world")
     validate_arch("amd64")
-    with pytest.raises(ValidationError):
+    with pytest.raises(ValueError):
         validate_id("Hello")
-    with pytest.raises(ValidationError):
+    with pytest.raises(ValueError):
         validate_arch("i386")
 
 
-def test_artifact_path_for_single_binary() -> None:
-    source = SourceConfig(
-        template="edgeapt.single_binary/v1",
-        id="hello",
-        package="edgeapt-hello",
-        e2e_command=("edgeapt-hello",),
-        source_file="sources/hello.yaml",
-        repackage=None,
-        upstream=(),
-    )
-    upstream = UpstreamConfig(
-        version="v0.1.0",
-        revision=1,
-        arch="amd64",
-        suites=("focal", "jammy", "noble", "resolute"),
-        url="tests/fixtures/hello-world",
-    )
-    assert artifact_version(source, upstream) == "0.1.0-1"
-    assert artifact_path(source, upstream) == Path(
-        "packages/hello/edgeapt-hello_0.1.0-1_amd64.deb"
-    )
-
-
 def test_load_repo_sources() -> None:
-    sources = load_sources()
-    assert {source.id for source in sources} >= {"hello", "doggo", "fd", "bat"}
+    documents = load_source_documents(SOURCES_DIR, root=ROOT)
+
+    assert {document.source.id for document in documents} >= {
+        "hello",
+        "doggo",
+        "fd",
+        "bat",
+    }
+    assert all(document.source_file.startswith("sources/") for document in documents)
 
 
 def test_override_reason_required(tmp_path: Path) -> None:
-    source_path = tmp_path / "bad.yaml"
-    source_path.write_text(
+    source_path = _write_source(
+        tmp_path,
         """
 template: edgeapt.single_binary/v1
 id: bad
@@ -77,18 +67,15 @@ upstream:
     suites: [jammy]
     url: tests/fixtures/hello-world
 """,
-        encoding="utf-8",
     )
 
-    with pytest.raises(ValidationError):
-        load_source(source_path)
+    with pytest.raises(ValidationError, match="override_reason"):
+        load_source_document(source_path, root=tmp_path)
 
 
-def test_override_fields_are_loaded() -> None:
-    source_dir = ROOT / "tmp" / "pytest-sources"
-    source_dir.mkdir(parents=True, exist_ok=True)
-    source_path = source_dir / "override.yaml"
-    source_path.write_text(
+def test_override_fields_are_loaded(tmp_path: Path) -> None:
+    source_path = _write_source(
+        tmp_path,
         """
 template: edgeapt.deb_upstream/v1
 id: fd
@@ -103,18 +90,18 @@ upstream:
     suites: [focal, jammy, noble, resolute]
     url: https://example.invalid/fd.deb
 """,
-        encoding="utf-8",
     )
 
-    source = load_source(source_path)
+    source = load_source_document(source_path, root=tmp_path).source
+
     assert source.allow_ubuntu_package_override is True
     assert source.override_reason == "Use upstream release."
     assert source.e2e_command == ("fd", "--version")
 
 
 def test_e2e_command_is_required(tmp_path: Path) -> None:
-    source_path = tmp_path / "missing-e2e.yaml"
-    source_path.write_text(
+    source_path = _write_source(
+        tmp_path,
         """
 template: edgeapt.deb_upstream/v1
 id: fd
@@ -126,30 +113,29 @@ upstream:
     suites: [noble]
     url: https://example.invalid/fd.deb
 """,
-        encoding="utf-8",
     )
 
     with pytest.raises(ValidationError, match="e2e_command"):
-        load_source(source_path)
+        load_source_document(source_path, root=tmp_path)
 
 
-def test_e2e_command_must_contain_non_empty_strings(tmp_path: Path) -> None:
-    source_path = tmp_path / "bad-e2e.yaml"
-    source_path.write_text(
+def test_unknown_template_is_rejected(tmp_path: Path) -> None:
+    source_path = _write_source(
+        tmp_path,
         """
-template: edgeapt.deb_upstream/v1
-id: fd
-package: fd
-e2e_command: [fd, ""]
-
-upstream:
-  - version: 10.4.1
-    arch: amd64
-    suites: [noble]
-    url: https://example.invalid/fd.deb
+template: edgeapt.unknown/v1
+id: unknown
+package: unknown
+e2e_command: [unknown]
 """,
-        encoding="utf-8",
     )
 
-    with pytest.raises(ValidationError, match="e2e_command"):
-        load_source(source_path)
+    with pytest.raises(ValidationError, match="unsupported template"):
+        load_source_document(source_path, root=tmp_path)
+
+
+def _write_source(root: Path, content: str) -> Path:
+    path = root / "sources" / "source.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content.lstrip(), encoding="utf-8")
+    return path

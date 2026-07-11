@@ -25,9 +25,10 @@ from edgeapt.constants import (
     TEST_PUBLIC_DIR,
 )
 from edgeapt.errors import CommandError, ValidationError
-from edgeapt.keyring import profile_public_keyring
-from edgeapt.lockfile import load_lock
-from edgeapt.models import ArtifactFact, LockFile
+from edgeapt.domain.artifacts import ArtifactFact
+from edgeapt.domain.lock import LockFile
+from edgeapt.infrastructure.lock_store import load_lock
+from edgeapt.infrastructure.signing import profile_public_keyring
 from edgeapt.util import require_executable
 
 E2E_SUITE_IMAGES = {

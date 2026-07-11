@@ -1,38 +1,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-from dataclasses import dataclass
+
+from edgeapt.project import ProjectPaths as ProjectPaths
 
 ROOT = Path(__file__).resolve().parents[3]
-
-
-@dataclass(frozen=True)
-class ProjectPaths:
-    root: Path
-
-    @property
-    def sources_dir(self) -> Path:
-        return self.root / "sources"
-
-    @property
-    def packages_dir(self) -> Path:
-        return self.root / "packages"
-
-    @property
-    def public_dir(self) -> Path:
-        return self.root / "public"
-
-    @property
-    def tmp_dir(self) -> Path:
-        return self.root / "tmp"
-
-    @property
-    def test_public_dir(self) -> Path:
-        return self.tmp_dir / "public-test"
-
-    @property
-    def lock_path(self) -> Path:
-        return self.root / "lock.json"
 
 
 PROJECT_PATHS = ProjectPaths(ROOT)
@@ -46,10 +18,6 @@ E2E_APT_CACHE_DIR = TMP_DIR / "e2e-apt-cache"
 LOCK_PATH = ROOT / "lock.json"
 KEYS_DIR = ROOT / "keys"
 
-SUPPORTED_TEMPLATES = {
-    "edgeapt.single_binary/v1",
-    "edgeapt.deb_upstream/v1",
-}
 SUPPORTED_SUITES = {"focal", "jammy", "noble", "resolute"}
 SUPPORTED_ARCHES = {"amd64", "arm64"}
 SUPPORTED_E2E_ARCHES = {"amd64"}

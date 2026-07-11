@@ -6,28 +6,44 @@ from collections import defaultdict
 from collections.abc import Iterable
 from typing import Any
 
+import attrs
+
 from edgeapt.constants import COMPONENT
-from edgeapt.errors import ValidationError
-from edgeapt.models import (
+from edgeapt.domain.keys import DebKey, PublishKey
+from edgeapt.domain.planning import (
     BuildSpec,
     BuildUnit,
-    DebKey,
-    DebUpstreamBuildSpec,
-    FetchSpec,
     Publication,
     PublishClaim,
-    PublishKey,
     RepoPlan,
-    SingleBinaryBuildSpec,
-    SourceConfig,
     SourceProvenance,
-    UpstreamConfig,
 )
-from edgeapt.sources import artifact_version
+from edgeapt.errors import ValidationError
+from edgeapt.infrastructure.source_loader import load_source_documents
+from edgeapt.project import EdgeAptProject
+from edgeapt.templates.base import SourceDocument
 
 
-def build_repo_plan(sources: Iterable[SourceConfig]) -> RepoPlan:
-    claims = tuple(_expand_claims(sources))
+@attrs.define(kw_only=True, frozen=True)
+class PlanningResult:
+    source_count: int
+    plan: RepoPlan
+
+
+def compile_project_plan(project: EdgeAptProject) -> PlanningResult:
+    documents = load_source_documents(
+        project.paths.sources_dir,
+        root=project.paths.root,
+        templates=project.templates,
+    )
+    return PlanningResult(
+        source_count=len(documents),
+        plan=build_repo_plan(documents),
+    )
+
+
+def build_repo_plan(documents: Iterable[SourceDocument]) -> RepoPlan:
+    claims = tuple(_expand_claims(documents))
     publications = _merge_publications(claims)
     builds = _merge_builds(claims)
     plan_data = {
@@ -42,62 +58,35 @@ def build_repo_plan(sources: Iterable[SourceConfig]) -> RepoPlan:
 
 
 def build_spec_digest(spec: BuildSpec) -> str:
-    return _digest(spec.to_json())
+    return _digest(spec.to_canonical_data())
 
 
-def _expand_claims(sources: Iterable[SourceConfig]) -> Iterable[PublishClaim]:
-    for source in sorted(sources, key=lambda item: item.id):
-        for index, upstream in enumerate(source.upstream):
-            deb_version = artifact_version(source, upstream)
-            deb_key = DebKey(
-                package=source.package,
-                deb_version=deb_version,
-                arch=upstream.arch,
-            )
-            build_spec = _compile_build_spec(source, upstream)
-            provenance = SourceProvenance(
-                source_id=source.id,
-                source_file=source.source_file,
-                upstream_index=index,
-            )
-            for suite in sorted(set(upstream.suites)):
+def _expand_claims(documents: Iterable[SourceDocument]) -> Iterable[PublishClaim]:
+    for document in sorted(documents, key=lambda item: item.source.id):
+        source = document.source
+        provenance = SourceProvenance(
+            source_id=source.id,
+            source_file=document.source_file,
+            upstream_index=0,
+        )
+        for intent in source.plan(provenance):
+            for suite in sorted(set(intent.suites)):
                 yield PublishClaim(
                     key=PublishKey(
                         suite=suite,
                         component=COMPONENT,
-                        package=deb_key.package,
-                        deb_version=deb_key.deb_version,
-                        arch=deb_key.arch,
+                        package=intent.deb_key.package,
+                        deb_version=intent.deb_key.deb_version,
+                        arch=intent.deb_key.arch,
                     ),
-                    build_spec=build_spec,
-                    provenance=provenance,
-                    e2e_command=source.e2e_command,
-                    allow_ubuntu_package_override=source.allow_ubuntu_package_override,
-                    override_reason=source.override_reason,
+                    build_spec=intent.build_spec,
+                    provenance=intent.provenance,
+                    e2e_command=intent.e2e_command,
+                    allow_ubuntu_package_override=(
+                        intent.allow_ubuntu_package_override
+                    ),
+                    override_reason=intent.override_reason,
                 )
-
-
-def _compile_build_spec(
-    source: SourceConfig,
-    upstream: UpstreamConfig,
-) -> BuildSpec:
-    fetch = FetchSpec(url=upstream.url, sha256=upstream.sha256)
-    if source.template == "edgeapt.single_binary/v1":
-        if source.repackage is None or upstream.revision is None:
-            raise ValidationError(f"{source.id}: incomplete single_binary configuration")
-        return SingleBinaryBuildSpec(
-            template=source.template,
-            upstream_version=upstream.version,
-            revision=upstream.revision,
-            fetch=fetch,
-            extract_path=upstream.extract_path,
-            repackage=source.repackage,
-        )
-    return DebUpstreamBuildSpec(
-        template=source.template,
-        upstream_version=upstream.version,
-        fetch=fetch,
-    )
 
 
 def _merge_publications(claims: Iterable[PublishClaim]) -> tuple[Publication, ...]:

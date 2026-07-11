@@ -5,16 +5,16 @@ from pathlib import Path
 import pytest
 
 from edgeapt.errors import ValidationError
-from edgeapt.constants import ProjectPaths
-from edgeapt.lockfile import write_lock
-from edgeapt.models import LockedPublication
-from edgeapt.models import LockFile
-from edgeapt.models import SourceConfig
-from edgeapt.planner import build_repo_plan
-from edgeapt.repackage import repackage_all
-from edgeapt.repackage import RepackageEvent
+from edgeapt.domain.lock import LockedPublication, LockFile
+from edgeapt.infrastructure.lock_store import write_lock
+from edgeapt.templates.base import SourceTemplate
+from edgeapt.templates.base import FetchResult
 from edgeapt.util import sha256_file
+from edgeapt.workflows.planning import build_repo_plan
+from edgeapt.workflows.repackage import repackage_project, RepackageEvent
 from tests.factories import make_artifact
+from tests.factories import make_document
+from tests.factories import make_project
 from tests.factories import make_source
 
 
@@ -37,13 +37,18 @@ def test_repackage_reuses_cached_package_and_refreshes_publications(
     )
     _patch_environment(monkeypatch, tmp_path, source)
 
-    def fail_fetch(*args: object, **kwargs: object) -> object:
-        raise AssertionError("fetch_upstream should not run for cached artifact")
-
-    monkeypatch.setattr("edgeapt.repackage.fetch_upstream", fail_fetch)
     events: list[RepackageEvent] = []
 
-    lock = repackage_all(on_event=events.append, paths=ProjectPaths(tmp_path))
+    result = repackage_project(
+        on_event=events.append,
+        project=make_project(
+            tmp_path,
+            fetcher=_FailingFetcher(
+                AssertionError("fetcher should not run for cached artifact")
+            ),
+        ),
+    )
+    lock = result.lock
 
     assert lock.artifacts[0].created_at == "2026-07-05T00:00:00Z"
     assert [item.key.suite for item in lock.publications] == [
@@ -69,13 +74,14 @@ def test_repackage_cache_miss_when_artifact_missing(
     _patch_environment(monkeypatch, tmp_path, source)
     events: list[RepackageEvent] = []
 
-    def stop_after_cache_miss(*args: object, **kwargs: object) -> object:
-        raise RuntimeError("stop after cache miss")
-
-    monkeypatch.setattr("edgeapt.repackage.fetch_upstream", stop_after_cache_miss)
-
     with pytest.raises(RuntimeError, match="stop after cache miss"):
-        repackage_all(on_event=events.append, paths=ProjectPaths(tmp_path))
+        repackage_project(
+            on_event=events.append,
+            project=make_project(
+                tmp_path,
+                fetcher=_FailingFetcher(RuntimeError("stop after cache miss")),
+            ),
+        )
 
     assert any(
         event.kind == "cache_miss" and event.message == "miss - artifact missing"
@@ -104,14 +110,14 @@ def test_repackage_rejects_changed_plan_for_same_deb_key(
     _patch_environment(monkeypatch, tmp_path, current)
 
     with pytest.raises(ValidationError, match="build plan changed for DebKey"):
-        repackage_all(paths=ProjectPaths(tmp_path))
+        repackage_project(project=make_project(tmp_path))
 
 
 def _source(
     *,
     suites: tuple[str, ...],
     e2e_command: tuple[str, ...] = ("edgeapt-hello",),
-) -> SourceConfig:
+) -> SourceTemplate:
     return make_source(
         source_id="hello",
         package="edgeapt-hello",
@@ -135,10 +141,10 @@ def _artifact_path(tmp_path: Path) -> Path:
 def _write_previous_lock(
     tmp_path: Path,
     *,
-    source: SourceConfig,
+    source: SourceTemplate,
     artifact_path: Path,
 ) -> None:
-    plan = build_repo_plan((source,))
+    plan = build_repo_plan((make_document(source),))
     build = plan.builds[0]
     relative_path = artifact_path.relative_to(tmp_path).as_posix()
     artifact = make_artifact(
@@ -176,12 +182,36 @@ def _write_previous_lock(
 def _patch_environment(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
-    source: SourceConfig,
+    source: SourceTemplate,
 ) -> None:
-    def load_test_sources(*args: object, **kwargs: object) -> tuple[SourceConfig, ...]:
-        return (source,)
+    def load_test_sources(*args: object, **kwargs: object):
+        return (make_document(source),)
 
     monkeypatch.setattr(
-        "edgeapt.repackage.load_sources",
+        "edgeapt.workflows.planning.load_source_documents",
         load_test_sources,
     )
+
+
+class _FailingFetcher:
+    def __init__(self, error: Exception) -> None:
+        self._error = error
+
+    def fetch(
+        self,
+        *,
+        url: str,
+        sha256: str | None,
+        destination: Path,
+        root: Path,
+    ) -> FetchResult:
+        raise self._error
+
+    def prepare_single_binary(
+        self,
+        *,
+        downloaded: Path,
+        extract_path: str | None,
+        work_dir: Path,
+    ) -> Path:
+        raise self._error

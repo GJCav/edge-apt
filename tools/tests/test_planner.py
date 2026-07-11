@@ -1,17 +1,17 @@
 from __future__ import annotations
 
-import attrs
 import pytest
 
+from edgeapt.constants import ROOT, SOURCES_DIR
 from edgeapt.errors import ValidationError
-from edgeapt.models import RepackageConfig
-from edgeapt.models import RepackageMetadata
-from edgeapt.planner import build_repo_plan
-from tests.factories import make_source
+from edgeapt.infrastructure.source_loader import load_source_documents
+from edgeapt.workflows.planning import build_repo_plan
+from edgeapt.templates.base import SourceTemplate
+from tests.factories import make_document, make_source
 
 
 def test_expands_suites_and_merges_one_build() -> None:
-    plan = build_repo_plan((make_source(suites=("noble", "jammy")),))
+    plan = _plan(make_source(suites=("noble", "jammy")))
 
     assert len(plan.builds) == 1
     assert [item.key.suite for item in plan.publications] == ["jammy", "noble"]
@@ -19,15 +19,14 @@ def test_expands_suites_and_merges_one_build() -> None:
 
 
 def test_merges_identical_claims_and_keeps_provenance_and_commands() -> None:
-    first = make_source(source_id="foo-common", package="foo", suites=("noble",))
-    second = attrs.evolve(
-        first,
-        id="foo-noble",
-        source_file="sources/foo-noble.yaml",
+    first = make_source(source_id="foo-common", package="foo")
+    second = make_source(
+        source_id="foo-noble",
+        package="foo",
         e2e_command=("foo", "version"),
     )
 
-    plan = build_repo_plan((second, first))
+    plan = _plan(second, first)
 
     assert len(plan.builds) == 1
     assert len(plan.publications) == 1
@@ -40,60 +39,63 @@ def test_merges_identical_claims_and_keeps_provenance_and_commands() -> None:
 
 
 def test_rejects_conflicting_publish_key() -> None:
-    first = make_source(source_id="foo-first", package="foo", suites=("noble",))
-    second = attrs.evolve(
-        make_source(source_id="foo-second", package="foo", suites=("noble",)),
-        source_file="sources/foo-second.yaml",
-        repackage=RepackageConfig(
-            type="nfpm",
-            install_path="/usr/local/bin/foo",
-            metadata=RepackageMetadata(description="foo"),
-        ),
+    first = make_source(source_id="foo-first", package="foo")
+    second = make_source(
+        source_id="foo-second",
+        package="foo",
+        install_path="/usr/local/bin/foo",
     )
 
     with pytest.raises(ValidationError, match="conflicting build plans for PublishKey"):
-        build_repo_plan((first, second))
+        _plan(first, second)
 
 
 def test_rejects_same_deb_key_with_different_suite_plans() -> None:
     jammy = make_source(source_id="foo-jammy", package="foo", suites=("jammy",))
-    noble = attrs.evolve(
-        make_source(source_id="foo-noble", package="foo", suites=("noble",)),
-        source_file="sources/foo-noble.yaml",
-        repackage=RepackageConfig(
-            type="nfpm",
-            install_path="/usr/local/bin/foo",
-            metadata=RepackageMetadata(description="foo"),
-        ),
+    noble = make_source(
+        source_id="foo-noble",
+        package="foo",
+        suites=("noble",),
+        install_path="/usr/local/bin/foo",
     )
 
     with pytest.raises(ValidationError, match="conflicting build plans for DebKey"):
-        build_repo_plan((jammy, noble))
+        _plan(jammy, noble)
 
 
 def test_rejects_conflicting_override_policy() -> None:
-    first = make_source(source_id="foo-first", package="foo", suites=("noble",))
-    second = attrs.evolve(
-        make_source(source_id="foo-second", package="foo", suites=("noble",)),
-        source_file="sources/foo-second.yaml",
+    first = make_source(source_id="foo-first", package="foo")
+    second = make_source(
+        source_id="foo-second",
+        package="foo",
         allow_ubuntu_package_override=True,
         override_reason="Use EdgeAPT build.",
     )
 
     with pytest.raises(ValidationError, match="conflicting Ubuntu override policy"):
-        build_repo_plan((first, second))
+        _plan(first, second)
 
 
 def test_plan_is_independent_of_source_order() -> None:
     first = make_source(source_id="foo-first", package="foo", suites=("jammy",))
-    second = attrs.evolve(
-        first,
-        id="foo-second",
-        source_file="sources/foo-second.yaml",
-        upstream=(attrs.evolve(first.upstream[0], suites=("noble",)),),
-    )
+    second = make_source(source_id="foo-second", package="foo", suites=("noble",))
 
-    forward = build_repo_plan((first, second))
-    reverse = build_repo_plan((second, first))
+    forward = _plan(first, second)
+    reverse = _plan(second, first)
 
     assert forward == reverse
+
+
+def test_current_sources_keep_expected_plan_digest() -> None:
+    documents = load_source_documents(SOURCES_DIR, root=ROOT)
+    plan = build_repo_plan(documents)
+
+    assert len(plan.builds) == 13
+    assert len(plan.publications) == 44
+    assert plan.plan_digest == (
+        "sha256:f0bbd236cd394b4b4febfc639e800bfdbb903745b04a7de9f4b246ba5f1f5c94"
+    )
+
+
+def _plan(*sources: SourceTemplate):
+    return build_repo_plan(tuple(make_document(source) for source in sources))

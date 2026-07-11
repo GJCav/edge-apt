@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from edgeapt.lockfile import load_lock
-from edgeapt.lockfile import write_lock
+from edgeapt.infrastructure.lock_store import load_lock
+from edgeapt.infrastructure.lock_store import write_lock
 from tests.factories import make_artifact
 from tests.factories import make_deb_key
 from tests.factories import make_lock

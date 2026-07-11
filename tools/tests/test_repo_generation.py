@@ -4,23 +4,26 @@ from pathlib import Path
 
 import pytest
 
-from edgeapt.constants import ProjectPaths
+from edgeapt.infrastructure.signing import ensure_test_key
 from edgeapt.errors import ValidationError
-from edgeapt.keyring import ensure_test_key
-from edgeapt.repo import check_static_asset_size_limit
-from edgeapt.repo import generate_repo
-from edgeapt.repackage import repackage_all
 from edgeapt.util import run
+from edgeapt.workflows.generate import (
+    check_static_asset_size_limit,
+    generate_repository,
+)
+from edgeapt.workflows.repackage import repackage_project
+from tests.factories import make_project
 from tests.factories import write_hello_source
 
 
 @pytest.mark.integration
 def test_generate_repo_writes_signed_metadata(tmp_path: Path) -> None:
-    paths = ProjectPaths(tmp_path)
+    project = make_project(tmp_path)
+    paths = project.paths
     write_hello_source(tmp_path)
     ensure_test_key()
-    repackage_all(paths=paths)
-    result = generate_repo(profile="test", paths=paths)
+    repackage_project(project=project)
+    result = generate_repository(profile="test", project=project)
     assert result.output_dir == paths.test_public_dir
 
     inrelease = paths.test_public_dir / "dists" / "noble" / "InRelease"

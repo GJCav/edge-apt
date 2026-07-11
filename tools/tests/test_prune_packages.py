@@ -2,26 +2,22 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
-from edgeapt.repackage import prune_packages
-from edgeapt.models import LockFile
+from edgeapt.domain.lock import LockFile
+from edgeapt.workflows.repackage import prune_packages
 from edgeapt.util import sha256_file
 from tests.factories import make_artifact
 from tests.factories import make_lock
 
 
 def test_prune_packages_dry_run_keeps_orphans(
-    monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
     packages_dir, kept, orphan = _package_files(tmp_path)
-    monkeypatch.setattr("edgeapt.repackage.ROOT", tmp_path)
-
     result = prune_packages(
         _lock_for(kept, tmp_path),
         dry_run=True,
         packages_dir=packages_dir,
+        root=tmp_path,
     )
 
     assert result.orphans == (orphan.resolve(),)
@@ -30,16 +26,14 @@ def test_prune_packages_dry_run_keeps_orphans(
 
 
 def test_prune_packages_deletes_only_orphans(
-    monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
     packages_dir, kept, orphan = _package_files(tmp_path)
-    monkeypatch.setattr("edgeapt.repackage.ROOT", tmp_path)
-
     result = prune_packages(
         _lock_for(kept, tmp_path),
         dry_run=False,
         packages_dir=packages_dir,
+        root=tmp_path,
     )
 
     assert result.deleted == (orphan.resolve(),)
@@ -48,13 +42,16 @@ def test_prune_packages_deletes_only_orphans(
 
 
 def test_prune_packages_handles_missing_packages_dir(
-    monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
-    monkeypatch.setattr("edgeapt.repackage.ROOT", tmp_path)
     lock = _lock_for(tmp_path / "packages" / "missing.deb", tmp_path)
 
-    result = prune_packages(lock, dry_run=False, packages_dir=tmp_path / "missing")
+    result = prune_packages(
+        lock,
+        dry_run=False,
+        packages_dir=tmp_path / "missing",
+        root=tmp_path,
+    )
 
     assert result.orphans == ()
     assert result.deleted == ()

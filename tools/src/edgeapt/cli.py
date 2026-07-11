@@ -13,7 +13,6 @@ from rich.table import Table
 from edgeapt.constants import (
     LOCK_PATH,
     ROOT,
-    SOURCES_DIR,
     SUPPORTED_SUITES,
     UBUNTU_COMPONENTS,
     UBUNTU_INDEX_ARCHES,
@@ -21,16 +20,21 @@ from edgeapt.constants import (
 from edgeapt.config import load_config
 from edgeapt.e2e import run_e2e, E2EEvent
 from edgeapt.errors import EdgeAptError
-from edgeapt.keyring import check_signing_key, ensure_test_key
-from edgeapt.planner import build_repo_plan
-from edgeapt.repackage import prune_packages, repackage_all, PruneResult, RepackageEvent
-from edgeapt.repo import generate_repo
-from edgeapt.sources import load_sources
-from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
-from edgeapt.ubuntu_index import refresh_ubuntu_indexes
-from edgeapt.ubuntu_index import UbuntuIndexRefreshEvent
+from edgeapt.infrastructure.signing import check_signing_key, ensure_test_key
+from edgeapt.infrastructure.ubuntu_index import refresh_ubuntu_indexes
+from edgeapt.infrastructure.ubuntu_index import UbuntuIndexRefreshEvent
+from edgeapt.project import create_project
+from edgeapt.workflows.generate import generate_repository
+from edgeapt.workflows.repackage import (
+    prune_packages,
+    repackage_project,
+    PruneResult,
+    RepackageEvent,
+)
+from edgeapt.workflows.validate import validate_project
 
 console = Console()
+PROJECT = create_project(ROOT)
 
 
 def guide() -> None:
@@ -56,10 +60,11 @@ def guide() -> None:
 
 def validate(skip_ubuntu_conflicts: bool = False) -> None:
     """Validate sources/*.yaml."""
-    sources = load_sources(SOURCES_DIR)
-    plan = build_repo_plan(sources)
-    if not skip_ubuntu_conflicts:
-        ensure_no_ubuntu_package_conflicts(plan.publications)
+    result = validate_project(
+        project=PROJECT,
+        skip_ubuntu_conflicts=skip_ubuntu_conflicts,
+    )
+    plan = result.plan
     table = Table(title="EdgeAPT Publications")
     table.add_column("suite")
     table.add_column("component")
@@ -78,7 +83,7 @@ def validate(skip_ubuntu_conflicts: bool = False) -> None:
         )
     console.print(table)
     console.print(
-        f"[green]Validated {len(sources)} source(s), "
+        f"[green]Validated {result.source_count} source(s), "
         f"{len(plan.builds)} build(s), "
         f"{len(plan.publications)} publication(s).[/green]"
     )
@@ -152,18 +157,22 @@ def repackage(
     dry_run: Annotated[bool, cyclopts.Parameter(alias="-n")] = False,
 ) -> None:
     """Run upstream repackaging and write packages/ plus lock.json."""
-    sources = load_sources(SOURCES_DIR)
-    total_artifacts = len(build_repo_plan(sources).builds)
     with Progress(
         TextColumn("[progress.description]{task.description}"),
         TextColumn("[progress.percentage]{task.completed}/{task.total}"),
         TimeElapsedColumn(),
         console=console,
     ) as progress:
-        task_id = progress.add_task("Waiting to start", total=total_artifacts)
+        task_id = progress.add_task("Waiting to start", total=None)
 
         def on_event(event: RepackageEvent) -> None:
-            if event.kind == "artifact_done":
+            if event.kind == "sources_loaded":
+                progress.update(
+                    task_id,
+                    total=event.build_count,
+                    description=event.message,
+                )
+            elif event.kind == "artifact_done":
                 progress.console.print(_format_repackage_done(event), soft_wrap=True)
                 progress.update(
                     task_id,
@@ -183,22 +192,29 @@ def repackage(
             else:
                 progress.update(task_id, description=event.message)
 
-        lock = repackage_all(on_event=on_event)
+        result = repackage_project(on_event=on_event, project=PROJECT)
         progress.update(task_id, description="Repackaging complete")
 
-    artifact_count = len(lock.artifacts)
+    artifact_count = len(result.lock.artifacts)
     console.print(f"[green]Wrote {LOCK_PATH}[/green]")
     console.print(
-        f"[green]Processed {len(sources)} source(s), "
+        f"[green]Processed {result.source_count} source(s), "
         f"{artifact_count} artifact(s).[/green]"
     )
     if prune:
-        _print_prune_result(prune_packages(lock, dry_run=dry_run))
+        _print_prune_result(
+            prune_packages(
+                result.lock,
+                dry_run=dry_run,
+                packages_dir=PROJECT.paths.packages_dir,
+                root=PROJECT.paths.root,
+            )
+        )
 
 
 def generate(profile: str = "test") -> None:
     """Generate signed APT repository output."""
-    result = generate_repo(profile=profile)
+    result = generate_repository(profile=profile, project=PROJECT)
     console.print(
         f"[green]Generated {result.profile} signed APT repository at "
         f"{result.output_dir}[/green]"
@@ -338,7 +354,7 @@ def _print_prune_result(result: PruneResult) -> None:
 def _display_path(path: Path) -> str:
     resolved = path.resolve()
     try:
-        return resolved.relative_to(ROOT.resolve()).as_posix()
+        return resolved.relative_to(PROJECT.paths.root.resolve()).as_posix()
     except ValueError:
         return resolved.as_posix()
 

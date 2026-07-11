@@ -1,19 +1,36 @@
 from __future__ import annotations
 
-from edgeapt.models import RepackageConfig
-from edgeapt.models import RepackageMetadata
-from edgeapt.models import ArtifactFact
-from edgeapt.models import DebKey
-from edgeapt.models import LockedPublication
-from edgeapt.models import LockFile
-from edgeapt.models import PublishKey
-from edgeapt.models import SourceProvenance
-from edgeapt.models import SourceConfig
-from edgeapt.models import UpstreamConfig
-from edgeapt.models import UpstreamFact
+from edgeapt.domain.artifacts import ArtifactFact
+from edgeapt.domain.artifacts import UpstreamFact
+from edgeapt.domain.keys import DebKey
+from edgeapt.domain.keys import PublishKey
+from edgeapt.domain.lock import LockedPublication
+from edgeapt.domain.lock import LockFile
+from edgeapt.domain.planning import SourceProvenance
 from edgeapt.constants import LOCK_SCHEMA
 from edgeapt.constants import ROOT
+from edgeapt.infrastructure.deb import DefaultDebTools
+from edgeapt.infrastructure.fetcher import DefaultFetcher
 from pathlib import Path
+from edgeapt.project import EdgeAptProject, ProjectPaths
+from edgeapt.templates.base import DebTools, Fetcher
+from edgeapt.templates.base import SourceDocument, SourceTemplate
+from edgeapt.templates.registry import DEFAULT_TEMPLATES, TemplateRegistry
+
+
+def make_project(
+    root: Path,
+    *,
+    templates: TemplateRegistry = DEFAULT_TEMPLATES,
+    fetcher: Fetcher | None = None,
+    deb_tools: DebTools | None = None,
+) -> EdgeAptProject:
+    return EdgeAptProject(
+        paths=ProjectPaths(root),
+        templates=templates,
+        fetcher=fetcher or DefaultFetcher(),
+        deb_tools=deb_tools or DefaultDebTools(),
+    )
 
 
 def make_source(
@@ -32,35 +49,43 @@ def make_source(
     e2e_command: tuple[str, ...] = ("foo", "--version"),
     allow_ubuntu_package_override: bool = False,
     override_reason: str | None = None,
-) -> SourceConfig:
+) -> SourceTemplate:
     package_name = package or source_id
-    repackage = None
+    upstream: dict[str, object] = {
+        "version": version,
+        "arch": arch,
+        "suites": list(suites),
+        "url": url,
+    }
+    if sha256 is not None:
+        upstream["sha256"] = sha256
+    raw: dict[str, object] = {
+        "template": template,
+        "id": source_id,
+        "package": package_name,
+        "e2e_command": list(e2e_command),
+        "allow_ubuntu_package_override": allow_ubuntu_package_override,
+        "upstream": [upstream],
+    }
+    if override_reason is not None:
+        raw["override_reason"] = override_reason
     if template == "edgeapt.single_binary/v1":
-        repackage = RepackageConfig(
-            type="nfpm",
-            install_path=install_path,
-            metadata=RepackageMetadata(description=package_name),
-        )
-    return SourceConfig(
-        template=template,
-        id=source_id,
-        package=package_name,
-        e2e_command=e2e_command,
-        source_file=f"sources/{source_id}.yaml",
-        repackage=repackage,
-        upstream=(
-            UpstreamConfig(
-                version=version,
-                revision=revision,
-                arch=arch,
-                suites=suites,
-                url=url,
-                sha256=sha256,
-                extract_path=extract_path,
-            ),
-        ),
-        allow_ubuntu_package_override=allow_ubuntu_package_override,
-        override_reason=override_reason,
+        upstream["revision"] = revision
+        if extract_path is not None:
+            upstream["extract_path"] = extract_path
+        raw["repackage"] = {
+            "type": "nfpm",
+            "install_path": install_path,
+            "metadata": {"description": package_name},
+        }
+    template_type = DEFAULT_TEMPLATES.resolve(template)
+    return template_type.model_validate(raw)
+
+
+def make_document(source: SourceTemplate) -> SourceDocument:
+    return SourceDocument(
+        source=source,
+        source_file=f"sources/{source.id}.yaml",
     )
 
 

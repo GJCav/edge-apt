@@ -5,16 +5,10 @@ from pathlib import Path
 from typing import Any, cast
 
 from edgeapt.constants import LOCK_PATH, LOCK_SCHEMA
-from edgeapt.models import (
-    ArtifactFact,
-    DebControlFact,
-    DebKey,
-    LockedPublication,
-    LockFile,
-    PublishKey,
-    SourceProvenance,
-    UpstreamFact,
-)
+from edgeapt.domain.artifacts import ArtifactFact, DebControlFact, UpstreamFact
+from edgeapt.domain.keys import DebKey, PublishKey
+from edgeapt.domain.lock import LockedPublication, LockFile
+from edgeapt.domain.planning import SourceProvenance
 from edgeapt.util import read_json, write_json
 
 

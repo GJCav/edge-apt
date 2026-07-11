@@ -5,15 +5,16 @@ from pathlib import Path
 import pytest
 
 from edgeapt.errors import ValidationError
-from edgeapt.models import Publication
-from edgeapt.planner import build_repo_plan
-from edgeapt.ubuntu_index import ensure_no_ubuntu_package_conflicts
-from edgeapt.ubuntu_index import load_ubuntu_index
-from edgeapt.ubuntu_index import parse_packages_index
-from edgeapt.ubuntu_index import refresh_ubuntu_index
-from edgeapt.ubuntu_index import UbuntuIndexRefreshEvent
+from edgeapt.domain.planning import Publication
+from edgeapt.infrastructure.ubuntu_index import ensure_no_ubuntu_package_conflicts
+from edgeapt.infrastructure.ubuntu_index import load_ubuntu_index
+from edgeapt.infrastructure.ubuntu_index import parse_packages_index
+from edgeapt.infrastructure.ubuntu_index import refresh_ubuntu_index
+from edgeapt.infrastructure.ubuntu_index import UbuntuIndexRefreshEvent
+from edgeapt.workflows.planning import build_repo_plan
 from edgeapt.util import write_json
 from tests.factories import make_source
+from tests.factories import make_document
 
 
 def test_parse_packages_index() -> None:
@@ -56,7 +57,7 @@ def test_refresh_ubuntu_index_reports_component_downloads(
         return frozenset({component})
 
     monkeypatch.setattr(
-        "edgeapt.ubuntu_index._download_component_packages",
+        "edgeapt.infrastructure.ubuntu_index._download_component_packages",
         fake_download_component_packages,
     )
 
@@ -139,7 +140,7 @@ def _publications(
         allow_ubuntu_package_override=allow_ubuntu_package_override,
         override_reason=override_reason,
     )
-    return build_repo_plan((source,)).publications
+    return build_repo_plan((make_document(source),)).publications
 
 
 def _write_index(tmp_path: Path, *, packages: list[str]) -> None:

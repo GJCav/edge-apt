@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import os
 import shutil
+import tempfile
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
@@ -10,25 +12,17 @@ import attrs
 from edgeapt.constants import (
     LOCK_SCHEMA,
     PACKAGES_DIR,
-    PROJECT_PATHS,
     ROOT,
-    ProjectPaths,
 )
-from edgeapt.deb import build_binary_deb, read_deb_control, validate_deb_control
+from edgeapt.domain.artifacts import ArtifactFact, DebControlFact
+from edgeapt.domain.lock import LockedPublication, LockFile
+from edgeapt.domain.planning import BuildUnit
 from edgeapt.errors import ValidationError
-from edgeapt.fetch import fetch_upstream, prepare_single_binary
-from edgeapt.lockfile import load_lock, write_lock
-from edgeapt.models import (
-    ArtifactFact,
-    BuildUnit,
-    LockedPublication,
-    LockFile,
-    SingleBinaryBuildSpec,
-)
-from edgeapt.planner import build_repo_plan
-from edgeapt.sources import load_sources
+from edgeapt.infrastructure.lock_store import load_lock, write_lock
+from edgeapt.project import EdgeAptProject, ProjectPaths, create_project
+from edgeapt.templates.base import BuildContext
 from edgeapt.util import file_size, relative_to_root, sha256_file
-
+from edgeapt.workflows.planning import compile_project_plan
 
 @attrs.define(kw_only=True, frozen=True)
 class RepackageEvent:
@@ -42,6 +36,9 @@ class RepackageEvent:
     url: str | None = None
     size: int | None = None
     sha256: str | None = None
+    source_count: int | None = None
+    build_count: int | None = None
+    publication_count: int | None = None
     message: str
 
 
@@ -59,13 +56,23 @@ class PruneResult:
     dry_run: bool
 
 
-def repackage_all(
+@attrs.define(kw_only=True, frozen=True)
+class RepackageResult:
+    lock: LockFile
+    source_count: int
+    build_count: int
+    publication_count: int
+
+
+def repackage_project(
     on_event: Callable[[RepackageEvent], None] | None = None,
     *,
-    paths: ProjectPaths = PROJECT_PATHS,
-) -> LockFile:
-    sources = load_sources(paths.sources_dir, root=paths.root)
-    plan = build_repo_plan(sources)
+    project: EdgeAptProject | None = None,
+) -> RepackageResult:
+    active_project = project or create_project(ROOT)
+    paths = active_project.paths
+    planning = compile_project_plan(active_project)
+    plan = planning.plan
     previous_lock = load_lock(paths.lock_path)
     previous_artifacts = (
         {artifact.deb_key: artifact for artifact in previous_lock.artifacts}
@@ -76,8 +83,11 @@ def repackage_all(
     _emit(
         on_event,
         kind="sources_loaded",
+        source_count=planning.source_count,
+        build_count=len(plan.builds),
+        publication_count=len(plan.publications),
         message=(
-            f"Loaded {len(sources)} source(s), "
+            f"Loaded {planning.source_count} source(s), "
             f"{len(plan.builds)} build(s), "
             f"{len(plan.publications)} publication(s)"
         ),
@@ -91,7 +101,7 @@ def repackage_all(
                 previous=previous_artifacts.get(build.deb_key),
                 now=now,
                 on_event=on_event,
-                paths=paths,
+                project=active_project,
             )
         )
 
@@ -113,7 +123,12 @@ def repackage_all(
     )
     _emit(on_event, kind="lock_write_start", message=f"Writing {paths.lock_path}")
     write_lock(lock, paths.lock_path)
-    return lock
+    return RepackageResult(
+        lock=lock,
+        source_count=planning.source_count,
+        build_count=len(plan.builds),
+        publication_count=len(plan.publications),
+    )
 
 
 def _execute_build(
@@ -122,15 +137,15 @@ def _execute_build(
     previous: ArtifactFact | None,
     now: str,
     on_event: Callable[[RepackageEvent], None] | None,
-    paths: ProjectPaths,
+    project: EdgeAptProject,
 ) -> ArtifactFact:
+    paths = project.paths
     key = build.deb_key
     spec = build.build_spec
     provenance = build.provenance[0]
     artifact_abs = _artifact_path(build, paths)
     artifact_rel = relative_to_root(artifact_abs, paths.root)
-    template = spec.template
-    url = spec.fetch.url
+    template = spec.template_id
     _emit(
         on_event,
         kind="source_start",
@@ -148,7 +163,6 @@ def _execute_build(
         version=key.deb_version,
         arch=key.arch,
         path=artifact_rel,
-        url=url,
         message=f"Repackaging {key.package} {key.deb_version} {key.arch}",
     )
     cache = _find_cached_artifact(
@@ -168,12 +182,17 @@ def _execute_build(
             version=key.deb_version,
             arch=key.arch,
             path=artifact.path,
-            url=url,
+            url=artifact.upstream.url,
             size=artifact.size,
             sha256=artifact.sha256,
             message="hit",
         )
-        _emit_done(on_event, build=build, artifact=artifact, url=url)
+        _emit_done(
+            on_event,
+            build=build,
+            artifact=artifact,
+            url=artifact.upstream.url,
+        )
         return artifact
 
     _emit(
@@ -185,7 +204,6 @@ def _execute_build(
         version=key.deb_version,
         arch=key.arch,
         path=artifact_rel,
-        url=url,
         message=f"miss - {cache.reason}",
     )
     work_dir = (
@@ -194,92 +212,81 @@ def _execute_build(
     if work_dir.exists():
         shutil.rmtree(work_dir)
     work_dir.mkdir(parents=True, exist_ok=True)
-    download_path = work_dir / "upstream"
-    _emit(
-        on_event,
-        kind="fetch_start",
-        source_id=provenance.source_id,
-        template=template,
-        package=key.package,
-        version=key.deb_version,
-        arch=key.arch,
-        url=url,
-        message=f"Fetching {key.package} {spec.upstream_version} {key.arch}",
-    )
-    download = fetch_upstream(spec.fetch, download_path, root=paths.root)
 
-    deb_control = None
-    revision = None
-    if isinstance(spec, SingleBinaryBuildSpec):
-        revision = spec.revision
-        if spec.extract_path is not None:
-            _emit(
-                on_event,
-                kind="extract_start",
-                source_id=provenance.source_id,
-                template=template,
-                package=key.package,
-                version=key.deb_version,
-                arch=key.arch,
-                message=spec.extract_path,
-            )
-        binary = prepare_single_binary(download.path, spec.extract_path, work_dir)
-        candidate = work_dir / artifact_abs.name
+    def report(kind: str, message: str, url: str | None) -> None:
         _emit(
             on_event,
-            kind="build_start",
+            kind=kind,
             source_id=provenance.source_id,
             template=template,
             package=key.package,
             version=key.deb_version,
             arch=key.arch,
-            path=artifact_rel,
-            message=f"Building {artifact_abs.name}",
+            path=artifact_rel if kind == "build_start" else None,
+            url=url,
+            message=message,
         )
-        build_binary_deb(
-            binary=binary,
-            package=key.package,
-            version=key.deb_version,
-            arch=key.arch,
-            repackage=spec.repackage,
-            output=candidate,
+
+    template_type = project.templates.resolve(spec.template_id)
+    result = template_type.build(
+        spec,
+        BuildContext(
+            deb_key=key,
+            root=paths.root,
             work_dir=work_dir,
-        )
-        _install_artifact(candidate, artifact_abs, root=paths.root)
-    else:
-        _emit(
-            on_event,
-            kind="inspect_deb_start",
-            source_id=provenance.source_id,
-            template=template,
-            package=key.package,
-            version=key.deb_version,
-            arch=key.arch,
-            message=f"Inspecting upstream deb for {key.package}",
-        )
-        deb_control = read_deb_control(download.path)
-        validate_deb_control(
-            control=deb_control,
-            package=key.package,
-            version=key.deb_version,
-            arch=key.arch,
-        )
-        _install_artifact(download.path, artifact_abs, root=paths.root)
+            fetcher=project.fetcher,
+            deb_tools=project.deb_tools,
+            report=report,
+        ),
+    )
+    report(
+        "inspect_deb_start",
+        f"Inspecting candidate deb for {key.package}",
+        None,
+    )
+    actual_control = project.deb_tools.read_control(result.candidate_deb)
+    _validate_candidate_control(build=build, control=actual_control)
+    _install_artifact(result.candidate_deb, artifact_abs, root=paths.root)
 
     artifact = ArtifactFact(
         deb_key=key,
         build_plan_digest=build.plan_digest,
-        upstream_version=spec.upstream_version,
-        revision=revision,
+        upstream_version=result.upstream_version,
+        revision=result.revision,
         path=artifact_rel,
         sha256=sha256_file(artifact_abs),
         size=file_size(artifact_abs),
-        upstream=download.fact,
-        deb_control=deb_control,
+        upstream=result.upstream,
+        deb_control=actual_control,
         created_at=now,
     )
-    _emit_done(on_event, build=build, artifact=artifact, url=url)
+    _emit_done(
+        on_event,
+        build=build,
+        artifact=artifact,
+        url=result.upstream.url,
+    )
     return artifact
+
+
+def _validate_candidate_control(
+    *,
+    build: BuildUnit,
+    control: DebControlFact,
+) -> None:
+    key = build.deb_key
+    if control.package != key.package:
+        raise ValidationError(
+            f"Package mismatch: expected {key.package}, got {control.package}"
+        )
+    if control.version != key.deb_version:
+        raise ValidationError(
+            f"Version mismatch: expected {key.deb_version}, got {control.version}"
+        )
+    if control.architecture != key.arch:
+        raise ValidationError(
+            f"Architecture mismatch: expected {key.arch}, got {control.architecture}"
+        )
 
 
 def prune_packages(
@@ -287,8 +294,11 @@ def prune_packages(
     *,
     dry_run: bool,
     packages_dir: Path = PACKAGES_DIR,
+    root: Path = ROOT,
 ) -> PruneResult:
-    referenced = tuple(sorted((ROOT / artifact.path).resolve() for artifact in lock.artifacts))
+    referenced = tuple(
+        sorted((root / artifact.path).resolve() for artifact in lock.artifacts)
+    )
     if not packages_dir.exists():
         return PruneResult(referenced=referenced, orphans=(), deleted=(), dry_run=dry_run)
 
@@ -366,7 +376,7 @@ def _emit_done(
         on_event,
         kind="artifact_done",
         source_id=provenance.source_id,
-        template=build.build_spec.template,
+        template=build.build_spec.template_id,
         package=build.deb_key.package,
         version=build.deb_key.deb_version,
         arch=build.deb_key.arch,
@@ -392,6 +402,9 @@ def _emit(
     url: str | None = None,
     size: int | None = None,
     sha256: str | None = None,
+    source_count: int | None = None,
+    build_count: int | None = None,
+    publication_count: int | None = None,
 ) -> None:
     if on_event is None:
         return
@@ -407,6 +420,9 @@ def _emit(
             url=url,
             size=size,
             sha256=sha256,
+            source_count=source_count,
+            build_count=build_count,
+            publication_count=publication_count,
             message=message,
         )
     )
@@ -424,4 +440,15 @@ def _install_artifact(candidate: Path, destination: Path, *, root: Path) -> None
                 "use a different deb_version"
             )
         return
-    shutil.copy2(candidate, destination)
+    descriptor, temporary_name = tempfile.mkstemp(
+        dir=destination.parent,
+        prefix=f".{destination.name}.",
+        suffix=".tmp",
+    )
+    os.close(descriptor)
+    temporary = Path(temporary_name)
+    try:
+        shutil.copy2(candidate, temporary)
+        os.replace(temporary, destination)
+    finally:
+        temporary.unlink(missing_ok=True)

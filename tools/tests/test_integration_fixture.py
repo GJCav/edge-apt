@@ -4,17 +4,17 @@ from pathlib import Path
 
 import pytest
 
-from edgeapt.constants import ProjectPaths
-from edgeapt.repackage import repackage_all, RepackageEvent
-from tests.factories import write_hello_source
+from edgeapt.workflows.repackage import repackage_project, RepackageEvent
+from tests.factories import make_project, write_hello_source
 
 
 @pytest.mark.integration
 def test_repackage_writes_lock_and_packages(tmp_path: Path) -> None:
-    paths = ProjectPaths(tmp_path)
+    project = make_project(tmp_path)
+    paths = project.paths
     write_hello_source(tmp_path)
 
-    lock = repackage_all(paths=paths)
+    lock = repackage_project(project=project).lock
 
     assert paths.lock_path.exists()
     assert any(
@@ -32,11 +32,11 @@ def test_repackage_writes_lock_and_packages(tmp_path: Path) -> None:
 
 @pytest.mark.integration
 def test_repackage_reports_progress_events(tmp_path: Path) -> None:
-    paths = ProjectPaths(tmp_path)
+    project = make_project(tmp_path)
     write_hello_source(tmp_path)
     events: list[RepackageEvent] = []
 
-    repackage_all(on_event=events.append, paths=paths)
+    repackage_project(on_event=events.append, project=project)
 
     kinds = {event.kind for event in events}
     assert "source_start" in kinds

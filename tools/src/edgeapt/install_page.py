@@ -7,8 +7,8 @@ from pathlib import Path
 import attrs
 
 from edgeapt.constants import COMPONENT
-from edgeapt.keyring import SigningKey
-from edgeapt.models import LockFile
+from edgeapt.domain.lock import LockFile
+from edgeapt.infrastructure.signing import SigningKey
 
 SUITE_LABELS = {
     "focal": "focal (20)",

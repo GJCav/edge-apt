@@ -19,7 +19,7 @@ from edgeapt.constants import (
     UBUNTU_INDEX_DIR,
 )
 from edgeapt.errors import ValidationError
-from edgeapt.models import Publication
+from edgeapt.domain.planning import Publication
 from edgeapt.util import write_json
 
 @attrs.define(kw_only=True, frozen=True)
