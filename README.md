@@ -1,31 +1,71 @@
 # EdgeAPT
 
-EdgeAPT builds a signed APT repository from declarative source files and deploys
-the generated repository with Cloudflare Workers and Static Assets. Large debs are
-split during generation and streamed through the Worker under their normal APT URL.
+EdgeAPT is a personal, serverless Ubuntu repository hosted on Cloudflare Workers,
+designed for ultra-fast global package delivery **completely FREE OF CHARGE**.
 
-## Repository inputs
+Browse available packages, get installation instructions, or download deb files
+directly at **[edgeapt.gjm20.top](https://edgeapt.gjm20.top/)**.
 
-Package definitions live in `sources/*.yaml`. Every upstream input must include a
-lowercase `sha256:<64 hex digits>` digest. `lock.json` is the reviewed publication
-and output-integrity manifest.
+## Implementation
 
-The `packages/` directory is generated output. It is ignored by Git and may be
-cached locally or by GitHub Actions, but a cold checkout must always be able to
-rebuild it.
+EdgeAPT turns declarative package definitions into a signed APT repository:
 
-`dev-logs/` is an optional private submodule. It is not needed to build, test, or
-deploy EdgeAPT.
+```text
+sources/*.yaml
+      |
+      v
+validate and plan publications
+      |
+      v
+download, verify, and repackage debs
+      |
+      v
+lock.json + packages/
+      |
+      v
+generate signed APT metadata and static assets
+      |
+      v
+Cloudflare Workers + Static Assets
+```
+
+Package sources describe upstream releases, target Ubuntu suites and architectures,
+packaging templates, metadata, and end-to-end checks. Every upstream input is
+protected by a declared SHA256 digest.
+
+Validation expands those source definitions into concrete package publications and
+rejects conflicting plans. Repackaging then downloads verified upstream artifacts
+and either adopts existing debs or builds new ones through the selected template.
+`lock.json` records the reviewed build plan and expected artifact identities.
+
+Generation uses Aptly and GnuPG to create the signed repository. Debs that exceed
+Cloudflare's individual asset limit are split into static chunks; the Worker
+reassembles them as a streaming response under the original APT URL. The package
+explorer and installation guide are generated alongside the repository metadata.
+
+`packages/` is disposable build output. It is ignored by Git and used only as a
+local or GitHub Actions cache. A clean checkout can always rebuild it from the
+source declarations and committed lock.
 
 ## Toolchain
 
-GitHub Actions uses Ubuntu 24.04 with Python 3.13.12, uv 0.11.23, dpkg-deb 1.22.6,
-aptly 1.6.3, Node.js 24.14.0, pnpm 11.11.0, and Wrangler 4.110.0. Local development
-should use compatible versions; `uv run guide` shows the supported workflow.
+| Tool | Role |
+| --- | --- |
+| Python and uv | Planner, validation, packaging, generation, and workflow entry points |
+| dpkg-deb | Deterministic deb construction and inspection |
+| Aptly | APT repository metadata generation |
+| GnuPG | Repository signing |
+| Docker | Installation tests across supported Ubuntu suites |
+| Node.js and pnpm | Cloudflare Worker development and testing |
+| Wrangler | Local Worker runtime and production deployment |
+| Cloudflare Workers | Global delivery, Range requests, and large-deb streaming |
 
-## Local workflow
+CI currently pins Ubuntu 24.04, Python 3.13.12, uv 0.11.23, dpkg-deb 1.22.6,
+Aptly 1.6.3, Node.js 24.14.0, pnpm 11.11.0, and Wrangler 4.110.0.
 
-Install dependencies:
+## Local Development
+
+Install the Python and Worker dependencies:
 
 ```bash
 cd tools
@@ -35,52 +75,53 @@ cd ../cloudflare
 pnpm install --frozen-lockfile
 ```
 
-Validate and intentionally update the lock after changing sources:
+The project CLI is the canonical entry point for both test and production
+workflows. Start with:
 
 ```bash
 cd tools
+uv run guide
+```
+
+The guide lists each stage in order, including key setup, Ubuntu index refresh,
+validation, repackaging, repository generation, Worker startup, E2E testing, and
+deployment.
+
+After changing `sources/*.yaml`, intentionally update the lock with:
+
+```bash
 uv run refresh-ubuntu-index
 uv run validate
 uv run repackage --mode update-lock
 ```
 
-Build from the committed lock without changing it:
+Normal builds and CI use locked mode, which rebuilds missing artifacts and verifies
+them without modifying `lock.json`:
 
 ```bash
-cd tools
 uv run repackage --mode locked
-uv run generate --profile test
-uv run e2e
 ```
 
-Production generation and deployment are explicit steps:
-
-```bash
-cd tools
-uv run check-key --profile prod
-uv run repackage --mode locked
-uv run generate --profile prod
-uv run deploy --dry-run
-uv run deploy
-```
+The optional `dev-logs/` private submodule is not required to build, test, or
+deploy the repository.
 
 ## GitHub Actions
 
-`CI` runs Python and Worker checks plus the full package installation matrix without
-Git LFS or the private submodule. Its package cache is keyed by the canonical
-repository plan and is only a performance optimization.
+The `CI` workflow runs on pull requests and pushes to `master`. It performs Python
+tests, Pyright checks, Worker typechecks and tests, a cold-capable locked build, and
+the complete Docker installation matrix. Package artifacts are cached by operating
+system, repository plan, and lock digest; fallback caches allow unchanged debs to
+be reused after source changes.
 
-`Deploy` uses the GitHub Environment `production`. Automatic deployment on pushes
-to `master` is enabled by setting the repository or environment variable
-`PRODUCTION_DEPLOY_ENABLED=true`; it can always be invoked manually.
-
-The production environment requires these secrets:
+The `Deploy` workflow can be started manually and can also deploy pushes to
+`master` when the repository variable `PRODUCTION_DEPLOY_ENABLED=true`. It uses the
+GitHub Environment `production`, which must provide these secrets:
 
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
 - `EDGEAPT_GPG_PRIVATE_KEY`
 
-It may define `EDGEAPT_BASE_URL`; the workflow defaults to
-`https://edgeapt.gjm20.top`. The signing key fingerprint must match
-`keys/prod/fingerprint.txt`. Cloudflare custom-domain routing remains managed in the
-Dashboard.
+The environment may define `EDGEAPT_BASE_URL`; it defaults to
+`https://edgeapt.gjm20.top`. The signing key must match
+`keys/prod/fingerprint.txt`. Custom-domain routing remains managed in the
+Cloudflare Dashboard.
