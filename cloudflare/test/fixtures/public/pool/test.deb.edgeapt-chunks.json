@@ -1,0 +1,21 @@
+{
+  "schema": "edgeapt.chunked-asset/v1",
+  "path": "/pool/test.deb",
+  "size": 12,
+  "sha256": "sha256:98fc47ca0a2753c9c4c5528dd22a63db7f4cae22df55df8494c2747848545aaa",
+  "content_type": "application/vnd.debian.binary-package",
+  "chunks": [
+    {
+      "path": "/__edgeapt/chunks/sha256/98fc47ca0a2753c9c4c5528dd22a63db7f4cae22df55df8494c2747848545aaa/0000.part",
+      "offset": 0,
+      "size": 6,
+      "sha256": "sha256:0283da60063abfb3a87f1aed845d17fe2d9ba8c780b478dc4ae048f5ee97a6d5"
+    },
+    {
+      "path": "/__edgeapt/chunks/sha256/98fc47ca0a2753c9c4c5528dd22a63db7f4cae22df55df8494c2747848545aaa/0001.part",
+      "offset": 6,
+      "size": 6,
+      "sha256": "sha256:d2529f57fcda43a009979518cd57da9f964bcf5b4175cbc1c0e0649421c671aa"
+    }
+  ]
+}

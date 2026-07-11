@@ -1,5 +1,5 @@
-tmp/
-public/
+/tmp/
+/public/
 /packages/
 tools/.venv/
 tools/.pytest_cache/
