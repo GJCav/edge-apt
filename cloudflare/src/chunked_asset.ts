@@ -4,6 +4,7 @@ const SIDECAR_SCHEMA = "edgeapt.chunked-asset/v1";
 const SIDECAR_SUFFIX = ".edgeapt-chunks.json";
 const SHA256_PATTERN = /^sha256:[0-9a-f]{64}$/;
 const MAX_CHUNKS = 32;
+const FALLBACK_READ_SIZE = 256 * 1024;
 
 interface ChunkFact {
   path: string;
@@ -31,6 +32,8 @@ interface FetchedSegment {
   response: Response;
   skip: number;
   length: number;
+  requiresSlicing: boolean;
+  canPipeRemainder: boolean;
 }
 
 export async function handleChunkedAsset(
@@ -39,7 +42,7 @@ export async function handleChunkedAsset(
 ): Promise<Response | null> {
   const url = new URL(request.url);
   if (!url.pathname.endsWith(".deb")) return null;
-  if (!new Set(["GET", "HEAD"]).has(request.method)) {
+  if (request.method !== "GET" && request.method !== "HEAD") {
     return new Response("Method Not Allowed", {
       status: 405,
       headers: { Allow: "GET, HEAD" },
@@ -186,6 +189,8 @@ async function fetchSegment(
     response,
     skip: partial && response.status !== 206 ? relativeStart : 0,
     length: relativeEnd - relativeStart + 1,
+    requiresSlicing: partial && response.status !== 206,
+    canPipeRemainder: relativeEnd === segment.chunk.size - 1,
   };
 }
 
@@ -217,54 +222,85 @@ async function pumpSegments(
   artifactPath: string,
   writable: WritableStream<Uint8Array>,
 ): Promise<void> {
-  const writer = writable.getWriter();
   try {
-    await pipeSegment(first, writer);
+    await pipeSegment(first, writable);
     for (const segment of remaining) {
       await pipeSegment(
         await fetchSegment(assets, requestUrl, segment),
-        writer,
+        writable,
       );
     }
-    await writer.close();
+    await writable.close();
   } catch (error) {
     console.error(JSON.stringify({
       event: "chunked_asset_stream_error",
       path: artifactPath,
       error: error instanceof Error ? error.message : String(error),
     }));
-    await writer.abort(error);
+    await writable.abort(error);
   }
 }
 
 async function pipeSegment(
   segment: FetchedSegment,
-  writer: WritableStreamDefaultWriter<Uint8Array>,
+  writable: WritableStream<Uint8Array>,
 ): Promise<void> {
-  const reader = segment.response.body!.getReader();
+  const body = segment.response.body!;
+  if (!segment.requiresSlicing) {
+    // Native piping keeps CPU cost independent of the artifact's stream chunk count.
+    await pipeBody(body, writable);
+    return;
+  }
+
+  const reader = body.getReader({ mode: "byob" });
+  const writer = writable.getWriter();
   let skip = segment.skip;
   let remaining = segment.length;
+  let pipeRemainder = false;
   try {
     while (remaining > 0) {
-      const result = await reader.read();
-      if (result.done) break;
+      if (skip === 0 && segment.canPipeRemainder) {
+        pipeRemainder = true;
+        break;
+      }
+      const readSize = Math.min(FALLBACK_READ_SIZE, skip + remaining);
+      const result = await reader.readAtLeast(
+        readSize,
+        new Uint8Array(readSize),
+      );
+      if (result.done || result.value.byteLength === 0) break;
       let content = result.value;
       if (skip >= content.byteLength) {
         skip -= content.byteLength;
         continue;
       }
       if (skip > 0) {
-        content = content.slice(skip);
+        content = content.subarray(skip);
         skip = 0;
       }
-      if (content.byteLength > remaining) content = content.slice(0, remaining);
+      if (content.byteLength > remaining) content = content.subarray(0, remaining);
       await writer.write(content);
       remaining -= content.byteLength;
     }
-    if (remaining !== 0) throw new Error("chunk response ended before expected length");
+    if (remaining !== 0 && !pipeRemainder) {
+      throw new Error("chunk response ended before expected length");
+    }
   } finally {
-    await reader.cancel();
+    writer.releaseLock();
+    if (!pipeRemainder) await reader.cancel();
+    reader.releaseLock();
   }
+  if (pipeRemainder) await pipeBody(body, writable);
+}
+
+async function pipeBody(
+  body: ReadableStream<Uint8Array>,
+  writable: WritableStream<Uint8Array>,
+): Promise<void> {
+  await body.pipeTo(writable, {
+    preventAbort: true,
+    preventClose: true,
+  });
 }
 
 function responseHeaders(manifest: ChunkedAssetManifest, etag: string): Headers {

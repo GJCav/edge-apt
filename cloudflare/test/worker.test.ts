@@ -1,9 +1,12 @@
+import { env } from "cloudflare:test";
 import { exports } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 
 import { validateManifest } from "../src/chunked_asset";
 
 const URL = "https://example.test/pool/test.deb";
+const CHUNK_URL =
+  "https://example.test/__edgeapt/chunks/sha256/98fc47ca0a2753c9c4c5528dd22a63db7f4cae22df55df8494c2747848545aaa/0000.part";
 const ETAG = '"98fc47ca0a2753c9c4c5528dd22a63db7f4cae22df55df8494c2747848545aaa"';
 
 describe("chunked asset worker", () => {
@@ -34,6 +37,21 @@ describe("chunked asset worker", () => {
     expect(response.headers.get("Content-Range")).toBe("bytes 4-8/12");
     expect(response.headers.get("Content-Length")).toBe("5");
     expect(await bodyText(response)).toBe("e\nfgh");
+  });
+
+  it("slices ranges when the static asset binding ignores Range", async () => {
+    const assetResponse = await env.ASSETS.fetch(new Request(CHUNK_URL, {
+      headers: { Range: "bytes=1-2" },
+    }));
+    expect(assetResponse.status).toBe(200);
+    expect(await bodyText(assetResponse)).toBe("abcde\n");
+
+    const response = await exports.default.fetch(new Request(URL, {
+      headers: { Range: "bytes=1-2" },
+    }));
+    expect(response.status).toBe(206);
+    expect(response.headers.get("Content-Length")).toBe("2");
+    expect(await bodyText(response)).toBe("bc");
   });
 
   it("serves suffix ranges", async () => {
