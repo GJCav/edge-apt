@@ -56,6 +56,8 @@ def test_generate_repo_writes_signed_metadata(tmp_path: Path) -> None:
     assert vue_license.exists()
     assert not paths.public_dir.exists()
     html = index_html.read_text(encoding="utf-8")
+    assert "deployed at the edge and powered by serverless functions" in html
+    assert "SIGNED APT REPOSITORY" not in html
     assert "Package explorer" in html
     assert "Repository Setup" in html
     assert "paginatedPackages" in html

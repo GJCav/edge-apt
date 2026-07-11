@@ -22,12 +22,11 @@ button, .button { min-height: 40px; }
   gap: 24px;
   padding-bottom: 24px;
 }
-.eyebrow {
-  margin: 0 0 4px;
+.project-intro {
+  margin: 0 0 6px;
   color: #176b5b;
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .12em;
+  font-size: .9rem;
+  font-weight: 650;
 }
 h1 { margin: 0; font-size: 2.5rem; line-height: 1; letter-spacing: 0; }
 h2 { margin: 0 0 4px; font-size: 1.35rem; letter-spacing: 0; }
