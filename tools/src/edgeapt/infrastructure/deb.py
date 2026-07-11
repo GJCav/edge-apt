@@ -39,15 +39,20 @@ class DefaultDebTools:
         ]
         if homepage is not None:
             control_lines.append(f"Homepage: {homepage}")
-        (debian_dir / "control").write_text(
+        control_path = debian_dir / "control"
+        control_path.write_text(
             "\n".join(control_lines) + "\n", encoding="utf-8"
         )
+        control_path.chmod(0o644)
 
         output.parent.mkdir(parents=True, exist_ok=True)
         if output.exists():
             output.unlink()
         for path in root.rglob("*"):
+            if path.is_dir():
+                path.chmod(0o755)
             os.utime(path, (source_date_epoch, source_date_epoch))
+        root.chmod(0o755)
         os.utime(root, (source_date_epoch, source_date_epoch))
         run(
             ["dpkg-deb", "--build", "--root-owner-group", root, output],
