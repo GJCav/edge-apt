@@ -13,6 +13,7 @@ from edgeapt.infrastructure.aptly import publish_with_aptly
 from edgeapt.infrastructure.lock_store import load_lock
 from edgeapt.infrastructure.signing import load_signing_key, SigningKey
 from edgeapt.install_page import write_install_page
+from edgeapt.package_manifest import write_package_manifest
 from edgeapt.project import EdgeAptProject, ProjectPaths, create_project
 from edgeapt.util import require_executable
 from edgeapt.workflows.planning import compile_project_plan
@@ -24,6 +25,7 @@ class GenerateResult:
     signing_key_fingerprint: str
     profile: str
     index_html: Path
+    package_manifest: Path
 
 
 def generate_repository(
@@ -50,10 +52,13 @@ def generate_repository(
         output_dir=output_dir,
         signing_key_fingerprint=signing_key.fingerprint,
     )
-    install_page = write_install_page(
+    package_manifest = write_package_manifest(
         output_dir=output_dir,
         profile=profile,
         lock=lock,
+    )
+    install_page = write_install_page(
+        output_dir=output_dir,
         signing_key=signing_key,
     )
     check_static_asset_size_limit(output_dir)
@@ -62,6 +67,7 @@ def generate_repository(
         signing_key_fingerprint=signing_key.fingerprint,
         profile=profile,
         index_html=install_page.index_html,
+        package_manifest=package_manifest,
     )
 
 

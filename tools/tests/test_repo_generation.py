@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
+from typing import Any, cast
 
 import pytest
 
@@ -32,21 +34,45 @@ def test_generate_repo_writes_signed_metadata(tmp_path: Path) -> None:
     index_html = paths.test_public_dir / "index.html"
     public_ascii = paths.test_public_dir / "edgeapt.asc"
     public_keyring = paths.test_public_dir / "edgeapt.gpg"
+    package_manifest = paths.test_public_dir / "packages.json"
+    vue_bundle = paths.test_public_dir / "assets" / "vue.global.prod.js"
+    explorer_script = paths.test_public_dir / "assets" / "explorer.js"
+    explorer_styles = paths.test_public_dir / "assets" / "explorer.css"
+    vue_license = paths.test_public_dir / "assets" / "vue.LICENSE.txt"
 
     assert inrelease.exists()
     assert release.exists()
     assert release_gpg.exists()
     assert result.index_html == index_html
+    assert result.package_manifest == package_manifest
     assert index_html.exists()
     assert public_ascii.exists()
     assert public_keyring.exists()
+    assert package_manifest.exists()
+    assert vue_bundle.exists()
+    assert explorer_script.exists()
+    assert explorer_styles.exists()
+    assert vue_license.exists()
     assert not paths.public_dir.exists()
     html = index_html.read_text(encoding="utf-8")
-    assert "Use DEB822 source format" in html
-    assert "Types: deb" in html
-    assert "deb [arch=" in html
-    assert "edgeapt.gpg" in html
-    assert "noble" in html
+    assert "Package explorer" in html
+    assert "Repository Setup" in html
+    assert "paginatedPackages" in html
+    assert "Page {{ currentPage }} of {{ pageCount }}" in html
+    assert '@click="copyText(item.sha256)"' in html
+    assert 'title="Copy SHA256"' in html
+    assert "Copy SHA256 for ${item.package}" in html
+    assert "./assets/vue.global.prod.js" in html
+    assert "cdn" not in html.lower()
+    manifest = cast(
+        dict[str, Any],
+        json.loads(package_manifest.read_text(encoding="utf-8")),
+    )
+    packages = cast(list[dict[str, Any]], manifest["packages"])
+    assert manifest["schema"] == "edgeapt.packages/v1"
+    assert packages[0]["package"] == "edgeapt-hello"
+    assert packages[0]["suite"] == "noble"
+    assert (paths.test_public_dir / packages[0]["filename"]).is_file()
     run(["gpg", "--verify", inrelease])
 
 

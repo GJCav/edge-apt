@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>EdgeAPT Repository</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./assets/explorer.css">
+  <script src="./assets/vue.global.prod.js" defer></script>
+  <script src="./assets/explorer.js" defer></script>
+</head>
+<body>
+  <main id="app" v-cloak>
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">SIGNED APT REPOSITORY</p>
+        <h1>EdgeAPT</h1>
+      </div>
+      <div v-if="manifest" class="repository-meta">
+        <span>{{ manifest.profile }}</span>
+        <span>{{ manifest.packages.length }} publications</span>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Repository views" role="tablist">
+      <button type="button" role="tab" :aria-selected="view === 'packages'" :class="{ active: view === 'packages' }" @click="setView('packages')">Packages</button>
+      <button type="button" role="tab" :aria-selected="view === 'setup'" :class="{ active: view === 'setup' }" @click="setView('setup')">Repository Setup</button>
+    </nav>
+
+    <section v-if="view === 'packages'" class="view" aria-labelledby="packages-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="packages-heading">Package explorer</h2>
+          <p>Inspect repository publications and download Debian packages directly.</p>
+        </div>
+        <span v-if="!loading && !error" class="result-count">{{ filteredPackages.length }} results</span>
+      </div>
+
+      <div class="filters" aria-label="Package filters">
+        <label class="search-field">
+          <span>Search</span>
+          <input v-model="query" type="search" placeholder="Package name or description" autocomplete="off" @input="scheduleQuerySync">
+        </label>
+        <label>
+          <span>Suite</span>
+          <select v-model="suite" @change="commitFilterState">
+            <option value="">All</option>
+            <option v-for="value in suites" :key="value" :value="value">{{ suiteLabel(value) }}</option>
+          </select>
+        </label>
+        <label>
+          <span>Architecture</span>
+          <select v-model="arch" @change="commitFilterState">
+            <option value="">All</option>
+            <option v-for="value in arches" :key="value" :value="value">{{ value }}</option>
+          </select>
+        </label>
+        <label>
+          <span>Component</span>
+          <select v-model="component" @change="commitFilterState">
+            <option value="">All</option>
+            <option v-for="value in components" :key="value" :value="value">{{ value }}</option>
+          </select>
+        </label>
+        <button class="secondary clear-button" type="button" :disabled="!hasFilters" @click="clearFilters">Clear</button>
+      </div>
+
+      <div v-if="loading" class="state" role="status">Loading package index...</div>
+      <div v-else-if="error" class="state error" role="alert">
+        <strong>Package index unavailable</strong>
+        <span>{{ error }}</span>
+        <button type="button" @click="loadManifest">Retry</button>
+      </div>
+      <div v-else-if="filteredPackages.length === 0" class="state">
+        <strong>No matching packages</strong>
+        <span>Adjust or clear the current filters.</span>
+      </div>
+      <div v-else>
+        <div class="package-list">
+        <article v-for="item in paginatedPackages" :key="packageKey(item)" class="package-row">
+          <div class="package-primary">
+            <div class="package-title">
+              <h3>{{ item.package }}</h3>
+              <code>{{ item.version }}</code>
+            </div>
+            <p class="description">{{ item.description }}</p>
+            <a v-if="item.homepage" class="homepage" :href="item.homepage" target="_blank" rel="noreferrer">Project homepage</a>
+          </div>
+          <dl class="package-facts">
+            <div><dt>Suite</dt><dd>{{ suiteLabel(item.suite) }}</dd></div>
+            <div><dt>Arch</dt><dd>{{ item.arch }}</dd></div>
+            <div><dt>Component</dt><dd>{{ item.component }}</dd></div>
+            <div><dt>Size</dt><dd>{{ formatSize(item.size) }}</dd></div>
+            <div class="checksum-fact">
+              <dt class="fact-label">
+                <span>SHA256</span>
+                <button class="copy-icon" type="button" title="Copy SHA256" :aria-label="`Copy SHA256 for ${item.package}`" @click="copyText(item.sha256)">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                  </svg>
+                </button>
+              </dt>
+              <dd :title="item.sha256"><code>{{ shortHash(item.sha256) }}</code></dd>
+            </div>
+          </dl>
+          <div class="package-actions">
+            <button class="secondary" type="button" @click="copyInstall(item.package)">Copy install command</button>
+            <a class="button" :href="downloadUrl(item)" download>Download deb</a>
+          </div>
+        </article>
+        </div>
+        <nav v-if="pageCount > 1" class="pagination" aria-label="Package result pages">
+          <button class="secondary" type="button" :disabled="currentPage === 1" @click="setPage(currentPage - 1)">Previous</button>
+          <span>Page {{ currentPage }} of {{ pageCount }}</span>
+          <button class="secondary" type="button" :disabled="currentPage === pageCount" @click="setPage(currentPage + 1)">Next</button>
+        </nav>
+      </div>
+    </section>
+
+    <section v-else class="view" aria-labelledby="setup-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="setup-heading">Repository setup</h2>
+          <p>Configure this signed repository for the target Ubuntu system.</p>
+        </div>
+      </div>
+      <div class="setup-controls">
+        <label>
+          <span>Ubuntu suite</span>
+          <select v-model="setupSuite">
+            <option v-for="value in suites" :key="value" :value="value">{{ suiteLabel(value) }}</option>
+          </select>
+        </label>
+        <label>
+          <span>Architecture</span>
+          <select v-model="setupArch">
+            <option v-for="value in arches" :key="value" :value="value">{{ value }}</option>
+          </select>
+        </label>
+        <label class="toggle">
+          <input v-model="deb822" type="checkbox">
+          <span>Use DEB822 source format</span>
+        </label>
+      </div>
+      <p class="hint">DEB822 is recommended for current Ubuntu releases. The legacy one-line format remains available for older systems.</p>
+
+      <div class="command-block">
+        <div><h3>Setup commands</h3><button class="secondary" type="button" @click="copyText(setupCommand)">Copy</button></div>
+        <pre><code>{{ setupCommand }}</code></pre>
+      </div>
+      <div class="command-block">
+        <div><h3>Install a package</h3><button class="secondary" type="button" @click="copyText(exampleCommand)">Copy</button></div>
+        <pre><code>{{ exampleCommand }}</code></pre>
+      </div>
+    </section>
+
+    <p class="toast" :class="{ visible: toast }" aria-live="polite">{{ toast }}</p>
+  </main>
+  <noscript>This package explorer requires JavaScript.</noscript>
+</body>
+</html>

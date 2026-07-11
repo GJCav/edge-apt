@@ -220,6 +220,7 @@ def generate(profile: str = "test") -> None:
         f"{result.output_dir}[/green]"
     )
     console.print(f"install page: {result.index_html}")
+    console.print(f"package index: {result.package_manifest}")
     console.print(f"signing key: {result.signing_key_fingerprint}")
 
 
