@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import gzip
 import shutil
 import stat
 import tarfile
 import zipfile
+import zlib
 from collections.abc import Callable, Mapping
 from pathlib import Path, PurePosixPath
 
@@ -48,6 +50,13 @@ class DefaultArchiveExtractor:
                     requested=requested,
                     destination=destination,
                 )
+        if _is_gzip(archive):
+            return _extract_gzip(
+                archive,
+                strip_components=strip_components,
+                requested=requested,
+                destination=destination,
+            )
         raise ValidationError("unsupported archive format")
 
 
@@ -128,6 +137,51 @@ def _extract_zip(
         sizes=sizes,
         copy_member=copy_member,
     )
+
+
+def _is_gzip(archive: Path) -> bool:
+    with archive.open("rb") as source:
+        return source.read(2) == b"\x1f\x8b"
+
+
+def _extract_gzip(
+    archive: Path,
+    *,
+    strip_components: int,
+    requested: tuple[str, ...],
+    destination: Path,
+) -> Mapping[str, Path]:
+    if strip_components != 0:
+        raise ValidationError(
+            "strip_components is unsupported for single-file gzip archives"
+        )
+    if len(requested) != 1:
+        raise ValidationError(
+            "single-file gzip archives require exactly one requested path"
+        )
+
+    path = requested[0]
+    target = destination.joinpath(*PurePosixPath(path).parts)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    size_limit = min(MAX_ARCHIVE_MEMBER_SIZE, MAX_SELECTED_TOTAL_SIZE)
+    size = 0
+    try:
+        with gzip.open(archive, "rb") as source, target.open("wb") as output:
+            while chunk := source.read(1024 * 1024):
+                size += len(chunk)
+                if size > size_limit:
+                    raise ValidationError(
+                        "gzip payload exceeds archive size limit"
+                    )
+                output.write(chunk)
+    except (gzip.BadGzipFile, EOFError, zlib.error) as error:
+        target.unlink(missing_ok=True)
+        raise ValidationError("invalid gzip archive") from error
+    except ValidationError:
+        target.unlink(missing_ok=True)
+        raise
+
+    return {path: target}
 
 
 def _materialize(

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gzip
 import io
 import tarfile
 import zipfile
@@ -31,6 +32,52 @@ def test_extracts_same_payload_from_supported_archives(
     )
 
     assert extracted["bin/tool"].read_bytes() == b"payload"
+
+
+def test_extracts_single_file_gzip_payload(tmp_path: Path) -> None:
+    archive = tmp_path / "tool.gz"
+    archive.write_bytes(gzip.compress(b"payload"))
+
+    extracted = DefaultArchiveExtractor().extract_regular_files(
+        archive=archive,
+        strip_components=0,
+        paths=("bin/tool",),
+        destination=tmp_path / "output",
+    )
+
+    assert extracted["bin/tool"].read_bytes() == b"payload"
+
+
+def test_single_file_gzip_rejects_strip_components(tmp_path: Path) -> None:
+    archive = tmp_path / "tool.gz"
+    archive.write_bytes(gzip.compress(b"payload"))
+
+    with pytest.raises(ValidationError, match="strip_components"):
+        DefaultArchiveExtractor().extract_regular_files(
+            archive=archive,
+            strip_components=1,
+            paths=("tool",),
+            destination=tmp_path / "output",
+        )
+
+
+def test_single_file_gzip_enforces_size_limit(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    archive = tmp_path / "tool.gz"
+    archive.write_bytes(gzip.compress(b"payload"))
+    monkeypatch.setattr(archive_module, "MAX_ARCHIVE_MEMBER_SIZE", 1)
+
+    with pytest.raises(ValidationError, match="size limit"):
+        DefaultArchiveExtractor().extract_regular_files(
+            archive=archive,
+            strip_components=0,
+            paths=("tool",),
+            destination=tmp_path / "output",
+        )
+
+    assert not (tmp_path / "output" / "tool").exists()
 
 
 def test_rejects_duplicate_path_after_strip(tmp_path: Path) -> None:

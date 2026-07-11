@@ -1,0 +1,22 @@
+template: edgeapt.single_binary/v1
+id: eza
+package: eza
+e2e_commands:
+  - [eza, --version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer the latest upstream eza release over the Ubuntu packaged version."
+
+repackage:
+  install_path: /usr/bin/eza
+  metadata:
+    description: "A modern alternative to ls."
+    homepage: "https://github.com/eza-community/eza"
+
+upstream:
+  - version: v0.23.5
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/eza-community/eza/releases/download/v0.23.5/eza_x86_64-unknown-linux-gnu.zip"
+    sha256: "sha256:f3bfd758743699e6c8ac38c6c65cf4aadc8f02d046a0af5a4c4b28e59e305a5a"
+    extract_path: eza
