@@ -39,12 +39,11 @@ def test_repackage_rejects_candidate_with_wrong_deb_key(tmp_path: Path) -> None:
 
 
 class _WrongControlDebTools:
-    def build_single_binary(
+    def build_package(
         self,
         *,
-        binary: Path,
+        payload_root: Path,
         deb_key: object,
-        install_path: str,
         description: str,
         homepage: str | None,
         output: Path,

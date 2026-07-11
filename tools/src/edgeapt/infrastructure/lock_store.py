@@ -8,7 +8,7 @@ from edgeapt.constants import LOCK_PATH, LOCK_SCHEMA
 from edgeapt.domain.artifacts import ArtifactFact, DebControlFact, UpstreamFact
 from edgeapt.domain.keys import DebKey, PublishKey
 from edgeapt.domain.lock import LockedPublication, LockFile
-from edgeapt.domain.planning import SourceProvenance
+from edgeapt.domain.planning import PublicationE2EClaim, SourceProvenance
 from edgeapt.util import read_json, write_json
 
 
@@ -79,24 +79,34 @@ def _artifact_from_json(data: Mapping[str, Any]) -> ArtifactFact:
 
 
 def _publication_from_json(data: Mapping[str, Any]) -> LockedPublication:
-    provenance = tuple(
+    claims = tuple(
         sorted(
-            _provenance_from_json(item)
-            for item in _expect_object_array(data, "provenance")
+            (_e2e_claim_from_json(item) for item in _expect_object_array(data, "e2e_claims")),
+            key=lambda claim: (claim.provenance, claim.commands),
         )
     )
-    commands_raw = data.get("e2e_commands")
-    if not isinstance(commands_raw, list) or not commands_raw:
-        raise ValueError("lock field e2e_commands must be a non-empty array")
-    command_items = cast(list[object], commands_raw)
-    commands = tuple(
-        sorted(_str_tuple(item, "e2e_commands") for item in command_items)
-    )
+    if not claims:
+        raise ValueError("lock field e2e_claims must be a non-empty array")
     return LockedPublication(
         key=_publish_key_from_json(_expect_object(data, "key")),
         artifact=_deb_key_from_json(_expect_object(data, "artifact")),
-        provenance=provenance,
-        e2e_commands=commands,
+        e2e_claims=claims,
+    )
+
+
+def _e2e_claim_from_json(data: Mapping[str, Any]) -> PublicationE2EClaim:
+    commands_raw = data.get("commands")
+    if not isinstance(commands_raw, list) or not commands_raw:
+        raise ValueError("lock field commands must be a non-empty array")
+    commands = tuple(
+        sorted(
+            _str_tuple(item, "commands")
+            for item in cast(list[object], commands_raw)
+        )
+    )
+    return PublicationE2EClaim(
+        provenance=_provenance_from_json(_expect_object(data, "provenance")),
+        commands=commands,
     )
 
 

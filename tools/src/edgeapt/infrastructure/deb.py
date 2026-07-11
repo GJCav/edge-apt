@@ -10,12 +10,11 @@ from edgeapt.util import run
 
 
 class DefaultDebTools:
-    def build_single_binary(
+    def build_package(
         self,
         *,
-        binary: Path,
+        payload_root: Path,
         deb_key: DebKey,
-        install_path: str,
         description: str,
         homepage: str | None,
         output: Path,
@@ -25,13 +24,9 @@ class DefaultDebTools:
         root = work_dir / "pkgroot"
         if root.exists():
             shutil.rmtree(root)
+        shutil.copytree(payload_root, root)
         debian_dir = root / "DEBIAN"
         debian_dir.mkdir(parents=True, exist_ok=True)
-
-        target = root / install_path.lstrip("/")
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(binary, target)
-        target.chmod(0o755)
 
         control_lines = [
             f"Package: {deb_key.package}",

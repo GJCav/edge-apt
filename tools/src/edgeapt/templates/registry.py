@@ -6,6 +6,7 @@ from types import MappingProxyType
 from edgeapt.errors import ValidationError
 from edgeapt.templates.base import SourceTemplate
 from edgeapt.templates.deb_upstream_v1 import DebUpstreamV1
+from edgeapt.templates.prebuilt_archive_v1 import PrebuiltArchiveV1
 from edgeapt.templates.single_binary_v1 import SingleBinaryV1
 
 
@@ -32,4 +33,6 @@ class TemplateRegistry:
         return tuple(sorted(self._templates))
 
 
-DEFAULT_TEMPLATES = TemplateRegistry([SingleBinaryV1, DebUpstreamV1])
+DEFAULT_TEMPLATES = TemplateRegistry(
+    [SingleBinaryV1, DebUpstreamV1, PrebuiltArchiveV1]
+)

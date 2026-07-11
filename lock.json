@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "build_plan_digest": "sha256:36a626c28d6dcf955d49c51083dcfa4637fbb30a1046f551131476569895b3e1",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "bat",
@@ -27,7 +27,7 @@
     },
     {
       "build_plan_digest": "sha256:170b8e69284aeee434930acde299f1f4d979d90d8f4216b917e44f236f54ab6d",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "chezmoi",
@@ -52,7 +52,7 @@
     },
     {
       "build_plan_digest": "sha256:72690f7fb3aab95530a4c7769abe37dff9697f29f7feea05730ae80f359715b3",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "chezmoi",
@@ -77,7 +77,12 @@
     },
     {
       "build_plan_digest": "sha256:746b1e07aa5614267f609e05cd0b44fde22041a7c26a732faaf80e079b1c0aa7",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "difftastic",
+        "version": "0.69.0-1"
+      },
       "deb_key": {
         "arch": "amd64",
         "deb_version": "0.69.0-1",
@@ -98,7 +103,12 @@
     },
     {
       "build_plan_digest": "sha256:bcfdec7522d81d758749218976f947ea961f727c1c983beada1cc602820efe3c",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "doggo",
+        "version": "1.1.7-1"
+      },
       "deb_key": {
         "arch": "amd64",
         "deb_version": "1.1.7-1",
@@ -119,7 +129,12 @@
     },
     {
       "build_plan_digest": "sha256:653c694e3df4f0a146b2661dc5a1b0b9d0f0a15316b9b4b386ec1771c0f47e80",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "doggo",
+        "version": "1.2.0-1"
+      },
       "deb_key": {
         "arch": "amd64",
         "deb_version": "1.2.0-1",
@@ -140,7 +155,12 @@
     },
     {
       "build_plan_digest": "sha256:dea0a23edb68096e329df30bdb5a8a1f4df557d7727f619baff0c7f2cd19cc44",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "edgeapt-hello",
+        "version": "0.1.0-1"
+      },
       "deb_key": {
         "arch": "amd64",
         "deb_version": "0.1.0-1",
@@ -159,7 +179,7 @@
     },
     {
       "build_plan_digest": "sha256:213a0880fcd6e70c4fc77ec8280e44fa4426e08deeee76225a112e6bf42595aa",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "fd",
@@ -184,7 +204,7 @@
     },
     {
       "build_plan_digest": "sha256:7edb912cf29a60c3a1bd49a0b3ef1c2d738fbdd3bf26157d1d09101a742b0853",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "helix",
@@ -209,7 +229,7 @@
     },
     {
       "build_plan_digest": "sha256:90976c80e68676ae9385e4eabbaeb02c6d828bde2a01fcc3b32725b25b5d958e",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "mihomo",
@@ -233,8 +253,60 @@
       "upstream_version": "1.19.28"
     },
     {
+      "build_plan_digest": "sha256:f8149abc3c73299224566676b1282fa4a5cd09105ccf4da16b2aacd1df148f9b",
+      "created_at": "2026-07-11T03:23:51Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "ouch",
+        "version": "0.8.1-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.8.1-1",
+        "package": "ouch"
+      },
+      "path": "packages/ouch/ouch_0.8.1-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:2596bfa29361c97b3a71f4dcd580acfa4451b48ad6d071fdcbe0f293ff59d405",
+      "size": 2291656,
+      "upstream": {
+        "etag": "\"0x8DED61CA5006BE6\"",
+        "last_modified": "Mon, 29 Jun 2026 20:26:04 GMT",
+        "sha256": "sha256:b515aac953cf37d85d81a563eba37e4fee7b0960994f008cfad2e9fa1a09b26a",
+        "size": 2718693,
+        "url": "https://github.com/ouch-org/ouch/releases/download/0.8.1/ouch-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "0.8.1"
+    },
+    {
+      "build_plan_digest": "sha256:182b162977358b21a9bf5de7cfad1674ee3dae574a0fedf525d7f9850d855710",
+      "created_at": "2026-07-11T03:23:51Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "uv",
+        "version": "0.11.28-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.11.28-1",
+        "package": "uv"
+      },
+      "path": "packages/uv/uv_0.11.28-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:4a7b5b5e060baf68767301a8e5c1f71a59c1815641bc72d2f253b3f54a4b4692",
+      "size": 18617250,
+      "upstream": {
+        "etag": "\"079ad4908b90b40261c6d66ad0e3a05d-4\"",
+        "last_modified": "Tue, 07 Jul 2026 23:14:36 GMT",
+        "sha256": "sha256:e490a6464492183c5d4534a5527fb4440f7f2bb2f228162ad7e4afe076dc0224",
+        "size": 26411870,
+        "url": "https://releases.astral.sh/github/uv/releases/download/0.11.28/uv-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "0.11.28"
+    },
+    {
       "build_plan_digest": "sha256:16cf88a5cebf1910328ca842d61a0275fb95ebc94c6f3b439153651cbab3d530",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "yazi",
@@ -259,7 +331,12 @@
     },
     {
       "build_plan_digest": "sha256:61123ea2f5ff7c39611c791b8be015777805bd85cf9f0288178df3cebe178cde",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "yq",
+        "version": "4.53.3-1"
+      },
       "deb_key": {
         "arch": "amd64",
         "deb_version": "4.53.3-1",
@@ -280,7 +357,7 @@
     },
     {
       "build_plan_digest": "sha256:6e7083d567abc5249a99f2ddbb84f0dc38a5cad15aad76224282ba07e6b2f994",
-      "created_at": "2026-07-10T14:45:14Z",
+      "created_at": "2026-07-11T03:23:51Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "zoxide",
@@ -304,8 +381,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-10T14:59:56Z",
-  "plan_digest": "sha256:f445f6c576ff5e252c2962b308140b9f5ecc9ea39471cb906ad96b1618d7f6eb",
+  "generated_at": "2026-07-11T03:23:51Z",
+  "plan_digest": "sha256:03144937afc5cf535e0362b7baf41756d973ac4a6c154e55306b19ea3cbc7bfa",
   "publications": [
     {
       "artifact": {
@@ -313,11 +390,20 @@
         "deb_version": "0.25.0",
         "package": "bat"
       },
-      "e2e_commands": [
-        [
-          "bat",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -325,14 +411,7 @@
         "deb_version": "0.25.0",
         "package": "bat",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/bat.yaml",
-          "source_id": "bat",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -340,11 +419,20 @@
         "deb_version": "2.47.1",
         "package": "chezmoi"
       },
-      "e2e_commands": [
-        [
-          "chezmoi",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -352,14 +440,7 @@
         "deb_version": "2.47.1",
         "package": "chezmoi",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/chezmoi.yaml",
-          "source_id": "chezmoi",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -367,11 +448,20 @@
         "deb_version": "1.1.7-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -379,14 +469,7 @@
         "deb_version": "1.1.7-1",
         "package": "doggo",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -394,11 +477,20 @@
         "deb_version": "1.2.0-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 1
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -406,14 +498,7 @@
         "deb_version": "1.2.0-1",
         "package": "doggo",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 1
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -421,10 +506,19 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello"
       },
-      "e2e_commands": [
-        [
-          "edgeapt-hello"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "edgeapt-hello"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/hello.yaml",
+            "source_id": "hello",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -432,14 +526,7 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/hello.yaml",
-          "source_id": "hello",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -447,11 +534,20 @@
         "deb_version": "10.4.1",
         "package": "fd"
       },
-      "e2e_commands": [
-        [
-          "fd",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -459,14 +555,7 @@
         "deb_version": "10.4.1",
         "package": "fd",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/fd.yaml",
-          "source_id": "fd",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -474,11 +563,20 @@
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
-      "e2e_commands": [
-        [
-          "mihomo",
-          "-v"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -486,14 +584,7 @@
         "deb_version": "1.19.28",
         "package": "mihomo",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/mihomo.yaml",
-          "source_id": "mihomo",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -501,11 +592,20 @@
         "deb_version": "4.53.3-1",
         "package": "yq"
       },
-      "e2e_commands": [
-        [
-          "yq",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -513,14 +613,7 @@
         "deb_version": "4.53.3-1",
         "package": "yq",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/yq.yaml",
-          "source_id": "yq",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -528,11 +621,20 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide"
       },
-      "e2e_commands": [
-        [
-          "zoxide",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zoxide",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zoxide.yaml",
+            "source_id": "zoxide",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -540,14 +642,7 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide",
         "suite": "focal"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/zoxide.yaml",
-          "source_id": "zoxide",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -555,11 +650,20 @@
         "deb_version": "0.25.0",
         "package": "bat"
       },
-      "e2e_commands": [
-        [
-          "bat",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -567,14 +671,7 @@
         "deb_version": "0.25.0",
         "package": "bat",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/bat.yaml",
-          "source_id": "bat",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -582,11 +679,20 @@
         "deb_version": "2.71.0",
         "package": "chezmoi"
       },
-      "e2e_commands": [
-        [
-          "chezmoi",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 1
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -594,14 +700,7 @@
         "deb_version": "2.71.0",
         "package": "chezmoi",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/chezmoi.yaml",
-          "source_id": "chezmoi",
-          "upstream_index": 1
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -609,11 +708,20 @@
         "deb_version": "0.69.0-1",
         "package": "difftastic"
       },
-      "e2e_commands": [
-        [
-          "difft",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic.yaml",
+            "source_id": "difftastic",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -621,14 +729,7 @@
         "deb_version": "0.69.0-1",
         "package": "difftastic",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/difftastic.yaml",
-          "source_id": "difftastic",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -636,11 +737,20 @@
         "deb_version": "1.1.7-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -648,14 +758,7 @@
         "deb_version": "1.1.7-1",
         "package": "doggo",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -663,11 +766,20 @@
         "deb_version": "1.2.0-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 1
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -675,14 +787,7 @@
         "deb_version": "1.2.0-1",
         "package": "doggo",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 1
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -690,10 +795,19 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello"
       },
-      "e2e_commands": [
-        [
-          "edgeapt-hello"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "edgeapt-hello"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/hello.yaml",
+            "source_id": "hello",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -701,14 +815,7 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/hello.yaml",
-          "source_id": "hello",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -716,11 +823,20 @@
         "deb_version": "10.4.1",
         "package": "fd"
       },
-      "e2e_commands": [
-        [
-          "fd",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -728,14 +844,7 @@
         "deb_version": "10.4.1",
         "package": "fd",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/fd.yaml",
-          "source_id": "fd",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -743,11 +852,20 @@
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
-      "e2e_commands": [
-        [
-          "hx",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "hx",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/helix.yaml",
+            "source_id": "helix",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -755,14 +873,7 @@
         "deb_version": "25.7.1-1",
         "package": "helix",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/helix.yaml",
-          "source_id": "helix",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -770,11 +881,20 @@
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
-      "e2e_commands": [
-        [
-          "mihomo",
-          "-v"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -782,14 +902,69 @@
         "deb_version": "1.19.28",
         "package": "mihomo",
         "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.8.1-1",
+        "package": "ouch"
       },
-      "provenance": [
+      "e2e_claims": [
         {
-          "source_file": "sources/mihomo.yaml",
-          "source_id": "mihomo",
-          "upstream_index": 0
+          "commands": [
+            [
+              "ouch",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ouch.yaml",
+            "source_id": "ouch",
+            "upstream_index": 0
+          }
         }
-      ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.8.1-1",
+        "package": "ouch",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.11.28-1",
+        "package": "uv"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "uv",
+              "--version"
+            ],
+            [
+              "uvx",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/uv.yaml",
+            "source_id": "uv",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.11.28-1",
+        "package": "uv",
+        "suite": "jammy"
+      }
     },
     {
       "artifact": {
@@ -797,11 +972,20 @@
         "deb_version": "4.53.3-1",
         "package": "yq"
       },
-      "e2e_commands": [
-        [
-          "yq",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -809,14 +993,7 @@
         "deb_version": "4.53.3-1",
         "package": "yq",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/yq.yaml",
-          "source_id": "yq",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -824,11 +1001,20 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide"
       },
-      "e2e_commands": [
-        [
-          "zoxide",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zoxide",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zoxide.yaml",
+            "source_id": "zoxide",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -836,14 +1022,7 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide",
         "suite": "jammy"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/zoxide.yaml",
-          "source_id": "zoxide",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -851,11 +1030,20 @@
         "deb_version": "0.25.0",
         "package": "bat"
       },
-      "e2e_commands": [
-        [
-          "bat",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -863,14 +1051,7 @@
         "deb_version": "0.25.0",
         "package": "bat",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/bat.yaml",
-          "source_id": "bat",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -878,11 +1059,20 @@
         "deb_version": "2.71.0",
         "package": "chezmoi"
       },
-      "e2e_commands": [
-        [
-          "chezmoi",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 1
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -890,14 +1080,7 @@
         "deb_version": "2.71.0",
         "package": "chezmoi",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/chezmoi.yaml",
-          "source_id": "chezmoi",
-          "upstream_index": 1
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -905,11 +1088,20 @@
         "deb_version": "0.69.0-1",
         "package": "difftastic"
       },
-      "e2e_commands": [
-        [
-          "difft",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic.yaml",
+            "source_id": "difftastic",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -917,14 +1109,7 @@
         "deb_version": "0.69.0-1",
         "package": "difftastic",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/difftastic.yaml",
-          "source_id": "difftastic",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -932,11 +1117,20 @@
         "deb_version": "1.1.7-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -944,14 +1138,7 @@
         "deb_version": "1.1.7-1",
         "package": "doggo",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -959,11 +1146,20 @@
         "deb_version": "1.2.0-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 1
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -971,14 +1167,7 @@
         "deb_version": "1.2.0-1",
         "package": "doggo",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 1
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -986,10 +1175,19 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello"
       },
-      "e2e_commands": [
-        [
-          "edgeapt-hello"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "edgeapt-hello"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/hello.yaml",
+            "source_id": "hello",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -997,14 +1195,7 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/hello.yaml",
-          "source_id": "hello",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1012,11 +1203,20 @@
         "deb_version": "10.4.1",
         "package": "fd"
       },
-      "e2e_commands": [
-        [
-          "fd",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1024,14 +1224,7 @@
         "deb_version": "10.4.1",
         "package": "fd",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/fd.yaml",
-          "source_id": "fd",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1039,11 +1232,20 @@
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
-      "e2e_commands": [
-        [
-          "hx",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "hx",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/helix.yaml",
+            "source_id": "helix",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1051,14 +1253,7 @@
         "deb_version": "25.7.1-1",
         "package": "helix",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/helix.yaml",
-          "source_id": "helix",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1066,11 +1261,20 @@
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
-      "e2e_commands": [
-        [
-          "mihomo",
-          "-v"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1078,14 +1282,69 @@
         "deb_version": "1.19.28",
         "package": "mihomo",
         "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.8.1-1",
+        "package": "ouch"
       },
-      "provenance": [
+      "e2e_claims": [
         {
-          "source_file": "sources/mihomo.yaml",
-          "source_id": "mihomo",
-          "upstream_index": 0
+          "commands": [
+            [
+              "ouch",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ouch.yaml",
+            "source_id": "ouch",
+            "upstream_index": 0
+          }
         }
-      ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.8.1-1",
+        "package": "ouch",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.11.28-1",
+        "package": "uv"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "uv",
+              "--version"
+            ],
+            [
+              "uvx",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/uv.yaml",
+            "source_id": "uv",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.11.28-1",
+        "package": "uv",
+        "suite": "noble"
+      }
     },
     {
       "artifact": {
@@ -1093,11 +1352,20 @@
         "deb_version": "26.5.6-1",
         "package": "yazi"
       },
-      "e2e_commands": [
-        [
-          "yazi",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yazi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yazi.yaml",
+            "source_id": "yazi",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1105,14 +1373,7 @@
         "deb_version": "26.5.6-1",
         "package": "yazi",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/yazi.yaml",
-          "source_id": "yazi",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1120,11 +1381,20 @@
         "deb_version": "4.53.3-1",
         "package": "yq"
       },
-      "e2e_commands": [
-        [
-          "yq",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1132,14 +1402,7 @@
         "deb_version": "4.53.3-1",
         "package": "yq",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/yq.yaml",
-          "source_id": "yq",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1147,11 +1410,20 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide"
       },
-      "e2e_commands": [
-        [
-          "zoxide",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zoxide",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zoxide.yaml",
+            "source_id": "zoxide",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1159,14 +1431,7 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide",
         "suite": "noble"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/zoxide.yaml",
-          "source_id": "zoxide",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1174,11 +1439,20 @@
         "deb_version": "0.25.0",
         "package": "bat"
       },
-      "e2e_commands": [
-        [
-          "bat",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1186,14 +1460,7 @@
         "deb_version": "0.25.0",
         "package": "bat",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/bat.yaml",
-          "source_id": "bat",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1201,11 +1468,20 @@
         "deb_version": "2.71.0",
         "package": "chezmoi"
       },
-      "e2e_commands": [
-        [
-          "chezmoi",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 1
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1213,14 +1489,7 @@
         "deb_version": "2.71.0",
         "package": "chezmoi",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/chezmoi.yaml",
-          "source_id": "chezmoi",
-          "upstream_index": 1
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1228,11 +1497,20 @@
         "deb_version": "0.69.0-1",
         "package": "difftastic"
       },
-      "e2e_commands": [
-        [
-          "difft",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic.yaml",
+            "source_id": "difftastic",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1240,14 +1518,7 @@
         "deb_version": "0.69.0-1",
         "package": "difftastic",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/difftastic.yaml",
-          "source_id": "difftastic",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1255,11 +1526,20 @@
         "deb_version": "1.1.7-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1267,14 +1547,7 @@
         "deb_version": "1.1.7-1",
         "package": "doggo",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1282,11 +1555,20 @@
         "deb_version": "1.2.0-1",
         "package": "doggo"
       },
-      "e2e_commands": [
-        [
-          "doggo",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 1
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1294,14 +1576,7 @@
         "deb_version": "1.2.0-1",
         "package": "doggo",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/doggo.yaml",
-          "source_id": "doggo",
-          "upstream_index": 1
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1309,10 +1584,19 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello"
       },
-      "e2e_commands": [
-        [
-          "edgeapt-hello"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "edgeapt-hello"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/hello.yaml",
+            "source_id": "hello",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1320,14 +1604,7 @@
         "deb_version": "0.1.0-1",
         "package": "edgeapt-hello",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/hello.yaml",
-          "source_id": "hello",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1335,11 +1612,20 @@
         "deb_version": "10.4.1",
         "package": "fd"
       },
-      "e2e_commands": [
-        [
-          "fd",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1347,14 +1633,7 @@
         "deb_version": "10.4.1",
         "package": "fd",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/fd.yaml",
-          "source_id": "fd",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1362,11 +1641,20 @@
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
-      "e2e_commands": [
-        [
-          "hx",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "hx",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/helix.yaml",
+            "source_id": "helix",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1374,14 +1662,7 @@
         "deb_version": "25.7.1-1",
         "package": "helix",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/helix.yaml",
-          "source_id": "helix",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1389,11 +1670,20 @@
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
-      "e2e_commands": [
-        [
-          "mihomo",
-          "-v"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1401,14 +1691,69 @@
         "deb_version": "1.19.28",
         "package": "mihomo",
         "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.8.1-1",
+        "package": "ouch"
       },
-      "provenance": [
+      "e2e_claims": [
         {
-          "source_file": "sources/mihomo.yaml",
-          "source_id": "mihomo",
-          "upstream_index": 0
+          "commands": [
+            [
+              "ouch",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ouch.yaml",
+            "source_id": "ouch",
+            "upstream_index": 0
+          }
         }
-      ]
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.8.1-1",
+        "package": "ouch",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.11.28-1",
+        "package": "uv"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "uv",
+              "--version"
+            ],
+            [
+              "uvx",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/uv.yaml",
+            "source_id": "uv",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.11.28-1",
+        "package": "uv",
+        "suite": "resolute"
+      }
     },
     {
       "artifact": {
@@ -1416,11 +1761,20 @@
         "deb_version": "26.5.6-1",
         "package": "yazi"
       },
-      "e2e_commands": [
-        [
-          "yazi",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yazi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yazi.yaml",
+            "source_id": "yazi",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1428,14 +1782,7 @@
         "deb_version": "26.5.6-1",
         "package": "yazi",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/yazi.yaml",
-          "source_id": "yazi",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1443,11 +1790,20 @@
         "deb_version": "4.53.3-1",
         "package": "yq"
       },
-      "e2e_commands": [
-        [
-          "yq",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1455,14 +1811,7 @@
         "deb_version": "4.53.3-1",
         "package": "yq",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/yq.yaml",
-          "source_id": "yq",
-          "upstream_index": 0
-        }
-      ]
+      }
     },
     {
       "artifact": {
@@ -1470,11 +1819,20 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide"
       },
-      "e2e_commands": [
-        [
-          "zoxide",
-          "--version"
-        ]
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zoxide",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zoxide.yaml",
+            "source_id": "zoxide",
+            "upstream_index": 0
+          }
+        }
       ],
       "key": {
         "arch": "amd64",
@@ -1482,15 +1840,8 @@
         "deb_version": "0.10.0-1",
         "package": "zoxide",
         "suite": "resolute"
-      },
-      "provenance": [
-        {
-          "source_file": "sources/zoxide.yaml",
-          "source_id": "zoxide",
-          "upstream_index": 0
-        }
-      ]
+      }
     }
   ],
-  "schema": "edgeapt.lock/v2"
+  "schema": "edgeapt.lock/v3"
 }

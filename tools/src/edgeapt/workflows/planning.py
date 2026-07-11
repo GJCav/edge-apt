@@ -14,6 +14,7 @@ from edgeapt.domain.planning import (
     BuildSpec,
     BuildUnit,
     Publication,
+    PublicationE2EClaim,
     PublishClaim,
     RepoPlan,
     SourceProvenance,
@@ -81,7 +82,7 @@ def _expand_claims(documents: Iterable[SourceDocument]) -> Iterable[PublishClaim
                     ),
                     build_spec=intent.build_spec,
                     provenance=intent.provenance,
-                    e2e_command=intent.e2e_command,
+                    e2e_commands=intent.e2e_commands,
                     allow_ubuntu_package_override=(
                         intent.allow_ubuntu_package_override
                     ),
@@ -111,8 +112,18 @@ def _merge_publications(claims: Iterable[PublishClaim]) -> tuple[Publication, ..
             Publication(
                 key=key,
                 deb_key=key.deb_key,
-                provenance=tuple(sorted({item.provenance for item in items})),
-                e2e_commands=tuple(sorted({item.e2e_command for item in items})),
+                e2e_claims=tuple(
+                    sorted(
+                        {
+                            PublicationE2EClaim(
+                                provenance=item.provenance,
+                                commands=item.e2e_commands,
+                            )
+                            for item in items
+                        },
+                        key=lambda claim: (claim.provenance, claim.commands),
+                    )
+                ),
                 allow_ubuntu_package_override=first.allow_ubuntu_package_override,
                 override_reasons=tuple(
                     sorted(

@@ -136,7 +136,7 @@ def _publications(
         version="0.1.0",
         revision=None,
         suites=("jammy",),
-        e2e_command=(package,),
+        e2e_commands=((package,),),
         allow_ubuntu_package_override=allow_ubuntu_package_override,
         override_reason=override_reason,
     )

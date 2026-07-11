@@ -19,7 +19,7 @@ def test_repackage_writes_lock_and_packages(tmp_path: Path) -> None:
     assert paths.lock_path.exists()
     assert any(
         publication.key.package == "edgeapt-hello"
-        and publication.e2e_commands == (("edgeapt-hello",),)
+        and publication.e2e_claims[0].commands == (("edgeapt-hello",),)
         for publication in lock.publications
     )
     assert (

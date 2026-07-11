@@ -1,7 +1,8 @@
 template: edgeapt.single_binary/v1
 id: difftastic
 package: difftastic
-e2e_command: [difft, --version]
+e2e_commands:
+  - [difft, --version]
 
 repackage:
   install_path: /usr/bin/difft

@@ -28,10 +28,12 @@ def test_lock_json_is_deterministic() -> None:
         "deb_version": "0.1.0-1",
         "arch": "amd64",
     }
-    assert data["publications"][0]["e2e_commands"] == [["edgeapt-hello"]]
+    assert data["publications"][0]["e2e_claims"][0]["commands"] == [
+        ["edgeapt-hello"]
+    ]
 
 
-def test_lock_v2_round_trip(tmp_path: Path) -> None:
+def test_lock_v3_round_trip(tmp_path: Path) -> None:
     key = make_deb_key(package="edgeapt-hello", deb_version="0.1.0-1")
     expected = make_lock(
         artifacts=(make_artifact(deb_key=key),),
@@ -47,9 +49,9 @@ def test_lock_v2_round_trip(tmp_path: Path) -> None:
     assert actual == expected
 
 
-def test_lock_rejects_v1_schema(tmp_path: Path) -> None:
+def test_lock_rejects_old_schema(tmp_path: Path) -> None:
     path = tmp_path / "lock.json"
-    path.write_text('{"schema":"edgeapt.lock/v1"}\n', encoding="utf-8")
+    path.write_text('{"schema":"edgeapt.lock/v2"}\n', encoding="utf-8")
 
     with pytest.raises(ValueError, match="regenerate lock.json"):
         load_lock(path)

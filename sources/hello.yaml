@@ -1,7 +1,8 @@
 template: edgeapt.single_binary/v1
 id: hello
 package: edgeapt-hello
-e2e_command: [edgeapt-hello]
+e2e_commands:
+  - [edgeapt-hello]
 
 repackage:
   install_path: /usr/bin/edgeapt-hello

@@ -1,7 +1,8 @@
 template: edgeapt.deb_upstream/v1
 id: chezmoi
 package: chezmoi
-e2e_command: [chezmoi, --version]
+e2e_commands:
+  - [chezmoi, --version]
 
 upstream:
   - version: 2.47.1

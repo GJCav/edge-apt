@@ -118,7 +118,32 @@ def test_e2e_keeps_multiple_commands_in_one_install_case() -> None:
     cases = build_e2e_test_cases(lock)
 
     assert len(cases) == 1
-    assert cases[0].commands == (("foo", "--version"), ("foo", "--help"))
+    assert cases[0].commands == (("foo", "--help"), ("foo", "--version"))
+
+
+def test_e2e_source_filter_keeps_only_matching_claim_commands() -> None:
+    key = make_deb_key(package="foo")
+    lock = make_lock(
+        artifacts=(make_artifact(deb_key=key),),
+        publications=(
+            make_publication(
+                deb_key=key,
+                source_commands=(
+                    ("foo-old", (("foo", "--version"),)),
+                    (
+                        "foo-new",
+                        (("foo", "--version"), ("foo-extra", "--version")),
+                    ),
+                ),
+            ),
+        ),
+    )
+
+    cases = build_e2e_test_cases(lock, source_filter="foo-old")
+
+    assert len(cases) == 1
+    assert cases[0].source_ids == ("foo-old",)
+    assert cases[0].commands == (("foo", "--version"),)
 
 
 def test_e2e_rejects_invalid_jobs_before_starting_docker() -> None:

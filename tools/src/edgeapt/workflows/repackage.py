@@ -109,8 +109,7 @@ def repackage_project(
         LockedPublication(
             key=publication.key,
             artifact=publication.deb_key,
-            provenance=publication.provenance,
-            e2e_commands=publication.e2e_commands,
+            e2e_claims=publication.e2e_claims,
         )
         for publication in plan.publications
     )
@@ -235,6 +234,7 @@ def _execute_build(
             root=paths.root,
             work_dir=work_dir,
             fetcher=project.fetcher,
+            archive_extractor=project.archive_extractor,
             deb_tools=project.deb_tools,
             report=report,
         ),

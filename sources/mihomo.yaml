@@ -1,7 +1,8 @@
 template: edgeapt.deb_upstream/v1
 id: mihomo
 package: mihomo
-e2e_command: [mihomo, -v]
+e2e_commands:
+  - [mihomo, -v]
 
 upstream:
   - version: 1.19.28

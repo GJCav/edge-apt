@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import shutil
-import tarfile
 import urllib.request
-import zipfile
 from email.message import Message
 from pathlib import Path
 from urllib.parse import urlparse
@@ -27,7 +25,11 @@ class DefaultFetcher:
         headers = Message()
         parsed = urlparse(url)
         if parsed.scheme in {"http", "https"}:
-            with urllib.request.urlopen(url) as response:
+            request = urllib.request.Request(
+                url,
+                headers={"User-Agent": "EdgeAPT/0.1"},
+            )
+            with urllib.request.urlopen(request) as response:
                 destination.write_bytes(response.read())
                 headers = response.headers
         elif parsed.scheme == "file":
@@ -56,56 +58,3 @@ class DefaultFetcher:
                 last_modified=headers.get("Last-Modified"),
             ),
         )
-
-    def prepare_single_binary(
-        self,
-        *,
-        downloaded: Path,
-        extract_path: str | None,
-        work_dir: Path,
-    ) -> Path:
-        if extract_path is None:
-            return downloaded
-
-        extract_dir = work_dir / "extract"
-        if extract_dir.exists():
-            shutil.rmtree(extract_dir)
-        extract_dir.mkdir(parents=True, exist_ok=True)
-        candidate = _safe_extract_path(extract_dir, extract_path)
-        if tarfile.is_tarfile(downloaded):
-            with tarfile.open(downloaded) as archive:
-                archive.extractall(extract_dir, filter="data")
-        elif zipfile.is_zipfile(downloaded):
-            with zipfile.ZipFile(downloaded) as archive:
-                try:
-                    info = archive.getinfo(extract_path)
-                except KeyError as exc:
-                    raise ValidationError(
-                        f"extract_path not found in archive: {extract_path}"
-                    ) from exc
-                if info.is_dir():
-                    raise ValidationError(
-                        f"extract_path is a directory: {extract_path}"
-                    )
-                candidate.parent.mkdir(parents=True, exist_ok=True)
-                with archive.open(info) as source, candidate.open("wb") as target:
-                    shutil.copyfileobj(source, target)
-        else:
-            raise ValidationError(
-                "extract_path is only supported for tar or zip archives"
-            )
-
-        if not candidate.exists() or not candidate.is_file():
-            raise ValidationError(
-                f"extract_path not found in archive: {extract_path}"
-            )
-        return candidate
-
-
-def _safe_extract_path(extract_dir: Path, member: str) -> Path:
-    candidate = extract_dir / member
-    if not candidate.resolve().is_relative_to(extract_dir.resolve()):
-        raise ValidationError(
-            f"extract_path escapes archive extraction directory: {member}"
-        )
-    return candidate

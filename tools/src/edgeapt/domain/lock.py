@@ -6,22 +6,24 @@ import attrs
 
 from edgeapt.domain.artifacts import ArtifactFact
 from edgeapt.domain.keys import DebKey, PublishKey
-from edgeapt.domain.planning import SourceProvenance
+from edgeapt.domain.planning import PublicationE2EClaim, SourceProvenance
 
 
 @attrs.define(kw_only=True, frozen=True)
 class LockedPublication:
     key: PublishKey
     artifact: DebKey
-    provenance: tuple[SourceProvenance, ...]
-    e2e_commands: tuple[tuple[str, ...], ...]
+    e2e_claims: tuple[PublicationE2EClaim, ...]
+
+    @property
+    def provenance(self) -> tuple[SourceProvenance, ...]:
+        return tuple(sorted({claim.provenance for claim in self.e2e_claims}))
 
     def to_json(self) -> dict[str, Any]:
         return {
             "key": self.key.to_json(),
             "artifact": self.artifact.to_json(),
-            "provenance": [item.to_json() for item in self.provenance],
-            "e2e_commands": [list(command) for command in self.e2e_commands],
+            "e2e_claims": [claim.to_json() for claim in self.e2e_claims],
         }
 
 

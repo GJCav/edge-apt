@@ -24,7 +24,7 @@ def test_repackage_reuses_cached_package_and_refreshes_publications(
 ) -> None:
     source = _source(
         suites=("focal", "jammy", "noble", "resolute"),
-        e2e_command=("edgeapt-hello", "--help"),
+        e2e_commands=(("edgeapt-hello", "--help"),),
     )
     artifact_path = _artifact_path(tmp_path)
     artifact_path.parent.mkdir(parents=True)
@@ -58,8 +58,9 @@ def test_repackage_reuses_cached_package_and_refreshes_publications(
         "resolute",
     ]
     assert all(
-        item.e2e_commands == (("edgeapt-hello", "--help"),)
+        claim.commands == (("edgeapt-hello", "--help"),)
         for item in lock.publications
+        for claim in item.e2e_claims
     )
     assert any(event.kind == "cache_hit" for event in events)
 
@@ -100,7 +101,7 @@ def test_repackage_rejects_changed_plan_for_same_deb_key(
         version="v0.1.0",
         suites=("noble",),
         install_path="/usr/local/bin/edgeapt-hello",
-        e2e_command=("edgeapt-hello",),
+        e2e_commands=(("edgeapt-hello",),),
         url="tests/fixtures/hello-world",
     )
     artifact_path = _artifact_path(tmp_path)
@@ -116,7 +117,7 @@ def test_repackage_rejects_changed_plan_for_same_deb_key(
 def _source(
     *,
     suites: tuple[str, ...],
-    e2e_command: tuple[str, ...] = ("edgeapt-hello",),
+    e2e_commands: tuple[tuple[str, ...], ...] = (("edgeapt-hello",),),
 ) -> SourceTemplate:
     return make_source(
         source_id="hello",
@@ -125,7 +126,7 @@ def _source(
         suites=suites,
         url="tests/fixtures/hello-world",
         install_path="/usr/bin/edgeapt-hello",
-        e2e_command=e2e_command,
+        e2e_commands=e2e_commands,
     )
 
 
@@ -162,14 +163,13 @@ def _write_previous_lock(
         LockedPublication(
             key=item.key,
             artifact=item.deb_key,
-            provenance=item.provenance,
-            e2e_commands=item.e2e_commands,
+            e2e_claims=item.e2e_claims,
         )
         for item in plan.publications
     )
     write_lock(
         LockFile(
-            schema="edgeapt.lock/v2",
+            schema="edgeapt.lock/v3",
             generated_at="2026-07-05T00:00:00Z",
             plan_digest=plan.plan_digest,
             artifacts=(artifact,),

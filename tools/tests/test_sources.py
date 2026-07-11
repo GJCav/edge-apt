@@ -51,7 +51,8 @@ def test_override_reason_required(tmp_path: Path) -> None:
 template: edgeapt.single_binary/v1
 id: bad
 package: bad
-e2e_command: [bad, --version]
+e2e_commands:
+  - [bad, --version]
 allow_ubuntu_package_override: true
 
 repackage:
@@ -79,7 +80,8 @@ def test_override_fields_are_loaded(tmp_path: Path) -> None:
 template: edgeapt.deb_upstream/v1
 id: fd
 package: fd
-e2e_command: [fd, --version]
+e2e_commands:
+  - [fd, --version]
 allow_ubuntu_package_override: true
 override_reason: Use upstream release.
 
@@ -95,10 +97,10 @@ upstream:
 
     assert source.allow_ubuntu_package_override is True
     assert source.override_reason == "Use upstream release."
-    assert source.e2e_command == ("fd", "--version")
+    assert source.e2e_commands == (("fd", "--version"),)
 
 
-def test_e2e_command_is_required(tmp_path: Path) -> None:
+def test_e2e_commands_are_required(tmp_path: Path) -> None:
     source_path = _write_source(
         tmp_path,
         """
@@ -114,7 +116,7 @@ upstream:
 """,
     )
 
-    with pytest.raises(ValidationError, match="e2e_command"):
+    with pytest.raises(ValidationError, match="e2e_commands"):
         load_source_document(source_path, root=tmp_path)
 
 
@@ -125,7 +127,8 @@ def test_unknown_template_is_rejected(tmp_path: Path) -> None:
 template: edgeapt.unknown/v1
 id: unknown
 package: unknown
-e2e_command: [unknown]
+e2e_commands:
+  - [unknown]
 """,
     )
 

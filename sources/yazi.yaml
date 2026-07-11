@@ -1,7 +1,8 @@
 template: edgeapt.deb_upstream/v1
 id: yazi
 package: yazi
-e2e_command: [yazi, --version]
+e2e_commands:
+  - [yazi, --version]
 
 upstream:
   - version: 26.5.6-1

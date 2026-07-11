@@ -6,14 +6,15 @@ from edgeapt.domain.keys import DebKey
 from edgeapt.domain.keys import PublishKey
 from edgeapt.domain.lock import LockedPublication
 from edgeapt.domain.lock import LockFile
-from edgeapt.domain.planning import SourceProvenance
+from edgeapt.domain.planning import PublicationE2EClaim, SourceProvenance
 from edgeapt.constants import LOCK_SCHEMA
 from edgeapt.constants import ROOT
 from edgeapt.infrastructure.deb import DefaultDebTools
 from edgeapt.infrastructure.fetcher import DefaultFetcher
+from edgeapt.infrastructure.archive import DefaultArchiveExtractor
 from pathlib import Path
 from edgeapt.project import EdgeAptProject, ProjectPaths
-from edgeapt.templates.base import DebTools, Fetcher
+from edgeapt.templates.base import ArchiveExtractor, DebTools, Fetcher
 from edgeapt.templates.base import SourceDocument, SourceTemplate
 from edgeapt.templates.registry import DEFAULT_TEMPLATES, TemplateRegistry
 
@@ -23,12 +24,14 @@ def make_project(
     *,
     templates: TemplateRegistry = DEFAULT_TEMPLATES,
     fetcher: Fetcher | None = None,
+    archive_extractor: ArchiveExtractor | None = None,
     deb_tools: DebTools | None = None,
 ) -> EdgeAptProject:
     return EdgeAptProject(
         paths=ProjectPaths(root),
         templates=templates,
         fetcher=fetcher or DefaultFetcher(),
+        archive_extractor=archive_extractor or DefaultArchiveExtractor(),
         deb_tools=deb_tools or DefaultDebTools(),
     )
 
@@ -46,7 +49,7 @@ def make_source(
     sha256: str | None = None,
     extract_path: str | None = None,
     install_path: str = "/usr/bin/foo",
-    e2e_command: tuple[str, ...] = ("foo", "--version"),
+    e2e_commands: tuple[tuple[str, ...], ...] = (("foo", "--version"),),
     allow_ubuntu_package_override: bool = False,
     override_reason: str | None = None,
 ) -> SourceTemplate:
@@ -63,7 +66,7 @@ def make_source(
         "template": template,
         "id": source_id,
         "package": package_name,
-        "e2e_command": list(e2e_command),
+        "e2e_commands": [list(command) for command in e2e_commands],
         "allow_ubuntu_package_override": allow_ubuntu_package_override,
         "upstream": [upstream],
     }
@@ -77,6 +80,19 @@ def make_source(
             "install_path": install_path,
             "metadata": {"description": package_name},
         }
+    elif template == "edgeapt.prebuilt_archive/v1":
+        upstream["revision"] = revision
+        upstream["sha256"] = sha256 or f"sha256:{'a' * 64}"
+        upstream["strip_components"] = 0
+        raw["metadata"] = {"description": package_name}
+        raw["files"] = [
+            {
+                "id": "executable",
+                "path": "foo",
+                "destination": install_path,
+                "mode": "0755",
+            }
+        ]
     template_type = DEFAULT_TEMPLATES.resolve(template)
     return template_type.model_validate(raw)
 
@@ -131,6 +147,9 @@ def make_publication(
     component: str = "main",
     source_id: str | None = None,
     commands: tuple[tuple[str, ...], ...] | None = None,
+    source_commands: tuple[
+        tuple[str, tuple[tuple[str, ...], ...]], ...
+    ] | None = None,
 ) -> LockedPublication:
     key = deb_key or make_deb_key()
     resolved_source_id = source_id or key.package
@@ -143,14 +162,25 @@ def make_publication(
             arch=key.arch,
         ),
         artifact=key,
-        provenance=(
-            SourceProvenance(
-                source_id=resolved_source_id,
-                source_file=f"sources/{resolved_source_id}.yaml",
-                upstream_index=0,
-            ),
+        e2e_claims=tuple(
+            PublicationE2EClaim(
+                provenance=SourceProvenance(
+                    source_id=claim_source_id,
+                    source_file=f"sources/{claim_source_id}.yaml",
+                    upstream_index=0,
+                ),
+                commands=claim_commands,
+            )
+            for claim_source_id, claim_commands in (
+                source_commands
+                or (
+                    (
+                        resolved_source_id,
+                        commands or ((key.package, "--version"),),
+                    ),
+                )
+            )
         ),
-        e2e_commands=commands or ((key.package, "--version"),),
     )
 
 
@@ -183,7 +213,8 @@ def write_hello_source(root: Path) -> None:
                 "template: edgeapt.single_binary/v1",
                 "id: hello",
                 "package: edgeapt-hello",
-                "e2e_command: [edgeapt-hello]",
+                "e2e_commands:",
+                "  - [edgeapt-hello]",
                 "repackage:",
                 "  install_path: /usr/bin/edgeapt-hello",
                 "  metadata:",

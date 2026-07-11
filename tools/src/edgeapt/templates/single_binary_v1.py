@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shutil
 from typing import Any, ClassVar, Literal, cast
 
 import attrs
@@ -158,7 +159,7 @@ class SingleBinaryV1(SourceTemplate):
                         repackage=repackage,
                     ),
                     provenance=attrs.evolve(provenance, upstream_index=index),
-                    e2e_command=self.e2e_command,
+                    e2e_commands=self.e2e_commands,
                     allow_ubuntu_package_override=self.allow_ubuntu_package_override,
                     override_reason=self.override_reason,
                 )
@@ -189,20 +190,30 @@ class SingleBinaryV1(SourceTemplate):
         )
         if spec.extract_path is not None:
             context.report("extract_start", spec.extract_path, None)
-        binary = context.fetcher.prepare_single_binary(
-            downloaded=download.path,
-            extract_path=spec.extract_path,
-            work_dir=context.work_dir,
-        )
+            extracted = context.archive_extractor.extract_regular_files(
+                archive=download.path,
+                strip_components=0,
+                paths=(spec.extract_path,),
+                destination=context.work_dir / "extract",
+            )
+            binary = extracted[spec.extract_path]
+        else:
+            binary = download.path
+        payload_root = context.work_dir / "payload"
+        if payload_root.exists():
+            shutil.rmtree(payload_root)
+        target = payload_root / spec.repackage.install_path.lstrip("/")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(binary, target)
+        target.chmod(0o755)
         candidate = context.work_dir / (
             f"{context.deb_key.package}_{context.deb_key.deb_version}_"
             f"{context.deb_key.arch}.deb"
         )
         context.report("build_start", f"Building {candidate.name}", None)
-        context.deb_tools.build_single_binary(
-            binary=binary,
+        context.deb_tools.build_package(
+            payload_root=payload_root,
             deb_key=context.deb_key,
-            install_path=spec.repackage.install_path,
             description=spec.repackage.metadata.description,
             homepage=spec.repackage.metadata.homepage,
             output=candidate,

@@ -23,7 +23,7 @@ def test_merges_identical_claims_and_keeps_provenance_and_commands() -> None:
     second = make_source(
         source_id="foo-noble",
         package="foo",
-        e2e_command=("foo", "version"),
+        e2e_commands=(("foo", "version"),),
     )
 
     plan = _plan(second, first)
@@ -35,7 +35,10 @@ def test_merges_identical_claims_and_keeps_provenance_and_commands() -> None:
         "foo-common",
         "foo-noble",
     ]
-    assert publication.e2e_commands == (("foo", "--version"), ("foo", "version"))
+    assert [claim.commands for claim in publication.e2e_claims] == [
+        (("foo", "--version"),),
+        (("foo", "version"),),
+    ]
 
 
 def test_rejects_conflicting_publish_key() -> None:
@@ -90,10 +93,10 @@ def test_current_sources_keep_expected_plan_digest() -> None:
     documents = load_source_documents(SOURCES_DIR, root=ROOT)
     plan = build_repo_plan(documents)
 
-    assert len(plan.builds) == 13
-    assert len(plan.publications) == 44
+    assert len(plan.builds) == 15
+    assert len(plan.publications) == 50
     assert plan.plan_digest == (
-        "sha256:f445f6c576ff5e252c2962b308140b9f5ecc9ea39471cb906ad96b1618d7f6eb"
+        "sha256:03144937afc5cf535e0362b7baf41756d973ac4a6c154e55306b19ea3cbc7bfa"
     )
 
 

@@ -16,6 +16,7 @@ from edgeapt.domain.planning import (
     SourceProvenance,
 )
 from edgeapt.project import EdgeAptProject, ProjectPaths
+from edgeapt.infrastructure.archive import DefaultArchiveExtractor
 from edgeapt.templates.base import (
     BuildContext,
     FetchResult,
@@ -102,7 +103,8 @@ def test_fake_template_works_through_planner_and_repackage(tmp_path: Path) -> No
                 "template: edgeapt.fake/v1",
                 "id: fake",
                 "package: fake-package",
-                "e2e_command: [fake-package, --version]",
+                "e2e_commands:",
+                "  - [fake-package, --version]",
                 "version: 2.0-1",
                 "arch: amd64",
                 "suites: [jammy, noble]",
@@ -125,6 +127,7 @@ def test_fake_template_works_through_planner_and_repackage(tmp_path: Path) -> No
             paths=ProjectPaths(tmp_path),
             templates=registry,
             fetcher=_FakeFetcher(),
+            archive_extractor=DefaultArchiveExtractor(),
             deb_tools=deb_tools,
         )
     )
@@ -169,7 +172,7 @@ class _FakeTemplate(SourceTemplate):
                 suites=self.suites,
                 build_spec=_FakeBuildSpec(version=self.version),
                 provenance=provenance,
-                e2e_command=self.e2e_command,
+                e2e_commands=self.e2e_commands,
                 allow_ubuntu_package_override=self.allow_ubuntu_package_override,
                 override_reason=self.override_reason,
             ),
@@ -215,26 +218,15 @@ class _FakeFetcher:
             ),
         )
 
-    def prepare_single_binary(
-        self,
-        *,
-        downloaded: Path,
-        extract_path: str | None,
-        work_dir: Path,
-    ) -> Path:
-        return downloaded
-
-
 class _FakeDebTools:
     def __init__(self, control: DebControlFact) -> None:
         self._control = control
 
-    def build_single_binary(
+    def build_package(
         self,
         *,
-        binary: Path,
+        payload_root: Path,
         deb_key: DebKey,
-        install_path: str,
         description: str,
         homepage: str | None,
         output: Path,

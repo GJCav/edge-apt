@@ -1,0 +1,63 @@
+template: edgeapt.prebuilt_archive/v1
+id: ouch
+package: ouch
+e2e_commands:
+  - [ouch, --version]
+
+metadata:
+  description: "Command-line utility for easily compressing and decompressing files"
+  homepage: "https://github.com/ouch-org/ouch"
+
+files:
+  - id: executable
+    path: ouch
+    destination: /usr/bin/ouch
+    mode: "0755"
+
+  - id: man-main
+    path: man/ouch.1
+    destination: /usr/share/man/man1/ouch.1.gz
+    mode: "0644"
+    transform: gzip
+
+  - id: man-compress
+    path: man/ouch-compress.1
+    destination: /usr/share/man/man1/ouch-compress.1.gz
+    mode: "0644"
+    transform: gzip
+
+  - id: man-decompress
+    path: man/ouch-decompress.1
+    destination: /usr/share/man/man1/ouch-decompress.1.gz
+    mode: "0644"
+    transform: gzip
+
+  - id: man-list
+    path: man/ouch-list.1
+    destination: /usr/share/man/man1/ouch-list.1.gz
+    mode: "0644"
+    transform: gzip
+
+  - id: completion-bash
+    path: completions/ouch.bash
+    destination: /usr/share/bash-completion/completions/ouch.bash
+    mode: "0644"
+
+  - id: completion-zsh
+    path: completions/_ouch
+    destination: /usr/share/zsh/vendor-completions/_ouch
+    mode: "0644"
+
+  - id: completion-fish
+    path: completions/ouch.fish
+    destination: /usr/share/fish/vendor_completions.d/ouch.fish
+    mode: "0644"
+
+upstream:
+  - version: 0.8.1
+    revision: 1
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/ouch-org/ouch/releases/download/0.8.1/ouch-x86_64-unknown-linux-gnu.tar.gz"
+    sha256: "sha256:b515aac953cf37d85d81a563eba37e4fee7b0960994f008cfad2e9fa1a09b26a"
+    strip_components: 1

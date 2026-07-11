@@ -38,7 +38,7 @@ class BuildIntent:
     suites: tuple[str, ...]
     build_spec: BuildSpec
     provenance: SourceProvenance
-    e2e_command: tuple[str, ...]
+    e2e_commands: tuple[tuple[str, ...], ...]
     allow_ubuntu_package_override: bool
     override_reason: str | None
 
@@ -48,7 +48,7 @@ class PublishClaim:
     key: PublishKey
     build_spec: BuildSpec
     provenance: SourceProvenance
-    e2e_command: tuple[str, ...]
+    e2e_commands: tuple[tuple[str, ...], ...]
     allow_ubuntu_package_override: bool
     override_reason: str | None
 
@@ -74,20 +74,34 @@ class BuildUnit:
 
 
 @attrs.define(kw_only=True, frozen=True)
+class PublicationE2EClaim:
+    provenance: SourceProvenance
+    commands: tuple[tuple[str, ...], ...]
+
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "provenance": self.provenance.to_json(),
+            "commands": [list(command) for command in self.commands],
+        }
+
+
+@attrs.define(kw_only=True, frozen=True)
 class Publication:
     key: PublishKey
     deb_key: DebKey
-    provenance: tuple[SourceProvenance, ...]
-    e2e_commands: tuple[tuple[str, ...], ...]
+    e2e_claims: tuple[PublicationE2EClaim, ...]
     allow_ubuntu_package_override: bool
     override_reasons: tuple[str, ...]
+
+    @property
+    def provenance(self) -> tuple[SourceProvenance, ...]:
+        return tuple(sorted({claim.provenance for claim in self.e2e_claims}))
 
     def to_json(self) -> dict[str, Any]:
         return {
             "key": self.key.to_json(),
             "deb_key": self.deb_key.to_json(),
-            "provenance": [item.to_json() for item in self.provenance],
-            "e2e_commands": [list(command) for command in self.e2e_commands],
+            "e2e_claims": [claim.to_json() for claim in self.e2e_claims],
             "allow_ubuntu_package_override": self.allow_ubuntu_package_override,
             "override_reasons": list(self.override_reasons),
         }

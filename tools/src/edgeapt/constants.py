@@ -26,5 +26,5 @@ UBUNTU_COMPONENTS = ("main", "restricted", "universe", "multiverse")
 DEFAULT_UBUNTU_ARCHIVE_BASE_URL = "http://archive.ubuntu.com/ubuntu"
 
 COMPONENT = "main"
-LOCK_SCHEMA = "edgeapt.lock/v2"
+LOCK_SCHEMA = "edgeapt.lock/v3"
 STATIC_ASSET_SIZE_LIMIT_BYTES = 25 * 1024 * 1024

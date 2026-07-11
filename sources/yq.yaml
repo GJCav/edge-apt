@@ -1,7 +1,8 @@
 template: edgeapt.single_binary/v1
 id: yq
 package: yq
-e2e_command: [yq, --version]
+e2e_commands:
+  - [yq, --version]
 allow_ubuntu_package_override: true
 override_reason: "Prefer latest release from upstream instead of Ubuntu packaged version."
 

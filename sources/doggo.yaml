@@ -1,7 +1,8 @@
 template: edgeapt.single_binary/v1
 id: doggo
 package: doggo
-e2e_command: [doggo, --version]
+e2e_commands:
+  - [doggo, --version]
 
 repackage:
   install_path: /usr/bin/doggo

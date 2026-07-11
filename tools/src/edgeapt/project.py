@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from edgeapt.templates.base import DebTools, Fetcher
+    from edgeapt.templates.base import ArchiveExtractor, DebTools, Fetcher
     from edgeapt.templates.registry import TemplateRegistry
 
 
@@ -47,10 +47,12 @@ class EdgeAptProject:
     paths: ProjectPaths
     templates: TemplateRegistry
     fetcher: Fetcher
+    archive_extractor: ArchiveExtractor
     deb_tools: DebTools
 
 
 def create_project(root: Path) -> EdgeAptProject:
+    from edgeapt.infrastructure.archive import DefaultArchiveExtractor
     from edgeapt.infrastructure.deb import DefaultDebTools
     from edgeapt.infrastructure.fetcher import DefaultFetcher
     from edgeapt.templates.registry import DEFAULT_TEMPLATES
@@ -59,5 +61,6 @@ def create_project(root: Path) -> EdgeAptProject:
         paths=ProjectPaths(root),
         templates=DEFAULT_TEMPLATES,
         fetcher=DefaultFetcher(),
+        archive_extractor=DefaultArchiveExtractor(),
         deb_tools=DefaultDebTools(),
     )

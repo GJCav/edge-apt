@@ -225,8 +225,12 @@ def build_e2e_test_cases(
         raise ValidationError(f"unsupported e2e suite: {suite_filter}")
     cases: list[E2ETestCase] = []
     for publication in lock.publications:
-        source_ids = tuple(item.source_id for item in publication.provenance)
-        if source_filter is not None and source_filter not in source_ids:
+        claims = tuple(
+            claim
+            for claim in publication.e2e_claims
+            if source_filter is None or claim.provenance.source_id == source_filter
+        )
+        if not claims:
             continue
         if package_filter is not None and publication.key.package != package_filter:
             continue
@@ -234,10 +238,16 @@ def build_e2e_test_cases(
             continue
         _validate_suite_has_image(publication.key.suite)
         artifact = lock.artifact_for(publication.artifact)
+        source_ids = tuple(
+            sorted({claim.provenance.source_id for claim in claims})
+        )
+        commands = tuple(
+            sorted({command for claim in claims for command in claim.commands})
+        )
         cases.append(
             _case_from_artifact(
                 source_ids,
-                publication.e2e_commands,
+                commands,
                 publication.key.suite,
                 artifact,
             )

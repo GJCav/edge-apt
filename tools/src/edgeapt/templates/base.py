@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import ClassVar, Protocol
 
@@ -44,22 +44,23 @@ class Fetcher(Protocol):
         root: Path,
     ) -> FetchResult: ...
 
-    def prepare_single_binary(
+class ArchiveExtractor(Protocol):
+    def extract_regular_files(
         self,
         *,
-        downloaded: Path,
-        extract_path: str | None,
-        work_dir: Path,
-    ) -> Path: ...
+        archive: Path,
+        strip_components: int,
+        paths: tuple[str, ...],
+        destination: Path,
+    ) -> Mapping[str, Path]: ...
 
 
 class DebTools(Protocol):
-    def build_single_binary(
+    def build_package(
         self,
         *,
-        binary: Path,
+        payload_root: Path,
         deb_key: DebKey,
-        install_path: str,
         description: str,
         homepage: str | None,
         output: Path,
@@ -75,6 +76,7 @@ class BuildContext:
     root: Path
     work_dir: Path
     fetcher: Fetcher
+    archive_extractor: ArchiveExtractor
     deb_tools: DebTools
     report: Callable[[str, str, str | None], None]
 
@@ -86,7 +88,7 @@ class SourceTemplate(BaseModel, ABC):
 
     id: str
     package: str
-    e2e_command: tuple[str, ...] = Field(min_length=1)
+    e2e_commands: tuple[tuple[str, ...], ...] = Field(min_length=1)
     allow_ubuntu_package_override: bool = False
     override_reason: str | None = None
 
@@ -102,12 +104,17 @@ class SourceTemplate(BaseModel, ABC):
         validate_package(value)
         return value
 
-    @field_validator("e2e_command")
+    @field_validator("e2e_commands")
     @classmethod
-    def _validate_e2e_command(cls, value: tuple[str, ...]) -> tuple[str, ...]:
-        if any(item == "" for item in value):
-            raise ValueError("e2e_command must contain non-empty strings")
-        return value
+    def _validate_e2e_commands(
+        cls,
+        value: tuple[tuple[str, ...], ...],
+    ) -> tuple[tuple[str, ...], ...]:
+        if any(not command or any(item == "" for item in command) for command in value):
+            raise ValueError(
+                "e2e_commands must contain non-empty string arrays"
+            )
+        return tuple(sorted(set(value)))
 
     @model_validator(mode="after")
     def _validate_override(self) -> SourceTemplate:

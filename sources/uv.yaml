@@ -1,0 +1,30 @@
+template: edgeapt.prebuilt_archive/v1
+id: uv
+package: uv
+e2e_commands:
+  - [uv, --version]
+  - [uvx, --version]
+
+metadata:
+  description: "An extremely fast Python package and project manager"
+  homepage: "https://github.com/astral-sh/uv"
+
+files:
+  - id: uv
+    path: uv
+    destination: /usr/bin/uv
+    mode: "0755"
+
+  - id: uvx
+    path: uvx
+    destination: /usr/bin/uvx
+    mode: "0755"
+
+upstream:
+  - version: 0.11.28
+    revision: 1
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://releases.astral.sh/github/uv/releases/download/0.11.28/uv-x86_64-unknown-linux-gnu.tar.gz"
+    sha256: "sha256:e490a6464492183c5d4534a5527fb4440f7f2bb2f228162ad7e4afe076dc0224"
+    strip_components: 1

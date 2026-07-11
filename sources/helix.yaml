@@ -1,7 +1,8 @@
 template: edgeapt.deb_upstream/v1
 id: helix
 package: helix
-e2e_command: [hx, --version]
+e2e_commands:
+  - [hx, --version]
 allow_ubuntu_package_override: false
 
 upstream:

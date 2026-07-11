@@ -93,7 +93,7 @@ class DebUpstreamV1(SourceTemplate):
                         fetch=FetchSpec(url=upstream.url, sha256=upstream.sha256),
                     ),
                     provenance=attrs.evolve(provenance, upstream_index=index),
-                    e2e_command=self.e2e_command,
+                    e2e_commands=self.e2e_commands,
                     allow_ubuntu_package_override=self.allow_ubuntu_package_override,
                     override_reason=self.override_reason,
                 )

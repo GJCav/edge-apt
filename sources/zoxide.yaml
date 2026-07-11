@@ -1,7 +1,8 @@
 template: edgeapt.deb_upstream/v1
 id: zoxide
 package: zoxide
-e2e_command: [zoxide, --version]
+e2e_commands:
+  - [zoxide, --version]
 allow_ubuntu_package_override: true
 override_reason: "Prefer latest release from upstream instead of Ubuntu packaged version."
 
