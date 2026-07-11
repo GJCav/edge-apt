@@ -1,5 +1,6 @@
 tmp/
 public/
+/packages/
 tools/.venv/
 tools/.pytest_cache/
 tools/.ruff_cache/

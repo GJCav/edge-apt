@@ -1,0 +1,115 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: edgeapt-production
+  cancel-in-progress: false
+
+jobs:
+  production:
+    if: github.event_name == 'workflow_dispatch' || vars.PRODUCTION_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      EDGEAPT_GPG_PRIVATE_KEY: ${{ secrets.EDGEAPT_GPG_PRIVATE_KEY }}
+      EDGEAPT_BASE_URL: ${{ vars.EDGEAPT_BASE_URL || 'https://edgeapt.gjm20.top' }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          submodules: false
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: 3.13.12
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+        with:
+          version: 0.11.23
+          enable-cache: true
+          cache-dependency-glob: tools/uv.lock
+
+      - name: Set up Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24.14.0
+
+      - name: Install dependencies and system tools
+        run: |
+          npm install --global pnpm@11.11.0
+          cd tools
+          uv sync --frozen --all-groups
+          cd ../cloudflare
+          pnpm install --frozen-lockfile
+          cd ..
+          .github/scripts/install-aptly.sh
+          .github/scripts/verify-toolchain.sh
+
+      - name: Import production signing key
+        run: |
+          test -n "$EDGEAPT_GPG_PRIVATE_KEY"
+          export GNUPGHOME="$RUNNER_TEMP/edgeapt-gnupg"
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+          install -d -m 0700 "$GNUPGHOME"
+          printf '%s' "$EDGEAPT_GPG_PRIVATE_KEY" | gpg --batch --import
+          cd tools
+          uv run check-key --profile prod
+
+      - name: Compute repository plan
+        id: plan
+        working-directory: tools
+        run: echo "digest=$(uv run plan-digest | sed 's/^sha256://')" >> "$GITHUB_OUTPUT"
+
+      - name: Restore package cache
+        id: package-cache
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: packages
+          key: edgeapt-packages-${{ runner.os }}-${{ steps.plan.outputs.digest }}
+          restore-keys: |
+            edgeapt-packages-${{ runner.os }}-
+
+      - name: Build signed production repository
+        working-directory: tools
+        run: |
+          uv run refresh-ubuntu-index
+          uv run validate
+          uv run repackage --mode locked
+          uv run generate --profile prod
+          uv run deploy --dry-run
+
+      - name: Save package cache
+        if: steps.package-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: packages
+          key: edgeapt-packages-${{ runner.os }}-${{ steps.plan.outputs.digest }}
+
+      - name: Deploy Worker and static assets
+        working-directory: tools
+        run: uv run deploy
+
+      - name: Smoke test deployment
+        run: |
+          curl --fail --silent --show-error "$EDGEAPT_BASE_URL/dists/focal/InRelease" --output /dev/null
+          curl --fail --silent --show-error "$EDGEAPT_BASE_URL/packages.json" --output /tmp/packages.json
+          package_path="$(jq -r '.packages[] | select(.package == "rclone") | .filename' /tmp/packages.json | head -n 1)"
+          test -n "$package_path"
+          status="$(curl --silent --show-error --output /tmp/range.bin --write-out '%{http_code}' --header 'Range: bytes=0-0' "$EDGEAPT_BASE_URL/$package_path")"
+          test "$status" = 206
+          test "$(wc -c < /tmp/range.bin)" = 1
