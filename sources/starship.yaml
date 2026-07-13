@@ -1,0 +1,22 @@
+template: edgeapt.single_binary/v1
+id: starship
+package: starship
+e2e_commands:
+  - [starship, --version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer the latest upstream starship release over the Ubuntu packaged version."
+
+repackage:
+  install_path: /usr/bin/starship
+  metadata:
+    description: "A minimal, fast, and customizable shell prompt."
+    homepage: "https://github.com/starship/starship"
+
+upstream:
+  - version: v1.26.0
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/starship/starship/releases/download/v1.26.0/starship-x86_64-unknown-linux-gnu.tar.gz"
+    sha256: "sha256:321f0dd7af8340a5f2e6a8fec6538a04f617486f9ec70d878f91c09cd8deef22"
+    extract_path: starship

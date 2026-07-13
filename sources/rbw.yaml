@@ -1,0 +1,46 @@
+template: edgeapt.prebuilt_archive/v1
+id: rbw
+package: rbw
+e2e_commands:
+  - [rbw, --version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer the latest upstream rbw release over the Ubuntu packaged version."
+
+metadata:
+  description: "An unofficial Bitwarden command-line client."
+  homepage: "https://github.com/doy/rbw"
+
+files:
+  - id: rbw
+    path: rbw
+    destination: /usr/bin/rbw
+    mode: "0755"
+
+  - id: rbw-agent
+    path: rbw-agent
+    destination: /usr/bin/rbw-agent
+    mode: "0755"
+
+  - id: completion-bash
+    path: completion/bash
+    destination: /usr/share/bash-completion/completions/rbw
+    mode: "0644"
+
+  - id: completion-zsh
+    path: completion/zsh
+    destination: /usr/share/zsh/vendor-completions/_rbw
+    mode: "0644"
+
+  - id: completion-fish
+    path: completion/fish
+    destination: /usr/share/fish/vendor_completions.d/rbw.fish
+    mode: "0644"
+
+upstream:
+  - version: 1.15.0
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/doy/rbw/releases/download/1.15.0/rbw_1.15.0_linux_amd64.tar.gz"
+    sha256: "sha256:d8174b0aeaccbcd80322ca41fb48bf2dbad8fc4d5d9c509c42bbb46d5e195395"
+    strip_components: 0

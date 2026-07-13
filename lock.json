@@ -487,6 +487,32 @@
       "upstream_version": "v0.4.9"
     },
     {
+      "build_plan_digest": "sha256:aa182f828cf3235ddff126925f459e743765f97ffb16269e1c20e5b4c177c69a",
+      "created_at": "2026-07-13T03:37:54Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "rbw",
+        "version": "1.15.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.15.0-1",
+        "package": "rbw"
+      },
+      "path": "packages/rbw/rbw_1.15.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:ba24a99ba4a4874d61d91f2c1cf06c72ea941b8c9538bc8ca2254c7f8bfaa3cd",
+      "size": 5491324,
+      "upstream": {
+        "etag": "\"0x8DE4811A375FAD7\"",
+        "last_modified": "Wed, 31 Dec 2025 02:09:32 GMT",
+        "sha256": "sha256:d8174b0aeaccbcd80322ca41fb48bf2dbad8fc4d5d9c509c42bbb46d5e195395",
+        "size": 7121819,
+        "url": "https://github.com/doy/rbw/releases/download/1.15.0/rbw_1.15.0_linux_amd64.tar.gz"
+      },
+      "upstream_version": "1.15.0"
+    },
+    {
       "build_plan_digest": "sha256:da419172c2e6e5e166c5da67ce443b52ee0132d60227b36131d00341e4c5f773",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -535,6 +561,32 @@
         "url": "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb"
       },
       "upstream_version": "15.1.0-1"
+    },
+    {
+      "build_plan_digest": "sha256:984a1da5623ab41dfcfa59f9cd49c7a827948648269f9b06dba2771e8bb0a0ea",
+      "created_at": "2026-07-13T03:37:54Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "starship",
+        "version": "1.26.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.26.0-1",
+        "package": "starship"
+      },
+      "path": "packages/starship/starship_1.26.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:341a4d4cf9caa3a7e4fef365e7ccfb690814bd0cc3a96c7a67bd04afa21b5edf",
+      "size": 3896160,
+      "upstream": {
+        "etag": "\"0x8DED538ECF41864\"",
+        "last_modified": "Sun, 28 Jun 2026 17:16:00 GMT",
+        "sha256": "sha256:321f0dd7af8340a5f2e6a8fec6538a04f617486f9ec70d878f91c09cd8deef22",
+        "size": 5115170,
+        "url": "https://github.com/starship/starship/releases/download/v1.26.0/starship-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "v1.26.0"
     },
     {
       "build_plan_digest": "sha256:a64e354481e9cb82f1199fe3a5b83e6768990052d9be8da6893b6091fb87c211",
@@ -587,6 +639,32 @@
         "url": "https://releases.astral.sh/github/uv/releases/download/0.11.28/uv-x86_64-unknown-linux-gnu.tar.gz"
       },
       "upstream_version": "0.11.28"
+    },
+    {
+      "build_plan_digest": "sha256:0de01f29b3826a2b4e9dbecb071311fc79c4995e2a22a329032080e564c85df5",
+      "created_at": "2026-07-13T03:37:54Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "xh",
+        "version": "0.26.1-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.26.1-1",
+        "package": "xh"
+      },
+      "path": "packages/xh/xh_0.26.1-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:47ee01c23b08a3aa06f93bfade5acd2708b31a160bc09a59b3b06c76da9a9a4e",
+      "size": 3609768,
+      "upstream": {
+        "etag": "\"0x8DECE52C6C8F516\"",
+        "last_modified": "Fri, 19 Jun 2026 22:33:25 GMT",
+        "sha256": "sha256:c411f07a0b204ca07858a67473d0f5c77e332226430d4d84d1d2afd351a425f2",
+        "size": 4619856,
+        "url": "https://github.com/ducaale/xh/releases/download/v0.26.1/xh-v0.26.1-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v0.26.1"
     },
     {
       "build_plan_digest": "sha256:6c6059c51cfc7517174e9f467dc1a817f2ee055acd7fa79f49c4658aa01075e2",
@@ -691,8 +769,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-13T03:07:09Z",
-  "plan_digest": "sha256:f824fbe4916dd02525deebaac948ae74bf325dbf5492efd292c1f22b3bdc11f9",
+  "generated_at": "2026-07-13T03:37:54Z",
+  "plan_digest": "sha256:f8c589e8dab2a29c820183d0b2e515fb324054bc08c694c14bb65b105b8a0bdf",
   "publications": [
     {
       "artifact": {
@@ -1102,6 +1180,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.15.0-1",
+        "package": "rbw"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rbw",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rbw.yaml",
+            "source_id": "rbw",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.15.0-1",
+        "package": "rbw",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.74.4",
         "package": "rclone"
       },
@@ -1160,6 +1267,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.26.0-1",
+        "package": "starship"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "starship",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/starship.yaml",
+            "source_id": "starship",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.26.0-1",
+        "package": "starship",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "14.0.0-1",
         "package": "tokei-musl"
       },
@@ -1183,6 +1319,35 @@
         "component": "main",
         "deb_version": "14.0.0-1",
         "package": "tokei-musl",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.1-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1-1",
+        "package": "xh",
         "suite": "focal"
       }
     },
@@ -1797,6 +1962,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.15.0-1",
+        "package": "rbw"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rbw",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rbw.yaml",
+            "source_id": "rbw",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.15.0-1",
+        "package": "rbw",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.74.4",
         "package": "rclone"
       },
@@ -1849,6 +2043,35 @@
         "component": "main",
         "deb_version": "15.1.0-1",
         "package": "ripgrep",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.26.0-1",
+        "package": "starship"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "starship",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/starship.yaml",
+            "source_id": "starship",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.26.0-1",
+        "package": "starship",
         "suite": "jammy"
       }
     },
@@ -1911,6 +2134,35 @@
         "component": "main",
         "deb_version": "0.11.28-1",
         "package": "uv",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.1-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1-1",
+        "package": "xh",
         "suite": "jammy"
       }
     },
@@ -2525,6 +2777,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.15.0-1",
+        "package": "rbw"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rbw",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rbw.yaml",
+            "source_id": "rbw",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.15.0-1",
+        "package": "rbw",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.74.4",
         "package": "rclone"
       },
@@ -2577,6 +2858,35 @@
         "component": "main",
         "deb_version": "15.1.0-1",
         "package": "ripgrep",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.26.0-1",
+        "package": "starship"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "starship",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/starship.yaml",
+            "source_id": "starship",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.26.0-1",
+        "package": "starship",
         "suite": "noble"
       }
     },
@@ -2639,6 +2949,35 @@
         "component": "main",
         "deb_version": "0.11.28-1",
         "package": "uv",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.1-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1-1",
+        "package": "xh",
         "suite": "noble"
       }
     },
@@ -3282,6 +3621,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.15.0-1",
+        "package": "rbw"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rbw",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rbw.yaml",
+            "source_id": "rbw",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.15.0-1",
+        "package": "rbw",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.74.4",
         "package": "rclone"
       },
@@ -3334,6 +3702,35 @@
         "component": "main",
         "deb_version": "15.1.0-1",
         "package": "ripgrep",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.26.0-1",
+        "package": "starship"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "starship",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/starship.yaml",
+            "source_id": "starship",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.26.0-1",
+        "package": "starship",
         "suite": "resolute"
       }
     },
@@ -3396,6 +3793,35 @@
         "component": "main",
         "deb_version": "0.11.28-1",
         "package": "uv",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.1-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1-1",
+        "package": "xh",
         "suite": "resolute"
       }
     },

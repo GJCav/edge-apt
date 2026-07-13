@@ -1,0 +1,47 @@
+template: edgeapt.prebuilt_archive/v1
+id: xh
+package: xh
+e2e_commands:
+  - [xh, --version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer the latest upstream xh release over the Ubuntu packaged version."
+
+metadata:
+  description: "A friendly and fast tool for sending HTTP requests."
+  homepage: "https://github.com/ducaale/xh"
+
+files:
+  - id: executable
+    path: xh
+    destination: /usr/bin/xh
+    mode: "0755"
+
+  - id: man
+    path: doc/xh.1
+    destination: /usr/share/man/man1/xh.1.gz
+    mode: "0644"
+    transform: gzip
+
+  - id: completion-bash
+    path: completions/xh.bash
+    destination: /usr/share/bash-completion/completions/xh
+    mode: "0644"
+
+  - id: completion-zsh
+    path: completions/_xh
+    destination: /usr/share/zsh/vendor-completions/_xh
+    mode: "0644"
+
+  - id: completion-fish
+    path: completions/xh.fish
+    destination: /usr/share/fish/vendor_completions.d/xh.fish
+    mode: "0644"
+
+upstream:
+  - version: v0.26.1
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/ducaale/xh/releases/download/v0.26.1/xh-v0.26.1-x86_64-unknown-linux-musl.tar.gz"
+    sha256: "sha256:c411f07a0b204ca07858a67473d0f5c77e332226430d4d84d1d2afd351a425f2"
+    strip_components: 1
