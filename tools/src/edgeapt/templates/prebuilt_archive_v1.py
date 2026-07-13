@@ -4,7 +4,7 @@ import gzip
 import shutil
 from collections import Counter
 from pathlib import Path, PurePosixPath
-from typing import Any, ClassVar, Literal, cast
+from typing import ClassVar, Literal, cast
 
 import attrs
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -18,6 +18,8 @@ from edgeapt.domain.planning import (
 )
 from edgeapt.templates.base import BuildContext, SourceTemplate, TemplateBuildResult
 from edgeapt.templates.common import (
+    DebPackageMetadataModel,
+    DebPackageMetadataSpec,
     FetchSpec,
     normalize_debian_version,
     validate_arch,
@@ -27,13 +29,6 @@ from edgeapt.templates.common import (
 
 type FileMode = Literal["0644", "0755"]
 type FileTransform = Literal["copy", "gzip"]
-
-
-class PrebuiltArchiveMetadataModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True)
-
-    description: str = Field(min_length=1)
-    homepage: str | None = None
 
 
 class PrebuiltArchiveFileModel(BaseModel):
@@ -103,18 +98,6 @@ class PrebuiltArchiveUpstreamModel(BaseModel):
         return value
 
 
-@attrs.define(kw_only=True, frozen=True)
-class PrebuiltArchiveMetadataSpec:
-    description: str
-    homepage: str | None
-
-    def to_canonical_data(self) -> JsonObject:
-        data: dict[str, Any] = {"description": self.description}
-        if self.homepage is not None:
-            data["homepage"] = self.homepage
-        return cast(JsonObject, data)
-
-
 @attrs.define(kw_only=True, frozen=True, order=True)
 class ResolvedArchiveFile:
     path: str
@@ -140,7 +123,7 @@ class PrebuiltArchiveBuildSpec:
     revision: int
     fetch: FetchSpec
     strip_components: int
-    metadata: PrebuiltArchiveMetadataSpec
+    metadata: DebPackageMetadataSpec
     files: tuple[ResolvedArchiveFile, ...]
 
     @property
@@ -166,7 +149,7 @@ class PrebuiltArchiveV1(SourceTemplate):
     template_id: ClassVar[str] = "edgeapt.prebuilt_archive/v1"
 
     template: Literal["edgeapt.prebuilt_archive/v1"]
-    metadata: PrebuiltArchiveMetadataModel
+    metadata: DebPackageMetadataModel
     files: tuple[PrebuiltArchiveFileModel, ...] = Field(min_length=1)
     upstream: tuple[PrebuiltArchiveUpstreamModel, ...] = Field(min_length=1)
 
@@ -190,10 +173,7 @@ class PrebuiltArchiveV1(SourceTemplate):
         return self
 
     def plan(self, provenance: SourceProvenance) -> tuple[BuildIntent, ...]:
-        metadata = PrebuiltArchiveMetadataSpec(
-            description=self.metadata.description,
-            homepage=self.metadata.homepage,
-        )
+        metadata = DebPackageMetadataSpec.from_model(self.metadata)
         intents: list[BuildIntent] = []
         for index, upstream in enumerate(self.upstream):
             files = tuple(
@@ -297,6 +277,8 @@ class PrebuiltArchiveV1(SourceTemplate):
             deb_key=context.deb_key,
             description=spec.metadata.description,
             homepage=spec.metadata.homepage,
+            section=spec.metadata.section,
+            multi_arch=spec.metadata.multi_arch,
             output=candidate,
             work_dir=context.work_dir,
         )

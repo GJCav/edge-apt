@@ -93,10 +93,10 @@ def test_current_sources_keep_expected_plan_digest() -> None:
     documents = load_source_documents(SOURCES_DIR, root=ROOT)
     plan = build_repo_plan(documents)
 
-    assert len(plan.builds) == 30
-    assert len(plan.publications) == 109
+    assert len(plan.builds) == 31
+    assert len(plan.publications) == 113
     assert plan.plan_digest == (
-        "sha256:f8c589e8dab2a29c820183d0b2e515fb324054bc08c694c14bb65b105b8a0bdf"
+        "sha256:73f5838bff2b9244dac4ea1b2daf2c633a68d228a3b6710fd4073b28f271796f"
     )
 
 

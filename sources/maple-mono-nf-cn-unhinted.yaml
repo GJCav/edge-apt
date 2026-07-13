@@ -1,0 +1,111 @@
+template: edgeapt.prebuilt_archive/v1
+id: maple-mono-nf-cn-unhinted
+package: fonts-maple-mono-nf-cn-unhinted
+e2e_commands:
+  - [test, -r, /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-Regular.ttf]
+
+metadata:
+  description: "Maple Mono with Nerd Font icons and CJK glyphs (unhinted)."
+  homepage: "https://github.com/subframe7536/maple-font"
+  section: fonts
+  multi_arch: foreign
+
+files:
+  - id: thin
+    path: MapleMono-NF-CN-Thin.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-Thin.ttf
+    mode: "0644"
+
+  - id: thin-italic
+    path: MapleMono-NF-CN-ThinItalic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-ThinItalic.ttf
+    mode: "0644"
+
+  - id: extra-light
+    path: MapleMono-NF-CN-ExtraLight.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-ExtraLight.ttf
+    mode: "0644"
+
+  - id: extra-light-italic
+    path: MapleMono-NF-CN-ExtraLightItalic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-ExtraLightItalic.ttf
+    mode: "0644"
+
+  - id: light
+    path: MapleMono-NF-CN-Light.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-Light.ttf
+    mode: "0644"
+
+  - id: light-italic
+    path: MapleMono-NF-CN-LightItalic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-LightItalic.ttf
+    mode: "0644"
+
+  - id: regular
+    path: MapleMono-NF-CN-Regular.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-Regular.ttf
+    mode: "0644"
+
+  - id: italic
+    path: MapleMono-NF-CN-Italic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-Italic.ttf
+    mode: "0644"
+
+  - id: medium
+    path: MapleMono-NF-CN-Medium.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-Medium.ttf
+    mode: "0644"
+
+  - id: medium-italic
+    path: MapleMono-NF-CN-MediumItalic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-MediumItalic.ttf
+    mode: "0644"
+
+  - id: semi-bold
+    path: MapleMono-NF-CN-SemiBold.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-SemiBold.ttf
+    mode: "0644"
+
+  - id: semi-bold-italic
+    path: MapleMono-NF-CN-SemiBoldItalic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-SemiBoldItalic.ttf
+    mode: "0644"
+
+  - id: bold
+    path: MapleMono-NF-CN-Bold.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-Bold.ttf
+    mode: "0644"
+
+  - id: bold-italic
+    path: MapleMono-NF-CN-BoldItalic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-BoldItalic.ttf
+    mode: "0644"
+
+  - id: extra-bold
+    path: MapleMono-NF-CN-ExtraBold.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-ExtraBold.ttf
+    mode: "0644"
+
+  - id: extra-bold-italic
+    path: MapleMono-NF-CN-ExtraBoldItalic.ttf
+    destination: /usr/share/fonts/truetype/maple-mono-nf-cn-unhinted/MapleMono-NF-CN-ExtraBoldItalic.ttf
+    mode: "0644"
+
+  - id: copyright
+    path: LICENSE.txt
+    destination: /usr/share/doc/fonts-maple-mono-nf-cn-unhinted/copyright
+    mode: "0644"
+
+  - id: upstream-config
+    path: config.json
+    destination: /usr/share/doc/fonts-maple-mono-nf-cn-unhinted/upstream-config.json
+    mode: "0644"
+
+upstream:
+  - version: v7.9
+    revision: 1
+    arch: all
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/subframe7536/maple-font/releases/download/v7.9/MapleMono-NF-CN-unhinted.zip"
+    sha256: "sha256:ab88522932cf4015dffeaef6dedc59a22a5fefecdcc6e583d9fcd997da5b7cac"
+    strip_components: 0

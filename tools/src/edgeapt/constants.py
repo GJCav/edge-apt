@@ -19,8 +19,9 @@ LOCK_PATH = ROOT / "lock.json"
 KEYS_DIR = ROOT / "keys"
 
 SUPPORTED_SUITES = {"focal", "jammy", "noble", "resolute"}
-SUPPORTED_ARCHES = {"amd64", "arm64"}
+SUPPORTED_ARCHES = {"all", "amd64", "arm64"}
 SUPPORTED_E2E_ARCHES = {"amd64"}
+DEFAULT_ARCH_FOR_ALL = "amd64"
 UBUNTU_INDEX_ARCHES = ("amd64",)
 UBUNTU_COMPONENTS = ("main", "restricted", "universe", "multiverse")
 DEFAULT_UBUNTU_ARCHIVE_BASE_URL = "http://archive.ubuntu.com/ubuntu"

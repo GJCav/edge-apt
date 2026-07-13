@@ -97,6 +97,47 @@ def test_manifest_keeps_one_entry_per_publication(tmp_path: Path) -> None:
     }
 
 
+def test_manifest_reads_arch_all_from_native_index(tmp_path: Path) -> None:
+    key = make_deb_key(
+        package="example-font",
+        deb_version="1.0-1",
+        arch="all",
+    )
+    pool_path = tmp_path / "pool/main/e/example-font/example-font_1.0-1_all.deb"
+    pool_path.parent.mkdir(parents=True)
+    pool_path.write_bytes(b"font deb")
+    artifact = make_artifact(
+        deb_key=key,
+        sha256=sha256_file(pool_path),
+        size=pool_path.stat().st_size,
+    )
+    packages_path = tmp_path / "dists/noble/main/binary-amd64/Packages"
+    packages_path.parent.mkdir(parents=True)
+    packages_path.write_text(
+        _packages_stanza(
+            pool_path,
+            tmp_path,
+            package="example-font",
+            arch="all",
+        ),
+        encoding="utf-8",
+    )
+
+    manifest_path = write_package_manifest(
+        output_dir=tmp_path,
+        profile="test",
+        lock=make_lock(
+            artifacts=(artifact,),
+            publications=(make_publication(deb_key=key),),
+        ),
+    )
+    raw = cast(dict[str, Any], json.loads(manifest_path.read_text(encoding="utf-8")))
+    entries = cast(list[dict[str, Any]], raw["packages"])
+
+    assert entries[0]["package"] == "example-font"
+    assert entries[0]["arch"] == "all"
+
+
 def test_manifest_rejects_filename_outside_repository(tmp_path: Path) -> None:
     key = make_deb_key(package="tool", deb_version="1.0-1")
     payload = b"deb payload"
@@ -163,12 +204,14 @@ def _packages_stanza(
     root: Path,
     *,
     filename: str | None = None,
+    package: str = "tool",
+    arch: str = "amd64",
 ) -> str:
     return "\n".join(
         [
-            "Package: tool",
+            f"Package: {package}",
             "Version: 1.0-1",
-            "Architecture: amd64",
+            f"Architecture: {arch}",
             f"Filename: {filename or pool_path.relative_to(root).as_posix()}",
             f"Size: {pool_path.stat().st_size}",
             f"SHA256: {sha256_file(pool_path).removeprefix('sha256:')}",

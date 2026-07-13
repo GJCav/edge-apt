@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 
 import attrs
 
+from edgeapt.constants import DEFAULT_ARCH_FOR_ALL
 from edgeapt.domain.lock import LockFile
 from edgeapt.errors import ValidationError
 from edgeapt.util import write_json
@@ -56,21 +57,27 @@ def write_package_manifest(
     entries: list[PackageManifestEntry] = []
     for publication in sorted(lock.publications, key=lambda item: item.key):
         key = publication.key
-        target = (key.suite, key.component, key.arch)
+        index_arch = _index_arch(key.arch)
+        target = (key.suite, key.component, index_arch)
         if target not in indexes:
             packages_path = (
                 output_dir
                 / "dists"
                 / key.suite
                 / key.component
-                / f"binary-{key.arch}"
+                / f"binary-{index_arch}"
                 / "Packages"
             )
             indexes[target] = index_package_stanzas(
                 parse_debian_control(packages_path.read_text(encoding="utf-8")),
                 source=packages_path,
             )
-        identity = (key.package, key.deb_version, key.arch)
+        artifact = lock.artifact_for(publication.artifact)
+        identity = (
+            artifact.deb_key.package,
+            artifact.deb_key.deb_version,
+            artifact.deb_key.arch,
+        )
         fields = indexes[target].get(identity)
         if fields is None:
             raise ValidationError(
@@ -78,7 +85,6 @@ def write_package_manifest(
                 f"{key.suite}/{key.component}/{key.package}/"
                 f"{key.deb_version}/{key.arch}"
             )
-        artifact = lock.artifact_for(publication.artifact)
         size = _parse_size(fields, identity)
         sha256 = _required_field(fields, "SHA256", identity)
         if size != artifact.size:
@@ -218,6 +224,10 @@ def _safe_homepage(value: str | None) -> str | None:
     if parsed.scheme not in {"http", "https"} or parsed.netloc == "":
         return None
     return value
+
+
+def _index_arch(package_arch: str) -> str:
+    return DEFAULT_ARCH_FOR_ALL if package_arch == "all" else package_arch
 
 
 def _validated_filename(value: str, *, output_dir: Path) -> str:

@@ -167,6 +167,19 @@ def test_e2e_source_filter_keeps_only_matching_claim_commands() -> None:
     assert cases[0].commands == (("foo", "--version"),)
 
 
+def test_e2e_runs_arch_all_package_on_amd64() -> None:
+    key = make_deb_key(package="example-font", arch="all")
+    lock = make_lock(
+        artifacts=(make_artifact(deb_key=key),),
+        publications=(make_publication(deb_key=key),),
+    )
+
+    cases = build_e2e_test_cases(lock)
+
+    assert len(cases) == 1
+    assert cases[0].arch == "amd64"
+
+
 def test_e2e_rejects_invalid_jobs_before_starting_docker() -> None:
     with pytest.raises(ValidationError, match="jobs must be a positive integer"):
         run_e2e(jobs=0)

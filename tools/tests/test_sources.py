@@ -25,6 +25,7 @@ def test_normalize_debian_version_strips_v_prefix() -> None:
 
 def test_validate_id_and_arch() -> None:
     validate_id("hello-world")
+    validate_arch("all")
     validate_arch("amd64")
     with pytest.raises(ValueError):
         validate_id("Hello")

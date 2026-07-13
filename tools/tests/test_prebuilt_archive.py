@@ -148,6 +148,8 @@ class _CaptureDebTools:
         deb_key: DebKey,
         description: str,
         homepage: str | None,
+        section: str,
+        multi_arch: str | None,
         output: Path,
         work_dir: Path,
     ) -> None:

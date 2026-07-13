@@ -22,6 +22,7 @@ import attrs
 
 from edgeapt.constants import (
     E2E_APT_CACHE_DIR,
+    DEFAULT_ARCH_FOR_ALL,
     LOCK_PATH,
     ROOT,
     SUPPORTED_E2E_ARCHES,
@@ -514,7 +515,7 @@ def _case_from_artifact(
 ) -> E2ETestCase:
     return E2ETestCase(
         suite=suite,
-        arch=artifact.arch,
+        arch=(DEFAULT_ARCH_FOR_ALL if artifact.arch == "all" else artifact.arch),
         source_ids=source_ids,
         package=artifact.package,
         version=artifact.version,

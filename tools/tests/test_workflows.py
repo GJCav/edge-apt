@@ -46,6 +46,8 @@ class _WrongControlDebTools:
         deb_key: object,
         description: str,
         homepage: str | None,
+        section: str,
+        multi_arch: str | None,
         output: Path,
         work_dir: Path,
     ) -> None:

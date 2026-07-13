@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import shutil
-from typing import Any, ClassVar, Literal, cast
+from typing import ClassVar, Literal, cast
 
 import attrs
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -15,6 +15,8 @@ from edgeapt.domain.planning import (
 )
 from edgeapt.templates.base import BuildContext, SourceTemplate, TemplateBuildResult
 from edgeapt.templates.common import (
+    DebPackageMetadataModel,
+    DebPackageMetadataSpec,
     FetchSpec,
     normalize_debian_version,
     validate_arch,
@@ -22,18 +24,11 @@ from edgeapt.templates.common import (
 )
 
 
-class SingleBinaryMetadataModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True)
-
-    description: str = Field(min_length=1)
-    homepage: str | None = None
-
-
 class SingleBinaryRepackageModel(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     install_path: str = Field(min_length=1)
-    metadata: SingleBinaryMetadataModel
+    metadata: DebPackageMetadataModel
 
     @field_validator("install_path")
     @classmethod
@@ -69,21 +64,9 @@ class SingleBinaryUpstreamModel(BaseModel):
 
 
 @attrs.define(kw_only=True, frozen=True)
-class SingleBinaryMetadataSpec:
-    description: str
-    homepage: str | None
-
-    def to_canonical_data(self) -> JsonObject:
-        data: dict[str, Any] = {"description": self.description}
-        if self.homepage is not None:
-            data["homepage"] = self.homepage
-        return cast(JsonObject, data)
-
-
-@attrs.define(kw_only=True, frozen=True)
 class SingleBinaryRepackageSpec:
     install_path: str
-    metadata: SingleBinaryMetadataSpec
+    metadata: DebPackageMetadataSpec
 
     def to_canonical_data(self) -> JsonObject:
         return cast(
@@ -133,10 +116,7 @@ class SingleBinaryV1(SourceTemplate):
     def plan(self, provenance: SourceProvenance) -> tuple[BuildIntent, ...]:
         repackage = SingleBinaryRepackageSpec(
             install_path=self.repackage.install_path,
-            metadata=SingleBinaryMetadataSpec(
-                description=self.repackage.metadata.description,
-                homepage=self.repackage.metadata.homepage,
-            ),
+            metadata=DebPackageMetadataSpec.from_model(self.repackage.metadata),
         )
         intents: list[BuildIntent] = []
         for index, upstream in enumerate(self.upstream):
@@ -216,6 +196,8 @@ class SingleBinaryV1(SourceTemplate):
             deb_key=context.deb_key,
             description=spec.repackage.metadata.description,
             homepage=spec.repackage.metadata.homepage,
+            section=spec.repackage.metadata.section,
+            multi_arch=spec.repackage.metadata.multi_arch,
             output=candidate,
             work_dir=context.work_dir,
         )

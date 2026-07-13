@@ -17,6 +17,8 @@ class DefaultDebTools:
         deb_key: DebKey,
         description: str,
         homepage: str | None,
+        section: str,
+        multi_arch: str | None,
         output: Path,
         work_dir: Path,
     ) -> None:
@@ -31,7 +33,7 @@ class DefaultDebTools:
         control_lines = [
             f"Package: {deb_key.package}",
             f"Version: {deb_key.deb_version}",
-            "Section: utils",
+            f"Section: {section}",
             "Priority: optional",
             f"Architecture: {deb_key.arch}",
             "Maintainer: EdgeAPT <edgeapt@example.invalid>",
@@ -39,6 +41,8 @@ class DefaultDebTools:
         ]
         if homepage is not None:
             control_lines.append(f"Homepage: {homepage}")
+        if multi_arch is not None:
+            control_lines.append(f"Multi-Arch: {multi_arch}")
         control_path = debian_dir / "control"
         control_path.write_text(
             "\n".join(control_lines) + "\n", encoding="utf-8"
