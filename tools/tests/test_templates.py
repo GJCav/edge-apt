@@ -37,6 +37,11 @@ from tests.factories import make_document, make_source
             "sha256:83d3259b57dee66a9751bacaa4b39b7e38806781259ecf9ebe4035a6371fdf14",
         ),
         (
+            "edgeapt.single_binary/v1.1",
+            "v1.2.3",
+            "sha256:a6d2623041125244352d07aa7c49d2927f6ccd81dda3b3a94ac680d92a339fed",
+        ),
+        (
             "edgeapt.deb_upstream/v1",
             "1.2.3",
             "sha256:33aae9164e82247e959265b8e897924dc1bff0aed642c57a78c074e279477b12",
@@ -110,6 +115,24 @@ def test_single_binary_rejects_removed_repackage_type() -> None:
     repackage["type"] = "nfpm"
 
     with pytest.raises(PydanticValidationError, match="repackage.type"):
+        type(source).model_validate(raw)
+
+
+@pytest.mark.parametrize("field", ["depends", "copyright"])
+def test_single_binary_v1_rejects_v11_fields(field: str) -> None:
+    source = make_source(template="edgeapt.single_binary/v1")
+    raw = source.model_dump()
+    repackage = cast(dict[str, object], raw["repackage"])
+    if field == "depends":
+        metadata = cast(dict[str, object], repackage["metadata"])
+        metadata["depends"] = ["libc6 (>= 2.34)"]
+    else:
+        repackage["copyright"] = {
+            "url": "https://example.invalid/LICENSE",
+            "sha256": f"sha256:{'b' * 64}",
+        }
+
+    with pytest.raises(PydanticValidationError, match=field):
         type(source).model_validate(raw)
 
 
@@ -250,6 +273,7 @@ class _FakeDebTools:
         homepage: str | None,
         section: str,
         multi_arch: str | None,
+        depends: tuple[str, ...],
         output: Path,
         work_dir: Path,
     ) -> None:

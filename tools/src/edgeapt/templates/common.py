@@ -31,6 +31,7 @@ class DebPackageMetadataSpec:
     homepage: str | None
     section: str
     multi_arch: MultiArch | None
+    depends: tuple[str, ...] = ()
 
     @classmethod
     def from_model(cls, model: DebPackageMetadataModel) -> DebPackageMetadataSpec:
@@ -39,6 +40,7 @@ class DebPackageMetadataSpec:
             homepage=model.homepage,
             section=model.section,
             multi_arch=model.multi_arch,
+            depends=(),
         )
 
     def to_canonical_data(self) -> JsonObject:
@@ -49,6 +51,8 @@ class DebPackageMetadataSpec:
             data["section"] = self.section
         if self.multi_arch is not None:
             data["multi_arch"] = self.multi_arch
+        if self.depends:
+            data["depends"] = list(self.depends)
         return cast(JsonObject, data)
 
 

@@ -8,6 +8,7 @@ from edgeapt.templates.base import SourceTemplate
 from edgeapt.templates.deb_upstream_v1 import DebUpstreamV1
 from edgeapt.templates.prebuilt_archive_v1 import PrebuiltArchiveV1
 from edgeapt.templates.single_binary_v1 import SingleBinaryV1
+from edgeapt.templates.single_binary_v1_1 import SingleBinaryV11
 
 
 class TemplateRegistry:
@@ -34,5 +35,5 @@ class TemplateRegistry:
 
 
 DEFAULT_TEMPLATES = TemplateRegistry(
-    [SingleBinaryV1, DebUpstreamV1, PrebuiltArchiveV1]
+    [SingleBinaryV1, SingleBinaryV11, DebUpstreamV1, PrebuiltArchiveV1]
 )

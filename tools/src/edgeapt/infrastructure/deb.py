@@ -19,6 +19,7 @@ class DefaultDebTools:
         homepage: str | None,
         section: str,
         multi_arch: str | None,
+        depends: tuple[str, ...],
         output: Path,
         work_dir: Path,
     ) -> None:
@@ -43,6 +44,8 @@ class DefaultDebTools:
             control_lines.append(f"Homepage: {homepage}")
         if multi_arch is not None:
             control_lines.append(f"Multi-Arch: {multi_arch}")
+        if depends:
+            control_lines.append(f"Depends: {', '.join(depends)}")
         control_path = debian_dir / "control"
         control_path.write_text(
             "\n".join(control_lines) + "\n", encoding="utf-8"

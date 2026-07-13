@@ -150,6 +150,7 @@ class _CaptureDebTools:
         homepage: str | None,
         section: str,
         multi_arch: str | None,
+        depends: tuple[str, ...],
         output: Path,
         work_dir: Path,
     ) -> None:

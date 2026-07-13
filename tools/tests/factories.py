@@ -49,6 +49,10 @@ def make_source(
     sha256: str = f"sha256:{'a' * 64}",
     extract_path: str | None = None,
     install_path: str = "/usr/bin/foo",
+    depends: tuple[str, ...] = (),
+    copyright_path: str | None = None,
+    copyright_url: str = "https://example.invalid/LICENSE",
+    copyright_sha256: str = f"sha256:{'b' * 64}",
     e2e_commands: tuple[tuple[str, ...], ...] = (("foo", "--version"),),
     allow_ubuntu_package_override: bool = False,
     override_reason: str | None = None,
@@ -71,14 +75,26 @@ def make_source(
     }
     if override_reason is not None:
         raw["override_reason"] = override_reason
-    if template == "edgeapt.single_binary/v1":
+    if template in {
+        "edgeapt.single_binary/v1",
+        "edgeapt.single_binary/v1.1",
+    }:
         upstream["revision"] = revision
         if extract_path is not None:
             upstream["extract_path"] = extract_path
-        raw["repackage"] = {
+        metadata: dict[str, object] = {"description": package_name}
+        repackage: dict[str, object] = {
             "install_path": install_path,
-            "metadata": {"description": package_name},
+            "metadata": metadata,
         }
+        if template == "edgeapt.single_binary/v1.1":
+            metadata["depends"] = list(depends)
+            repackage["copyright"] = (
+                {"path": copyright_path}
+                if copyright_path is not None
+                else {"url": copyright_url, "sha256": copyright_sha256}
+            )
+        raw["repackage"] = repackage
     elif template == "edgeapt.prebuilt_archive/v1":
         upstream["revision"] = revision
         upstream["sha256"] = sha256 or f"sha256:{'a' * 64}"

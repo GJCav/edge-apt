@@ -279,6 +279,7 @@ class PrebuiltArchiveV1(SourceTemplate):
             homepage=spec.metadata.homepage,
             section=spec.metadata.section,
             multi_arch=spec.metadata.multi_arch,
+            depends=spec.metadata.depends,
             output=candidate,
             work_dir=context.work_dir,
         )

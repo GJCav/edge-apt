@@ -30,9 +30,11 @@ def test_build_package_is_reproducible_across_umasks(tmp_path: Path) -> None:
             homepage=None,
             section="utils",
             multi_arch=None,
+            depends=(),
             output=output,
             work_dir=case / "work",
         )
+        assert _control_field(output, "Depends") == ""
         outputs.append(output.read_bytes())
 
     assert outputs[0] == outputs[1]
@@ -50,6 +52,7 @@ def test_build_package_writes_optional_control_metadata(tmp_path: Path) -> None:
         homepage=None,
         section="fonts",
         multi_arch="foreign",
+        depends=("fontconfig",),
         output=output,
         work_dir=tmp_path / "work",
     )
@@ -57,6 +60,7 @@ def test_build_package_writes_optional_control_metadata(tmp_path: Path) -> None:
     assert _control_field(output, "Architecture") == "all"
     assert _control_field(output, "Section") == "fonts"
     assert _control_field(output, "Multi-Arch") == "foreign"
+    assert _control_field(output, "Depends") == "fontconfig"
 
 
 def _control_field(path: Path, field: str) -> str:

@@ -1,0 +1,30 @@
+template: edgeapt.single_binary/v1.1
+id: jless
+package: jless
+e2e_commands:
+  - [jless, --version]
+
+repackage:
+  install_path: /usr/bin/jless
+  metadata:
+    description: "A command-line JSON viewer"
+    homepage: "https://github.com/PaulJuliusMartinez/jless"
+    depends:
+      - "libc6 (>= 2.34)"
+      - "libgcc-s1 (>= 4.2)"
+      - libxcb-render0
+      - libxcb-shape0
+      - libxcb-xfixes0
+      - libxcb1
+  copyright:
+    url: "https://raw.githubusercontent.com/PaulJuliusMartinez/jless/v0.9.0/LICENSE"
+    sha256: "sha256:f1489522ae8a60cdc2ee0c40426d7308d33230440708064087cfcba4e241c7f1"
+
+upstream:
+  - version: v0.9.0
+    revision: 1
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/PaulJuliusMartinez/jless/releases/download/v0.9.0/jless-v0.9.0-x86_64-unknown-linux-gnu.zip"
+    sha256: "sha256:a1e0eb63ef347adc649989ac5c7d2dc896df6d494622b953c86e3a248e733a93"
+    extract_path: jless
