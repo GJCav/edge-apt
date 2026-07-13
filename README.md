@@ -102,9 +102,6 @@ them without modifying `lock.json`:
 uv run repackage --mode locked
 ```
 
-The optional `dev-logs/` private submodule is not required to build, test, or
-deploy the repository.
-
 ## GitHub Actions
 
 The `CI` workflow runs on pull requests and pushes to `master`. It performs Python
