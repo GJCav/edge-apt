@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from collections.abc import Callable
 from pathlib import Path
 from typing import Annotated, Literal
@@ -33,6 +34,11 @@ from edgeapt.workflows.repackage import (
 )
 from edgeapt.workflows.validate import validate_project
 from edgeapt.workflows.planning import compile_project_plan
+from edgeapt.upstream_updates import (
+    UpdateCheckItem,
+    UpdateCheckResult,
+    check_upstream_updates,
+)
 
 console = Console()
 PROJECT = create_project(ROOT)
@@ -106,6 +112,34 @@ def validate(skip_ubuntu_conflicts: bool = False) -> None:
 def plan_digest() -> None:
     """Print the canonical repository plan digest for automation."""
     print(compile_project_plan(PROJECT).plan.plan_digest)
+
+
+def check_updates(
+    format: Literal["table", "json", "markdown"] = "table",
+    output: Path | None = None,
+    json_output: Path | None = None,
+) -> None:
+    """Infer and check actionable upstream releases from source URLs."""
+    result = check_upstream_updates(project=PROJECT)
+    if json_output is not None:
+        _write_text(
+            json_output,
+            json.dumps(result.to_json(), indent=2, sort_keys=True) + "\n",
+        )
+    if format == "table":
+        if output is not None:
+            raise EdgeAptError("--output is only supported with json or markdown")
+        _print_update_table(result)
+        return
+    rendered = (
+        json.dumps(result.to_json(), indent=2, sort_keys=True) + "\n"
+        if format == "json"
+        else _render_update_markdown(result)
+    )
+    if output is None:
+        print(rendered, end="")
+    else:
+        _write_text(output, rendered)
 
 
 def refresh_ubuntu_index() -> None:
@@ -414,6 +448,10 @@ def plan_digest_main() -> None:
     _run_cli(plan_digest)
 
 
+def check_updates_main() -> None:
+    _run_cli(check_updates)
+
+
 def refresh_ubuntu_index_main() -> None:
     _run_cli(refresh_ubuntu_index)
 
@@ -448,3 +486,125 @@ def _run_cli(command: Callable[..., object]) -> None:
     except EdgeAptError as exc:
         console.print(f"[red]{exc}[/red]")
         raise SystemExit(1) from exc
+
+
+def _print_update_table(result: UpdateCheckResult) -> None:
+    table = Table(title="Upstream Updates")
+    table.add_column("source")
+    table.add_column("provider")
+    table.add_column("status")
+    table.add_column("current")
+    table.add_column("latest")
+    table.add_column("asset")
+    for item in result.items:
+        table.add_row(
+            item.source_id,
+            item.provider,
+            item.status,
+            ", ".join(item.current) or "-",
+            item.latest or "-",
+            "-" if item.asset is None else item.asset.name,
+        )
+    console.print(table)
+    console.print(
+        f"Checked {len(result.items)}/{result.source_count} source(s): "
+        f"{result.update_count} update(s), {result.waiting_count} waiting, "
+        f"{result.error_count} error(s)."
+    )
+    if result.skipped:
+        console.print(f"Skipped: {', '.join(result.skipped)}")
+
+
+def _render_update_markdown(result: UpdateCheckResult) -> str:
+    lines = [
+        "<!-- edgeapt-upstream-updates -->",
+        "## EdgeAPT upstream updates",
+        "",
+        f"Checked {len(result.items)} of {result.source_count} sources. "
+        f"Found **{result.update_count}** actionable update(s), "
+        f"**{result.waiting_count}** waiting for an artifact, and "
+        f"**{result.error_count}** error(s).",
+        "",
+    ]
+    updates = tuple(
+        item for item in result.items if item.status == "update_available"
+    )
+    if updates:
+        lines.extend(
+            [
+                "### Available",
+                "",
+                "| Source | Current | Latest | Asset | SHA256 |",
+                "| --- | --- | --- | --- | --- |",
+            ]
+        )
+        lines.extend(_update_markdown_row(item) for item in updates)
+        lines.append("")
+    else:
+        lines.extend(["No actionable upstream updates were found.", ""])
+
+    waiting = tuple(
+        item for item in result.items if item.status == "waiting_for_artifact"
+    )
+    if waiting:
+        lines.extend(["### Waiting For Artifact", ""])
+        lines.extend(_update_markdown_bullet(item) for item in waiting)
+        lines.append("")
+
+    errors = tuple(item for item in result.items if item.status == "error")
+    if errors:
+        lines.extend(["### Check Errors", ""])
+        lines.extend(_update_markdown_bullet(item) for item in errors)
+        lines.append("")
+
+    if result.skipped:
+        lines.extend(
+            [
+                "Sources without an automatically recognized upstream: "
+                + ", ".join(f"`{item}`" for item in result.skipped),
+                "",
+            ]
+        )
+    lines.append(
+        "This issue is maintained automatically by the EdgeAPT maintenance workflow."
+    )
+    return "\n".join(lines) + "\n"
+
+
+def _update_markdown_row(item: UpdateCheckItem) -> str:
+    latest = _markdown_link(item.latest or "-", item.release_url)
+    asset = (
+        "-"
+        if item.asset is None
+        else _markdown_link(item.asset.name, item.asset.url)
+    )
+    digest = "-" if item.asset is None or item.asset.digest is None else item.asset.digest
+    return "| " + " | ".join(
+        (
+            _markdown_text(item.source_id),
+            _markdown_text(", ".join(item.current) or "-"),
+            latest,
+            asset,
+            _markdown_text(digest),
+        )
+    ) + " |"
+
+
+def _update_markdown_bullet(item: UpdateCheckItem) -> str:
+    latest = _markdown_link(item.latest or "unknown", item.release_url)
+    message = _markdown_text(item.message or item.status)
+    return f"- `{_markdown_text(item.source_id)}`: {latest} - {message}"
+
+
+def _markdown_link(label: str, url: str | None) -> str:
+    escaped = _markdown_text(label)
+    return escaped if url is None else f"[{escaped}]({url})"
+
+
+def _markdown_text(value: str) -> str:
+    return value.replace("|", "\\|").replace("\n", " ")
+
+
+def _write_text(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")

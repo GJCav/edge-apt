@@ -137,3 +137,17 @@ The environment may define `EDGEAPT_BASE_URL`; it defaults to
 `https://edgeapt.gjm20.top`. The signing key must match
 `keys/prod/fingerprint.txt`. Custom-domain routing remains managed in the
 Cloudflare Dashboard.
+
+The `Check updates` workflow runs at 08:00 (UTC+8) on the first day of each month
+and can also be started manually. It checks recognized GitHub Releases and
+cargo-quickinstall artifacts, then creates a GitHub issue when it finds actionable
+upstream updates or check errors. It infers repositories, release tags, target
+assets, crates, and target triples from the existing upstream URLs, so source
+templates do not need update-specific fields.
+
+Run the same upstream check locally with:
+
+```bash
+cd tools
+uv run check-updates
+```

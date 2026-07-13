@@ -1,0 +1,78 @@
+name: Check updates
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: edgeapt-check-updates
+  cancel-in-progress: true
+
+jobs:
+  upstream-updates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          submodules: false
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: 3.13.12
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+        with:
+          version: 0.11.23
+          enable-cache: true
+          cache-dependency-glob: tools/uv.lock
+
+      - name: Install EdgeAPT tooling
+        working-directory: tools
+        run: uv sync --frozen
+
+      - name: Check upstream releases
+        id: updates
+        working-directory: tools
+        run: |
+          report="$RUNNER_TEMP/upstream-updates.md"
+          result="$RUNNER_TEMP/upstream-updates.json"
+          uv run check-updates --format markdown --output "$report" --json-output "$result"
+          echo "report=$report" >> "$GITHUB_OUTPUT"
+          echo "result=$result" >> "$GITHUB_OUTPUT"
+          echo "update-count=$(jq -r '.update_count' "$result")" >> "$GITHUB_OUTPUT"
+          echo "error-count=$(jq -r '.error_count' "$result")" >> "$GITHUB_OUTPUT"
+          cat "$report" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create update issue
+        env:
+          REPORT: ${{ steps.updates.outputs.report }}
+          UPDATE_COUNT: ${{ steps.updates.outputs.update-count }}
+          ERROR_COUNT: ${{ steps.updates.outputs.error-count }}
+        run: |
+          title="[Maintenance] Upstream updates available"
+          label="upstream-update"
+          actionable=$((UPDATE_COUNT + ERROR_COUNT))
+          if (( actionable > 0 )); then
+            gh label create "$label" \
+              --color D93F0B \
+              --description "Upstream releases requiring EdgeAPT maintenance" \
+              --force
+            gh issue create --title "$title" --label "$label" --body-file "$REPORT"
+          fi
