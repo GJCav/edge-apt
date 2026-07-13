@@ -16,7 +16,7 @@ from edgeapt.constants import (
     ROOT,
 )
 from edgeapt.domain.artifacts import ArtifactFact, DebControlFact
-from edgeapt.domain.lock import LockedPublication, LockFile
+from edgeapt.domain.lock import LockFile
 from edgeapt.domain.planning import BuildUnit
 from edgeapt.errors import ValidationError
 from edgeapt.infrastructure.lock_store import load_lock, write_lock
@@ -24,6 +24,15 @@ from edgeapt.project import EdgeAptProject, ProjectPaths, create_project
 from edgeapt.templates.base import BuildContext
 from edgeapt.util import file_size, relative_to_root, sha256_file
 from edgeapt.workflows.planning import compile_project_plan
+from edgeapt.workflows.scope import (
+    build_matches_scope,
+    locked_publications,
+    normalize_source_ids,
+    plan_source_ids,
+    validate_scoped_update,
+    validate_source_scope,
+)
+
 
 @attrs.define(kw_only=True, frozen=True)
 class RepackageEvent:
@@ -73,6 +82,7 @@ def repackage_project(
     on_event: Callable[[RepackageEvent], None] | None = None,
     *,
     mode: RepackageMode = "update-lock",
+    source_ids: tuple[str, ...] = (),
     project: EdgeAptProject | None = None,
 ) -> RepackageResult:
     active_project = project or create_project(ROOT)
@@ -80,9 +90,24 @@ def repackage_project(
     planning = compile_project_plan(active_project)
     plan = planning.plan
     previous_lock = load_lock(paths.lock_path)
+    scope = normalize_source_ids(source_ids)
+    available_source_ids = set(plan_source_ids(plan))
+    if previous_lock is not None:
+        available_source_ids.update(
+            provenance.source_id
+            for publication in previous_lock.publications
+            for provenance in publication.provenance
+        )
+    validate_source_scope(scope, available=available_source_ids)
+    if scope and previous_lock is None:
+        raise ValidationError(
+            "scoped repackage requires lock.json; run an unscoped lock update first"
+        )
     if mode == "locked":
         if previous_lock is None:
-            raise ValidationError("lock.json does not exist; run repackage --mode update-lock")
+            raise ValidationError(
+                "lock.json does not exist; run repackage --mode update-lock"
+            )
         if previous_lock.plan_digest != plan.plan_digest:
             raise ValidationError(
                 "sources changed since lock.json; run repackage --mode update-lock"
@@ -92,41 +117,62 @@ def repackage_project(
         if previous_lock is not None
         else {}
     )
+    desired_publications = locked_publications(plan)
+    if scope and mode == "update-lock":
+        assert previous_lock is not None
+        validate_scoped_update(
+            plan=plan,
+            desired_publications=desired_publications,
+            previous_lock=previous_lock,
+            source_ids=scope,
+        )
+    selected_builds = tuple(
+        build
+        for build in plan.builds
+        if not scope or build_matches_scope(build, scope)
+    )
+    selected_source_count = len(scope) if scope else planning.source_count
+    selected_publication_count = sum(
+        1
+        for publication in plan.publications
+        if not scope
+        or any(item.source_id in scope for item in publication.provenance)
+    )
     now = datetime.now(UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     _emit(
         on_event,
         kind="sources_loaded",
-        source_count=planning.source_count,
-        build_count=len(plan.builds),
-        publication_count=len(plan.publications),
-        message=(
-            f"Loaded {planning.source_count} source(s), "
-            f"{len(plan.builds)} build(s), "
-            f"{len(plan.publications)} publication(s)"
+        source_count=selected_source_count,
+        build_count=len(selected_builds),
+        publication_count=selected_publication_count,
+        message=_scope_summary(
+            total_sources=planning.source_count,
+            selected_sources=selected_source_count,
+            build_count=len(selected_builds),
+            publication_count=selected_publication_count,
+            scoped=bool(scope),
         ),
     )
 
     artifacts: list[ArtifactFact] = []
     for build in plan.builds:
+        previous = previous_artifacts.get(build.deb_key)
+        if scope and not build_matches_scope(build, scope):
+            assert previous is not None
+            artifacts.append(previous)
+            continue
         artifacts.append(
             _execute_build(
                 build=build,
-                previous=previous_artifacts.get(build.deb_key),
-                locked=mode == "locked",
+                previous=previous,
+                locked=(
+                    mode == "locked" or (bool(scope) and previous is not None)
+                ),
                 now=now,
                 on_event=on_event,
                 project=active_project,
             )
         )
-
-    publications = tuple(
-        LockedPublication(
-            key=publication.key,
-            artifact=publication.deb_key,
-            e2e_claims=publication.e2e_claims,
-        )
-        for publication in plan.publications
-    )
     if mode == "locked":
         assert previous_lock is not None
         lock = previous_lock
@@ -136,16 +182,35 @@ def repackage_project(
             generated_at=now,
             plan_digest=plan.plan_digest,
             artifacts=tuple(sorted(artifacts, key=lambda item: item.deb_key)),
-            publications=publications,
+            publications=desired_publications,
         )
         _emit(on_event, kind="lock_write_start", message=f"Writing {paths.lock_path}")
         write_lock(lock, paths.lock_path)
     return RepackageResult(
         lock=lock,
         mode=mode,
-        source_count=planning.source_count,
-        build_count=len(plan.builds),
-        publication_count=len(plan.publications),
+        source_count=selected_source_count,
+        build_count=len(selected_builds),
+        publication_count=selected_publication_count,
+    )
+
+
+def _scope_summary(
+    *,
+    total_sources: int,
+    selected_sources: int,
+    build_count: int,
+    publication_count: int,
+    scoped: bool,
+) -> str:
+    prefix = (
+        f"Selected {selected_sources} of {total_sources} source(s)"
+        if scoped
+        else f"Loaded {total_sources} source(s)"
+    )
+    return (
+        f"{prefix}, {build_count} build(s), "
+        f"{publication_count} publication(s)"
     )
 
 

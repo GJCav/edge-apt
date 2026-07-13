@@ -16,7 +16,7 @@ from collections.abc import Callable, Generator, Iterable, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 from pathlib import Path
-from typing import TextIO
+from typing import cast, TextIO
 
 import attrs
 
@@ -99,7 +99,7 @@ class E2ECommandContext:
 def run_e2e(
     *,
     suite: str | None = None,
-    source: str | None = None,
+    source_ids: tuple[str, ...] = (),
     package: str | None = None,
     jobs: int = 4,
     apt_cache: bool = True,
@@ -120,12 +120,14 @@ def run_e2e(
     lock = load_lock(LOCK_PATH)
     if lock is None:
         raise ValidationError("lock.json does not exist; run `uv run repackage` first")
-    validate_e2e_repository(lock, TEST_PUBLIC_DIR / "packages.json")
+    scope = validate_e2e_repository(lock, TEST_PUBLIC_DIR / "packages.json")
+    selected_sources = tuple(sorted(set(source_ids)))
+    validate_e2e_scope(scope, selected_sources)
 
     cases = build_e2e_test_cases(
         lock,
         suite_filter=suite,
-        source_filter=source,
+        source_filters=selected_sources,
         package_filter=package,
     )
     if not cases:
@@ -199,7 +201,10 @@ def run_e2e(
     return E2ERunResult(groups=len(groups), tested=tested, skipped=skipped)
 
 
-def validate_e2e_repository(lock: LockFile, manifest_path: Path) -> None:
+def validate_e2e_repository(
+    lock: LockFile,
+    manifest_path: Path,
+) -> tuple[str, ...] | None:
     try:
         manifest = read_json(manifest_path)
     except (OSError, ValueError) as error:
@@ -214,13 +219,47 @@ def validate_e2e_repository(lock: LockFile, manifest_path: Path) -> None:
         raise ValidationError(
             "test repository is stale; run `uv run generate --profile test`"
         )
+    raw_scope = manifest.get("scope")
+    if raw_scope is None:
+        return None
+    if not isinstance(raw_scope, dict):
+        raise ValidationError("invalid source scope in test repository manifest")
+    scope_data = cast(dict[str, object], raw_scope)
+    raw_sources = scope_data.get("sources")
+    if not isinstance(raw_sources, list) or not raw_sources:
+        raise ValidationError("invalid source scope in test repository manifest")
+    source_items = cast(list[object], raw_sources)
+    if any(not isinstance(item, str) or not item for item in source_items):
+        raise ValidationError("invalid source scope in test repository manifest")
+    sources = tuple(cast(str, item) for item in source_items)
+    if sources != tuple(sorted(set(sources))):
+        raise ValidationError("invalid source scope in test repository manifest")
+    return sources
+
+
+def validate_e2e_scope(
+    repository_scope: tuple[str, ...] | None,
+    source_ids: tuple[str, ...],
+) -> None:
+    if repository_scope is None:
+        return
+    if not source_ids:
+        raise ValidationError(
+            "scoped test repository requires at least one --source filter"
+        )
+    outside = sorted(set(source_ids) - set(repository_scope))
+    if outside:
+        raise ValidationError(
+            "source filter is outside the generated repository scope: "
+            + ", ".join(outside)
+        )
 
 
 def build_e2e_test_cases(
     lock: LockFile,
     *,
     suite_filter: str | None = None,
-    source_filter: str | None = None,
+    source_filters: tuple[str, ...] = (),
     package_filter: str | None = None,
 ) -> tuple[E2ETestCase, ...]:
     if suite_filter is not None and suite_filter not in E2E_SUITE_IMAGES:
@@ -230,7 +269,7 @@ def build_e2e_test_cases(
         claims = tuple(
             claim
             for claim in publication.e2e_claims
-            if source_filter is None or claim.provenance.source_id == source_filter
+            if not source_filters or claim.provenance.source_id in source_filters
         )
         if not claims:
             continue

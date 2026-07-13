@@ -25,4 +25,6 @@ def test_guide_uses_tools_as_the_single_workflow_entrypoint() -> None:
     assert "pnpm" not in rendered
     assert rendered.count("uv run refresh-ubuntu-index") == 2
     assert rendered.count("uv run validate") == 2
-    assert rendered.count("uv run repackage") == 2
+    assert rendered.count("uv run repackage") == 3
+    assert "uv run generate --profile test --source <id>" in rendered
+    assert "uv run e2e --source <id>" in rendered

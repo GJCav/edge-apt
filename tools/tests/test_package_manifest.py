@@ -74,12 +74,14 @@ def test_manifest_keeps_one_entry_per_publication(tmp_path: Path) -> None:
         output_dir=tmp_path,
         profile="test",
         lock=lock,
+        source_ids=("tool",),
     )
     raw = cast(dict[str, Any], json.loads(manifest_path.read_text(encoding="utf-8")))
     packages = cast(list[dict[str, Any]], raw["packages"])
 
     assert raw["schema"] == "edgeapt.packages/v1"
     assert raw["profile"] == "test"
+    assert raw["scope"] == {"sources": ["tool"]}
     assert [item["suite"] for item in packages] == ["jammy", "noble"]
     assert packages[0] == {
         "arch": "amd64",

@@ -47,6 +47,7 @@ def write_package_manifest(
     output_dir: Path,
     profile: str,
     lock: LockFile,
+    source_ids: tuple[str, ...] = (),
 ) -> Path:
     indexes: dict[
         tuple[str, str, str],
@@ -111,15 +112,15 @@ def write_package_manifest(
         )
 
     path = output_dir / "packages.json"
-    write_json(
-        path,
-        {
-            "schema": PACKAGE_MANIFEST_SCHEMA,
-            "generated_at": lock.generated_at,
-            "profile": profile,
-            "packages": [entry.to_json() for entry in sorted(entries)],
-        },
-    )
+    manifest: dict[str, Any] = {
+        "schema": PACKAGE_MANIFEST_SCHEMA,
+        "generated_at": lock.generated_at,
+        "profile": profile,
+        "packages": [entry.to_json() for entry in sorted(entries)],
+    }
+    if source_ids:
+        manifest["scope"] = {"sources": list(source_ids)}
+    write_json(path, manifest)
     return path
 
 

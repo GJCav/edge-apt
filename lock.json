@@ -306,6 +306,32 @@
       "upstream_version": "25.7.1-1"
     },
     {
+      "build_plan_digest": "sha256:3065b9598a028ec7738d31419fde15a79e1401ef3f6f2c3a91e476057867a007",
+      "created_at": "2026-07-13T02:34:58Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "lf",
+        "version": "41-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "41-1",
+        "package": "lf"
+      },
+      "path": "packages/lf/lf_41-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:4233e8fc517e75121f7e843f2a9f0e59ee3cca405e73fef85e8faba8eb9d85c3",
+      "size": 1983988,
+      "upstream": {
+        "etag": "\"0x8DE63B15AB5364E\"",
+        "last_modified": "Wed, 04 Feb 2026 05:50:51 GMT",
+        "sha256": "sha256:c7c4237b5d8618a13bbe01592859d89d6de0f460f8483b8e47c0f8c416203275",
+        "size": 2339674,
+        "url": "https://github.com/gokcehan/lf/releases/download/r41/lf-linux-amd64.tar.gz"
+      },
+      "upstream_version": "41"
+    },
+    {
       "build_plan_digest": "sha256:e525f2fd79bef4e7513a8be7b076e28c44dea9e0135a68ae832431e2a9cb046a",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -639,8 +665,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-11T15:13:39Z",
-  "plan_digest": "sha256:4cb9f48edc781cc3f6ea3e66440e65602c6773f1a125a92eefe1fdd8945d4601",
+  "generated_at": "2026-07-13T02:34:58Z",
+  "plan_digest": "sha256:530b747bfe3bc1090a7272f47fa108924e5232dd8d93cc9f44db748b8d585d44",
   "publications": [
     {
       "artifact": {
@@ -899,6 +925,35 @@
         "component": "main",
         "deb_version": "10.4.1",
         "package": "fd",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "41-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "41-1",
+        "package": "lf",
         "suite": "focal"
       }
     },
@@ -1478,6 +1533,35 @@
         "component": "main",
         "deb_version": "25.7.1-1",
         "package": "helix",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "41-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "41-1",
+        "package": "lf",
         "suite": "jammy"
       }
     },
@@ -2148,6 +2232,35 @@
         "component": "main",
         "deb_version": "25.7.1-1",
         "package": "helix",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "41-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "41-1",
+        "package": "lf",
         "suite": "noble"
       }
     },
@@ -2847,6 +2960,35 @@
         "component": "main",
         "deb_version": "25.7.1-1",
         "package": "helix",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "41-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "41-1",
+        "package": "lf",
         "suite": "resolute"
       }
     },

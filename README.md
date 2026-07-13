@@ -95,6 +95,21 @@ uv run validate
 uv run repackage --mode update-lock
 ```
 
+For a small source change, use a scoped maintenance run. Planning and conflict
+validation still cover the complete repository, while only the selected sources
+are downloaded, packaged, published to the test repository, and installed by E2E:
+
+```bash
+uv run refresh-ubuntu-index
+uv run validate
+uv run repackage --mode update-lock --source lf
+uv run generate --profile test --source lf
+uv run e2e --source lf
+```
+
+Repeat `--source` to maintain multiple sources together. Scoped runs update the
+single canonical `lock.json`; they never create or merge partial lock files.
+
 Normal builds and CI use locked mode, which rebuilds missing artifacts and verifies
 them without modifying `lock.json`:
 

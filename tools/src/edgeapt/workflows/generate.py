@@ -18,6 +18,12 @@ from edgeapt.package_manifest import write_package_manifest
 from edgeapt.project import EdgeAptProject, ProjectPaths, create_project
 from edgeapt.util import require_executable
 from edgeapt.workflows.planning import compile_project_plan
+from edgeapt.workflows.scope import (
+    normalize_source_ids,
+    plan_source_ids,
+    scoped_lock,
+    validate_source_scope,
+)
 
 
 @attrs.define(kw_only=True, frozen=True)
@@ -33,10 +39,14 @@ class GenerateResult:
 def generate_repository(
     *,
     profile: str,
+    source_ids: tuple[str, ...] = (),
     project: EdgeAptProject | None = None,
 ) -> GenerateResult:
     active_project = project or create_project(ROOT)
     paths = active_project.paths
+    scope = normalize_source_ids(source_ids)
+    if scope and profile != "test":
+        raise ValidationError("source scope is only supported for the test profile")
     require_executable("aptly")
     require_executable("gpg")
     output_dir, signing_key = _resolve_profile(profile=profile, paths=paths)
@@ -46,9 +56,11 @@ def generate_repository(
     current_plan = compile_project_plan(active_project).plan
     if current_plan.plan_digest != lock.plan_digest:
         raise ValidationError("sources changed since lock.json; run repackage first")
+    validate_source_scope(scope, available=plan_source_ids(current_plan))
+    publish_lock = scoped_lock(lock, scope) if scope else lock
 
     publish_with_aptly(
-        lock=lock,
+        lock=publish_lock,
         paths=paths,
         profile=profile,
         output_dir=output_dir,
@@ -57,7 +69,8 @@ def generate_repository(
     package_manifest = write_package_manifest(
         output_dir=output_dir,
         profile=profile,
-        lock=lock,
+        lock=publish_lock,
+        source_ids=scope,
     )
     install_page = write_install_page(
         output_dir=output_dir,

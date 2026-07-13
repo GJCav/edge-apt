@@ -13,6 +13,7 @@ from edgeapt.e2e import E2ETestCase
 from edgeapt.e2e import group_e2e_test_cases
 from edgeapt.e2e import run_e2e
 from edgeapt.e2e import validate_e2e_repository
+from edgeapt.e2e import validate_e2e_scope
 from edgeapt.errors import ValidationError
 from edgeapt.package_manifest import PACKAGE_MANIFEST_SCHEMA
 from edgeapt.util import write_json
@@ -65,7 +66,7 @@ def test_e2e_matrix_filters_by_suite_source_and_package() -> None:
     cases = build_e2e_test_cases(
         lock,
         suite_filter="noble",
-        source_filter="doggo",
+        source_filters=("doggo",),
         package_filter="doggo",
     )
 
@@ -159,7 +160,7 @@ def test_e2e_source_filter_keeps_only_matching_claim_commands() -> None:
         ),
     )
 
-    cases = build_e2e_test_cases(lock, source_filter="foo-old")
+    cases = build_e2e_test_cases(lock, source_filters=("foo-old",))
 
     assert len(cases) == 1
     assert cases[0].source_ids == ("foo-old",)
@@ -221,7 +222,33 @@ def test_e2e_accepts_repository_generated_from_current_lock(tmp_path: Path) -> N
         },
     )
 
-    validate_e2e_repository(lock, manifest)
+    assert validate_e2e_repository(lock, manifest) is None
+
+
+def test_e2e_reads_scoped_repository_manifest(tmp_path: Path) -> None:
+    lock = make_lock()
+    manifest = tmp_path / "packages.json"
+    write_json(
+        manifest,
+        {
+            "schema": PACKAGE_MANIFEST_SCHEMA,
+            "profile": "test",
+            "generated_at": lock.generated_at,
+            "scope": {"sources": ["bar", "foo"]},
+            "packages": [],
+        },
+    )
+
+    assert validate_e2e_repository(lock, manifest) == ("bar", "foo")
+
+
+def test_e2e_scoped_repository_requires_matching_source_filter() -> None:
+    with pytest.raises(ValidationError, match="requires at least one --source"):
+        validate_e2e_scope(("foo",), ())
+    with pytest.raises(ValidationError, match="outside the generated"):
+        validate_e2e_scope(("foo",), ("bar",))
+
+    validate_e2e_scope(("bar", "foo"), ("foo",))
 
 
 def _case() -> E2ETestCase:

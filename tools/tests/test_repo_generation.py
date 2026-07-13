@@ -107,3 +107,12 @@ def test_static_asset_size_limit_reports_nested_multiple_files(tmp_path: Path) -
     message = str(exc_info.value)
     assert "first.deb" in message
     assert "Release" in message
+
+
+def test_generate_rejects_source_scope_for_production(tmp_path: Path) -> None:
+    with pytest.raises(ValidationError, match="only supported for the test profile"):
+        generate_repository(
+            profile="prod",
+            source_ids=("hello",),
+            project=make_project(tmp_path),
+        )

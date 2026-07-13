@@ -1,0 +1,22 @@
+template: edgeapt.single_binary/v1
+id: lf
+package: lf
+e2e_commands:
+  - [lf, -version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer the latest upstream lf release over the Ubuntu packaged version."
+
+repackage:
+  install_path: /usr/bin/lf
+  metadata:
+    description: "A terminal file manager."
+    homepage: "https://github.com/gokcehan/lf"
+
+upstream:
+  - version: "41"
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/gokcehan/lf/releases/download/r41/lf-linux-amd64.tar.gz"
+    sha256: "sha256:c7c4237b5d8618a13bbe01592859d89d6de0f460f8483b8e47c0f8c416203275"
+    extract_path: lf

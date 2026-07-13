@@ -51,6 +51,17 @@ def guide() -> None:
     table.add_row("Test", "Repackage", "uv run repackage --mode update-lock")
     table.add_row("Test", "Generate", "uv run generate --profile test")
     table.add_row("Test", "Verify", "uv run e2e")
+    table.add_row(
+        "Test",
+        "Scoped update",
+        "uv run repackage --mode update-lock --source <id>",
+    )
+    table.add_row(
+        "Test",
+        "Scoped generate",
+        "uv run generate --profile test --source <id>",
+    )
+    table.add_row("Test", "Scoped verify", "uv run e2e --source <id>")
     table.add_section()
     table.add_row("Prod", "Key", "uv run check-key --profile prod")
     table.add_row("Prod", "Index", "uv run refresh-ubuntu-index")
@@ -162,6 +173,7 @@ def check_key(profile: str = "test") -> None:
 
 def repackage(
     mode: Literal["locked", "update-lock"] = "update-lock",
+    source: tuple[str, ...] = (),
     prune: bool = False,
     dry_run: Annotated[bool, cyclopts.Parameter(alias="-n")] = False,
 ) -> None:
@@ -201,7 +213,12 @@ def repackage(
             else:
                 progress.update(task_id, description=event.message)
 
-        result = repackage_project(on_event=on_event, mode=mode, project=PROJECT)
+        result = repackage_project(
+            on_event=on_event,
+            mode=mode,
+            source_ids=source,
+            project=PROJECT,
+        )
         progress.update(task_id, description="Repackaging complete")
 
     artifact_count = len(result.lock.artifacts)
@@ -211,6 +228,7 @@ def repackage(
         console.print(f"[green]Wrote {LOCK_PATH}[/green]")
     console.print(
         f"[green]Processed {result.source_count} source(s), "
+        f"{result.build_count} build(s); lock contains "
         f"{artifact_count} artifact(s).[/green]"
     )
     if prune:
@@ -224,9 +242,13 @@ def repackage(
         )
 
 
-def generate(profile: str = "test") -> None:
+def generate(profile: str = "test", source: tuple[str, ...] = ()) -> None:
     """Generate signed APT repository output."""
-    result = generate_repository(profile=profile, project=PROJECT)
+    result = generate_repository(
+        profile=profile,
+        source_ids=source,
+        project=PROJECT,
+    )
     console.print(
         f"[green]Generated {result.profile} signed APT repository at "
         f"{result.output_dir}[/green]"
@@ -246,7 +268,7 @@ def deploy(dry_run: bool = False) -> None:
 
 def e2e(
     suite: str | None = None,
-    source: str | None = None,
+    source: tuple[str, ...] = (),
     package: str | None = None,
     jobs: int = 4,
     apt_cache: bool = True,
@@ -283,7 +305,7 @@ def e2e(
 
     result = run_e2e(
         suite=suite,
-        source=source,
+        source_ids=source,
         package=package,
         jobs=jobs,
         apt_cache=apt_cache,
