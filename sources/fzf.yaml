@@ -1,0 +1,22 @@
+template: edgeapt.single_binary/v1
+id: fzf
+package: fzf
+e2e_commands:
+  - [fzf, --version]
+allow_ubuntu_package_override: true
+override_reason: "Prefer the latest upstream fzf release over the Ubuntu packaged version."
+
+repackage:
+  install_path: /usr/bin/fzf
+  metadata:
+    description: "A command-line fuzzy finder."
+    homepage: "https://github.com/junegunn/fzf"
+
+upstream:
+  - version: v0.74.0
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/junegunn/fzf/releases/download/v0.74.0/fzf-0.74.0-linux_amd64.tar.gz"
+    sha256: "sha256:cf919f05b7581b4c744d764eaa704665d61dd6d3ca785f0df2351281dff60cda"
+    extract_path: fzf

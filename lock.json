@@ -281,6 +281,32 @@
       "upstream_version": "10.4.1"
     },
     {
+      "build_plan_digest": "sha256:b1a3eb134c015bea55e8a085b67628d1fccb49ab1a0775aa711bc350316e1317",
+      "created_at": "2026-07-13T03:07:09Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "fzf",
+        "version": "0.74.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.74.0-1",
+        "package": "fzf"
+      },
+      "path": "packages/fzf/fzf_0.74.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:fe412d28f46c89d175ba8b50e24d1dd32bbe2759218e8a8854a7d07599ecf956",
+      "size": 1680220,
+      "upstream": {
+        "etag": "\"0x8DEDB633B32F477\"",
+        "last_modified": "Mon, 06 Jul 2026 13:33:57 GMT",
+        "sha256": "sha256:cf919f05b7581b4c744d764eaa704665d61dd6d3ca785f0df2351281dff60cda",
+        "size": 1999541,
+        "url": "https://github.com/junegunn/fzf/releases/download/v0.74.0/fzf-0.74.0-linux_amd64.tar.gz"
+      },
+      "upstream_version": "v0.74.0"
+    },
+    {
       "build_plan_digest": "sha256:1257cadb1544083415fae7676e717e7f97a54ffcdae2bf69f510dcc484b91172",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -665,8 +691,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-13T02:34:58Z",
-  "plan_digest": "sha256:530b747bfe3bc1090a7272f47fa108924e5232dd8d93cc9f44db748b8d585d44",
+  "generated_at": "2026-07-13T03:07:09Z",
+  "plan_digest": "sha256:f824fbe4916dd02525deebaac948ae74bf325dbf5492efd292c1f22b3bdc11f9",
   "publications": [
     {
       "artifact": {
@@ -925,6 +951,35 @@
         "component": "main",
         "deb_version": "10.4.1",
         "package": "fd",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.74.0-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.0-1",
+        "package": "fzf",
         "suite": "focal"
       }
     },
@@ -1504,6 +1559,35 @@
         "component": "main",
         "deb_version": "10.4.1",
         "package": "fd",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.74.0-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.0-1",
+        "package": "fzf",
         "suite": "jammy"
       }
     },
@@ -2203,6 +2287,35 @@
         "component": "main",
         "deb_version": "10.4.1",
         "package": "fd",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.74.0-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.0-1",
+        "package": "fzf",
         "suite": "noble"
       }
     },
@@ -2931,6 +3044,35 @@
         "component": "main",
         "deb_version": "10.4.1",
         "package": "fd",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.74.0-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.0-1",
+        "package": "fzf",
         "suite": "resolute"
       }
     },
