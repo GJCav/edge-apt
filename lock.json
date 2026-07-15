@@ -358,6 +358,32 @@
       "upstream_version": "25.7.1-1"
     },
     {
+      "build_plan_digest": "sha256:da414ffa3bec5d252564e605023d9dbfcd1ffc1b8b42894aafe49ea8af5c79cf",
+      "created_at": "2026-07-15T06:30:20Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "jellyfin-ffmpeg7",
+        "version": "7.1.4-3"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7"
+      },
+      "path": "packages/jellyfin-ffmpeg7/jellyfin-ffmpeg7_7.1.4-3_amd64.deb",
+      "revision": 3,
+      "sha256": "sha256:1c49b743b40009dec44115d090d72d3717eb0b4195fa551a8010851bdec7b470",
+      "size": 63538488,
+      "upstream": {
+        "etag": "\"0x8DEC3E041E5C2F7\"",
+        "last_modified": "Sat, 06 Jun 2026 15:28:27 GMT",
+        "sha256": "sha256:cab9ff40a47e4232d231e4eb7e4e85fabfeec56c6905266bc94291fc0881f83f",
+        "size": 58599712,
+        "url": "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v7.1.4-3/jellyfin-ffmpeg_7.1.4-3_portable_linux64-gpl.tar.xz"
+      },
+      "upstream_version": "7.1.4"
+    },
+    {
       "build_plan_digest": "sha256:4196b75a9574573e56892f0292c8ac130ee96c244165d23e849397169ec4dec2",
       "created_at": "2026-07-13T07:34:45Z",
       "deb_control": {
@@ -821,8 +847,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-13T07:34:45Z",
-  "plan_digest": "sha256:6281c746354ea4e9b336361b57dcb28a02e9ff92a3eab7900c2bafb9bf3280e7",
+  "generated_at": "2026-07-15T06:30:20Z",
+  "plan_digest": "sha256:bbc785966f67f5acb9c4699e46996401de6463ca5be2835c73ba8b72bfd0ea57",
   "publications": [
     {
       "artifact": {
@@ -1140,6 +1166,39 @@
         "component": "main",
         "deb_version": "0.74.0-1",
         "package": "fzf",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffmpeg",
+              "-version"
+            ],
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffprobe",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/jellyfin-ffmpeg7.yaml",
+            "source_id": "jellyfin-ffmpeg7",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7",
         "suite": "focal"
       }
     },
@@ -1894,6 +1953,39 @@
         "component": "main",
         "deb_version": "25.7.1-1",
         "package": "helix",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffmpeg",
+              "-version"
+            ],
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffprobe",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/jellyfin-ffmpeg7.yaml",
+            "source_id": "jellyfin-ffmpeg7",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7",
         "suite": "jammy"
       }
     },
@@ -2768,6 +2860,39 @@
         "component": "main",
         "deb_version": "25.7.1-1",
         "package": "helix",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffmpeg",
+              "-version"
+            ],
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffprobe",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/jellyfin-ffmpeg7.yaml",
+            "source_id": "jellyfin-ffmpeg7",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7",
         "suite": "noble"
       }
     },
@@ -3671,6 +3796,39 @@
         "component": "main",
         "deb_version": "25.7.1-1",
         "package": "helix",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffmpeg",
+              "-version"
+            ],
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffprobe",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/jellyfin-ffmpeg7.yaml",
+            "source_id": "jellyfin-ffmpeg7",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "7.1.4-3",
+        "package": "jellyfin-ffmpeg7",
         "suite": "resolute"
       }
     },

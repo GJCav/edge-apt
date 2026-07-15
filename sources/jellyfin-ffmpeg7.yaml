@@ -1,0 +1,31 @@
+template: edgeapt.prebuilt_archive/v1
+id: jellyfin-ffmpeg7
+package: jellyfin-ffmpeg7
+e2e_commands:
+  - [/usr/lib/jellyfin-ffmpeg/ffmpeg, -version]
+  - [/usr/lib/jellyfin-ffmpeg/ffprobe, -version]
+
+metadata:
+  description: "Jellyfin's FFmpeg build with extended hardware acceleration support."
+  homepage: "https://github.com/jellyfin/jellyfin-ffmpeg"
+  section: video
+
+files:
+  - id: ffmpeg
+    path: ffmpeg
+    destination: /usr/lib/jellyfin-ffmpeg/ffmpeg
+    mode: "0755"
+
+  - id: ffprobe
+    path: ffprobe
+    destination: /usr/lib/jellyfin-ffmpeg/ffprobe
+    mode: "0755"
+
+upstream:
+  - version: 7.1.4
+    revision: 3
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v7.1.4-3/jellyfin-ffmpeg_7.1.4-3_portable_linux64-gpl.tar.xz"
+    sha256: "sha256:cab9ff40a47e4232d231e4eb7e4e85fabfeec56c6905266bc94291fc0881f83f"
+    strip_components: 0
