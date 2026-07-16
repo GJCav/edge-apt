@@ -1,0 +1,12 @@
+template: edgeapt.deb_upstream/v1
+id: mihomo
+package: mihomo
+e2e_commands:
+  - [mihomo, -v]
+
+upstream:
+  - version: 1.19.28
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v2-v1.19.28.deb"
+    sha256: "sha256:85d3edf3ace53f879c0841d6c152c2824e24f8405c2a967acaf0f5c7216d2dbc"

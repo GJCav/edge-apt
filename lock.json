@@ -436,56 +436,29 @@
       "upstream_version": "41"
     },
     {
-      "build_plan_digest": "sha256:e525f2fd79bef4e7513a8be7b076e28c44dea9e0135a68ae832431e2a9cb046a",
-      "created_at": "2026-07-11T15:13:39Z",
+      "build_plan_digest": "sha256:36767a42d3db1ba953d509b5069a483eb80ce4035e4501153009abcac9b2b804",
+      "created_at": "2026-07-16T02:10:39Z",
       "deb_control": {
         "architecture": "amd64",
-        "package": "mihomo-amd64-compatible",
-        "version": "1.19.28-2"
+        "package": "mihomo",
+        "version": "1.19.28"
       },
       "deb_key": {
         "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible"
+        "deb_version": "1.19.28",
+        "package": "mihomo"
       },
-      "path": "packages/mihomo-amd64-compatible/mihomo-amd64-compatible_1.19.28-2_amd64.deb",
-      "revision": 2,
-      "sha256": "sha256:877a11615afa7befc2dddbc204c4ce2a425a5b44b04c04beff77046f0d60f76c",
-      "size": 14074058,
+      "path": "packages/mihomo/mihomo_1.19.28_amd64.deb",
+      "sha256": "sha256:85d3edf3ace53f879c0841d6c152c2824e24f8405c2a967acaf0f5c7216d2dbc",
+      "size": 18011276,
       "upstream": {
-        "etag": "\"0x8DEDC88B00B9716\"",
+        "etag": "\"0x8DEDC88B06DEE93\"",
         "last_modified": "Wed, 08 Jul 2026 00:34:36 GMT",
-        "sha256": "sha256:70d01cfb8cb7bf7a92fd1af16cb4b9553d90bb4eecde3b5c4849103e27c80ddb",
-        "size": 18134851,
-        "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-compatible-v1.19.28.gz"
+        "sha256": "sha256:85d3edf3ace53f879c0841d6c152c2824e24f8405c2a967acaf0f5c7216d2dbc",
+        "size": 18011276,
+        "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v2-v1.19.28.deb"
       },
-      "upstream_version": "v1.19.28"
-    },
-    {
-      "build_plan_digest": "sha256:471e422a7caf13423eab258aead2760a0aa0dfeb6d605de795d53bee4a88f7c7",
-      "created_at": "2026-07-11T15:13:39Z",
-      "deb_control": {
-        "architecture": "amd64",
-        "package": "mihomo-amd64-v3",
-        "version": "1.19.28-2"
-      },
-      "deb_key": {
-        "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3"
-      },
-      "path": "packages/mihomo-amd64-v3/mihomo-amd64-v3_1.19.28-2_amd64.deb",
-      "revision": 2,
-      "sha256": "sha256:1b4662c32ee2a2a99d660ad270d48f4bb8a7143e281e00abadee393a048bcffd",
-      "size": 14054432,
-      "upstream": {
-        "etag": "\"0x8DEDC88B0295E05\"",
-        "last_modified": "Wed, 08 Jul 2026 00:34:36 GMT",
-        "sha256": "sha256:4348056413280635cfc674ce6b3e1f9d55e08a93e2940110ebf89fb31186b3b8",
-        "size": 18107366,
-        "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v3-v1.19.28.gz"
-      },
-      "upstream_version": "v1.19.28"
+      "upstream_version": "1.19.28"
     },
     {
       "build_plan_digest": "sha256:f8149abc3c73299224566676b1282fa4a5cd09105ccf4da16b2aacd1df148f9b",
@@ -847,8 +820,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-15T06:30:20Z",
-  "plan_digest": "sha256:bbc785966f67f5acb9c4699e46996401de6463ca5be2835c73ba8b72bfd0ea57",
+  "generated_at": "2026-07-16T02:10:39Z",
+  "plan_digest": "sha256:8e1f3fc3c350b9af62dbb1834c31e345eddf2733952ce9fef9bdac0eaf10db2c",
   "publications": [
     {
       "artifact": {
@@ -1234,8 +1207,8 @@
     {
       "artifact": {
         "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible"
+        "deb_version": "1.19.28",
+        "package": "mihomo"
       },
       "e2e_claims": [
         {
@@ -1246,8 +1219,8 @@
             ]
           ],
           "provenance": {
-            "source_file": "sources/mihomo-amd64-compatible.yaml",
-            "source_id": "mihomo-amd64-compatible",
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
             "upstream_index": 0
           }
         }
@@ -1255,37 +1228,8 @@
       "key": {
         "arch": "amd64",
         "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible",
-        "suite": "focal"
-      }
-    },
-    {
-      "artifact": {
-        "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3"
-      },
-      "e2e_claims": [
-        {
-          "commands": [
-            [
-              "mihomo",
-              "-v"
-            ]
-          ],
-          "provenance": {
-            "source_file": "sources/mihomo-amd64-v3.yaml",
-            "source_id": "mihomo-amd64-v3",
-            "upstream_index": 0
-          }
-        }
-      ],
-      "key": {
-        "arch": "amd64",
-        "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
         "suite": "focal"
       }
     },
@@ -2050,8 +1994,8 @@
     {
       "artifact": {
         "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible"
+        "deb_version": "1.19.28",
+        "package": "mihomo"
       },
       "e2e_claims": [
         {
@@ -2062,8 +2006,8 @@
             ]
           ],
           "provenance": {
-            "source_file": "sources/mihomo-amd64-compatible.yaml",
-            "source_id": "mihomo-amd64-compatible",
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
             "upstream_index": 0
           }
         }
@@ -2071,37 +2015,8 @@
       "key": {
         "arch": "amd64",
         "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible",
-        "suite": "jammy"
-      }
-    },
-    {
-      "artifact": {
-        "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3"
-      },
-      "e2e_claims": [
-        {
-          "commands": [
-            [
-              "mihomo",
-              "-v"
-            ]
-          ],
-          "provenance": {
-            "source_file": "sources/mihomo-amd64-v3.yaml",
-            "source_id": "mihomo-amd64-v3",
-            "upstream_index": 0
-          }
-        }
-      ],
-      "key": {
-        "arch": "amd64",
-        "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
         "suite": "jammy"
       }
     },
@@ -2957,8 +2872,8 @@
     {
       "artifact": {
         "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible"
+        "deb_version": "1.19.28",
+        "package": "mihomo"
       },
       "e2e_claims": [
         {
@@ -2969,8 +2884,8 @@
             ]
           ],
           "provenance": {
-            "source_file": "sources/mihomo-amd64-compatible.yaml",
-            "source_id": "mihomo-amd64-compatible",
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
             "upstream_index": 0
           }
         }
@@ -2978,37 +2893,8 @@
       "key": {
         "arch": "amd64",
         "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible",
-        "suite": "noble"
-      }
-    },
-    {
-      "artifact": {
-        "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3"
-      },
-      "e2e_claims": [
-        {
-          "commands": [
-            [
-              "mihomo",
-              "-v"
-            ]
-          ],
-          "provenance": {
-            "source_file": "sources/mihomo-amd64-v3.yaml",
-            "source_id": "mihomo-amd64-v3",
-            "upstream_index": 0
-          }
-        }
-      ],
-      "key": {
-        "arch": "amd64",
-        "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
         "suite": "noble"
       }
     },
@@ -3893,8 +3779,8 @@
     {
       "artifact": {
         "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible"
+        "deb_version": "1.19.28",
+        "package": "mihomo"
       },
       "e2e_claims": [
         {
@@ -3905,8 +3791,8 @@
             ]
           ],
           "provenance": {
-            "source_file": "sources/mihomo-amd64-compatible.yaml",
-            "source_id": "mihomo-amd64-compatible",
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
             "upstream_index": 0
           }
         }
@@ -3914,37 +3800,8 @@
       "key": {
         "arch": "amd64",
         "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-compatible",
-        "suite": "resolute"
-      }
-    },
-    {
-      "artifact": {
-        "arch": "amd64",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3"
-      },
-      "e2e_claims": [
-        {
-          "commands": [
-            [
-              "mihomo",
-              "-v"
-            ]
-          ],
-          "provenance": {
-            "source_file": "sources/mihomo-amd64-v3.yaml",
-            "source_id": "mihomo-amd64-v3",
-            "upstream_index": 0
-          }
-        }
-      ],
-      "key": {
-        "arch": "amd64",
-        "component": "main",
-        "deb_version": "1.19.28-2",
-        "package": "mihomo-amd64-v3",
+        "deb_version": "1.19.28",
+        "package": "mihomo",
         "suite": "resolute"
       }
     },
