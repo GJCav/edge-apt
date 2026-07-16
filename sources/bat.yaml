@@ -12,3 +12,9 @@ upstream:
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb"
     sha256: "sha256:7e6afdffaea04b394f466f6f719a1e0565572a4b59d6cb9969843355b684e2dc"
+
+  - version: 0.26.1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat_0.26.1_amd64.deb"
+    sha256: "sha256:ad59954aa1540e526f97267f60557ea5ef4c7dcf91a0811254134537cb353a3c"

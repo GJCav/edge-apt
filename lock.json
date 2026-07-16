@@ -52,6 +52,31 @@
       "upstream_version": "0.25.0"
     },
     {
+      "build_plan_digest": "sha256:2adc080dd4be42310adfd0450121af4a1c25db10e404f7226d8f6070e751f4da",
+      "created_at": "2026-07-16T02:16:18Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "bat",
+        "version": "0.26.1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.26.1",
+        "package": "bat"
+      },
+      "path": "packages/bat/bat_0.26.1_amd64.deb",
+      "sha256": "sha256:ad59954aa1540e526f97267f60557ea5ef4c7dcf91a0811254134537cb353a3c",
+      "size": 3037592,
+      "upstream": {
+        "etag": "\"0x8DE31E58567FD09\"",
+        "last_modified": "Tue, 02 Dec 2025 20:58:18 GMT",
+        "sha256": "sha256:ad59954aa1540e526f97267f60557ea5ef4c7dcf91a0811254134537cb353a3c",
+        "size": 3037592,
+        "url": "https://github.com/sharkdp/bat/releases/download/v0.26.1/bat_0.26.1_amd64.deb"
+      },
+      "upstream_version": "0.26.1"
+    },
+    {
       "build_plan_digest": "sha256:20716d5b5cec7602e68de5b8b7703d8b5e9333bcf3feb584eac7c6963279d676",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -279,6 +304,31 @@
         "url": "https://github.com/sharkdp/fd/releases/download/v10.4.1/fd_10.4.1_amd64.deb"
       },
       "upstream_version": "10.4.1"
+    },
+    {
+      "build_plan_digest": "sha256:2cfc436e83d35632ecd5b8de458a64bdd63b0bf9c19228e9d835548f962836b2",
+      "created_at": "2026-07-16T02:16:18Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "fd",
+        "version": "10.4.2"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "10.4.2",
+        "package": "fd"
+      },
+      "path": "packages/fd/fd_10.4.2_amd64.deb",
+      "sha256": "sha256:0e44eb5fca93f09bc6f5430b90acdf44c8e069d0a903700aeb4820629337b67b",
+      "size": 1399120,
+      "upstream": {
+        "etag": "\"0x8DE7E7804AA70B9\"",
+        "last_modified": "Tue, 10 Mar 2026 07:38:27 GMT",
+        "sha256": "sha256:0e44eb5fca93f09bc6f5430b90acdf44c8e069d0a903700aeb4820629337b67b",
+        "size": 1399120,
+        "url": "https://github.com/sharkdp/fd/releases/download/v10.4.2/fd_10.4.2_amd64.deb"
+      },
+      "upstream_version": "10.4.2"
     },
     {
       "build_plan_digest": "sha256:12ecf5cc7360ed6f9875361a8d09fedfd91426d9bf2454a15f406478ea57580c",
@@ -512,6 +562,31 @@
       "upstream_version": "1:0.53.0"
     },
     {
+      "build_plan_digest": "sha256:745e2764afe1a9ff4b7ade24e04eb02f7a11f3e5debce0d3cf355ba6880e0d41",
+      "created_at": "2026-07-16T02:16:18Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "ov",
+        "version": "1:0.54.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1:0.54.0",
+        "package": "ov"
+      },
+      "path": "packages/ov/ov_1:0.54.0_amd64.deb",
+      "sha256": "sha256:4d71fb8c0d2c78e70f4ae601cc943cf13364bae79f0a834ab031658664cc0463",
+      "size": 6668596,
+      "upstream": {
+        "etag": "\"0x8DEDFDE71203EE2\"",
+        "last_modified": "Sun, 12 Jul 2026 06:26:00 GMT",
+        "sha256": "sha256:4d71fb8c0d2c78e70f4ae601cc943cf13364bae79f0a834ab031658664cc0463",
+        "size": 6668596,
+        "url": "https://github.com/noborus/ov/releases/download/v0.54.0/ov_0.54.0_amd64.deb"
+      },
+      "upstream_version": "1:0.54.0"
+    },
+    {
       "build_plan_digest": "sha256:0bc5f259f564051b7653b7629bf96bede3e0ce7cf6649b1d2357897ce48bd281",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -612,6 +687,31 @@
         "url": "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb"
       },
       "upstream_version": "15.1.0-1"
+    },
+    {
+      "build_plan_digest": "sha256:8eee5418d744f407268920d231ec2ed108eb06106090f4ce9857a97f17fc388d",
+      "created_at": "2026-07-16T02:16:18Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "ripgrep",
+        "version": "15.2.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "15.2.0-1",
+        "package": "ripgrep"
+      },
+      "path": "packages/ripgrep/ripgrep_15.2.0-1_amd64.deb",
+      "sha256": "sha256:5af93eebe4c352474632cf1d28523b0e98bcd4e2f115a249a713b8d8c7d1d01c",
+      "size": 1703492,
+      "upstream": {
+        "etag": "\"0x8DEE28BA1606A80\"",
+        "last_modified": "Wed, 15 Jul 2026 16:10:46 GMT",
+        "sha256": "sha256:5af93eebe4c352474632cf1d28523b0e98bcd4e2f115a249a713b8d8c7d1d01c",
+        "size": 1703492,
+        "url": "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep_15.2.0-1_amd64.deb"
+      },
+      "upstream_version": "15.2.0-1"
     },
     {
       "build_plan_digest": "sha256:984a1da5623ab41dfcfa59f9cd49c7a827948648269f9b06dba2771e8bb0a0ea",
@@ -820,8 +920,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-16T02:10:39Z",
-  "plan_digest": "sha256:8e1f3fc3c350b9af62dbb1834c31e345eddf2733952ce9fef9bdac0eaf10db2c",
+  "generated_at": "2026-07-16T02:16:18Z",
+  "plan_digest": "sha256:526a1b1256380ab270503595b52926b5d862741853b3438bf16bb150d4cf5004",
   "publications": [
     {
       "artifact": {
@@ -877,6 +977,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.25.0",
+        "package": "bat",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.1",
+        "package": "bat"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1",
         "package": "bat",
         "suite": "focal"
       }
@@ -1079,6 +1208,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.2",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.2",
         "package": "fd",
         "suite": "focal"
       }
@@ -1352,6 +1510,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "15.2.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.2.0-1",
+        "package": "ripgrep",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.26.0-1",
         "package": "starship"
       },
@@ -1584,6 +1771,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.26.1",
+        "package": "bat"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1",
+        "package": "bat",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "2.71.0",
         "package": "chezmoi"
       },
@@ -1808,6 +2024,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.2",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.2",
         "package": "fd",
         "suite": "jammy"
       }
@@ -2081,6 +2326,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1:0.54.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.54.0",
+        "package": "ov",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.9-1",
         "package": "prek"
       },
@@ -2190,6 +2464,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "15.1.0-1",
+        "package": "ripgrep",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.2.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.2.0-1",
         "package": "ripgrep",
         "suite": "jammy"
       }
@@ -2462,6 +2765,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.26.1",
+        "package": "bat"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1",
+        "package": "bat",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "2.71.0",
         "package": "chezmoi"
       },
@@ -2686,6 +3018,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.2",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.2",
         "package": "fd",
         "suite": "noble"
       }
@@ -2959,6 +3320,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1:0.54.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.54.0",
+        "package": "ov",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.9-1",
         "package": "prek"
       },
@@ -3068,6 +3458,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "15.1.0-1",
+        "package": "ripgrep",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.2.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.2.0-1",
         "package": "ripgrep",
         "suite": "noble"
       }
@@ -3369,6 +3788,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.26.1",
+        "package": "bat"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "bat",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/bat.yaml",
+            "source_id": "bat",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.1",
+        "package": "bat",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "2.71.0",
         "package": "chezmoi"
       },
@@ -3593,6 +4041,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "10.4.1",
+        "package": "fd",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.4.2",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.4.2",
         "package": "fd",
         "suite": "resolute"
       }
@@ -3866,6 +4343,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1:0.54.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.54.0",
+        "package": "ov",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.9-1",
         "package": "prek"
       },
@@ -3975,6 +4481,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "15.1.0-1",
+        "package": "ripgrep",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.2.0-1",
+        "package": "ripgrep"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rg",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ripgrep.yaml",
+            "source_id": "ripgrep",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.2.0-1",
         "package": "ripgrep",
         "suite": "resolute"
       }

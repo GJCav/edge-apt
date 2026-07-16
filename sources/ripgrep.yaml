@@ -12,3 +12,9 @@ upstream:
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep_15.1.0-1_amd64.deb"
     sha256: "sha256:62ce186675c71edbc7c48a67dc36f986974551354d6ce63726adc2d85aad802c"
+
+  - version: 15.2.0-1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep_15.2.0-1_amd64.deb"
+    sha256: "sha256:5af93eebe4c352474632cf1d28523b0e98bcd4e2f115a249a713b8d8c7d1d01c"
