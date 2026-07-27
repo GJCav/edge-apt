@@ -13,9 +13,9 @@ export default defineConfig({
   plugins: [
     cloudflareTest(async () => ({
       main: "./src/index.ts",
-      compatibilityDate: "2026-07-11",
-      compatibilityFlags: ["nodejs_compat"],
       miniflare: {
+        compatibilityDate: "2026-07-11",
+        compatibilityFlags: ["nodejs_compat"],
         serviceBindings: {
           ASSETS: await buildPagesASSETSBinding(
             path.join(directory, "test", "fixtures", "public"),
