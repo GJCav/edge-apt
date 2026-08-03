@@ -81,6 +81,37 @@ def test_inferred_asset_pattern_preserves_debian_revision_and_architecture(
     assert result.items[0].asset == desired
 
 
+def test_mihomo_inference_selects_the_current_archive_format(
+    tmp_path: Path,
+) -> None:
+    source = make_source(
+        source_id="mihomo",
+        package="mihomo",
+        url=(
+            "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/"
+            "mihomo-linux-amd64-v2-v1.19.28.deb"
+        ),
+    )
+    _write_source(tmp_path, source)
+    assets = tuple(
+        ReleaseAsset(
+            name=f"mihomo-linux-amd64-v2-v1.19.29{suffix}",
+            url=f"https://example.invalid/mihomo{suffix}",
+            digest=None,
+        )
+        for suffix in (".deb", ".gz", ".pkg.tar.zst", ".rpm")
+    )
+
+    result = check_upstream_updates(
+        project=make_project(tmp_path),
+        client=_FakeMetadataClient(latest_release=_release("v1.19.29", assets)),
+    )
+
+    assert result.update_count == 1
+    assert result.items[0].asset is not None
+    assert result.items[0].asset.name.endswith(".deb")
+
+
 def test_github_release_handles_current_and_missing_assets(tmp_path: Path) -> None:
     for index, (latest, expected) in enumerate(
         (

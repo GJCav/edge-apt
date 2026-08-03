@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from typing import Any, Literal, Protocol, cast
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, unquote, urlparse
@@ -28,6 +28,7 @@ _GITHUB_API = "https://api.github.com"
 _CRATES_INDEX = "https://index.crates.io"
 _USER_AGENT = "edgeapt-upstream-check/1"
 _QUICKINSTALL_REPOSITORY = "cargo-bins/cargo-quickinstall"
+_MIHOMO_REPOSITORY = "metacubex/mihomo"
 _VERSION_TOKEN_RE = re.compile(
     r"(?<![A-Za-z0-9])v?[0-9]+(?:\.[0-9A-Za-z]+)+(?:-[0-9][0-9A-Za-z.+~]*)?"
 )
@@ -309,12 +310,7 @@ def _check_github_source(
             latest=release.tag,
             release_url=release.url,
         )
-    patterns = tuple(
-        re.compile(pattern)
-        for pattern in sorted(
-            {_asset_pattern(reference.asset_name).pattern for reference in references}
-        )
-    )
+    patterns = _asset_patterns(repository, references)
     matches = tuple(
         asset
         for asset in release.assets
@@ -516,6 +512,40 @@ def _asset_pattern(asset_name: str) -> re.Pattern[str]:
         offset = match.end()
     pieces.append(re.escape(asset_name[offset:]))
     return re.compile("".join(pieces))
+
+
+def _asset_patterns(
+    repository: str,
+    references: tuple[_GitHubReference, ...],
+) -> tuple[re.Pattern[str], ...]:
+    pattern_builder: Callable[[_GitHubReference], re.Pattern[str]] = (
+        _mihomo_asset_pattern
+        if repository.lower() == _MIHOMO_REPOSITORY
+        else _generic_asset_pattern
+    )
+    return tuple(
+        re.compile(pattern)
+        for pattern in sorted(
+            {pattern_builder(reference).pattern for reference in references}
+        )
+    )
+
+
+def _generic_asset_pattern(reference: _GitHubReference) -> re.Pattern[str]:
+    return _asset_pattern(reference.asset_name)
+
+
+def _mihomo_asset_pattern(reference: _GitHubReference) -> re.Pattern[str]:
+    tag_start = reference.asset_name.find(reference.tag)
+    if tag_start < 0:
+        raise ValueError(
+            f"Mihomo asset does not contain release tag: {reference.asset_name}"
+        )
+    prefix = reference.asset_name[:tag_start]
+    suffix = reference.asset_name[tag_start + len(reference.tag) :]
+    return re.compile(
+        re.escape(prefix) + _VERSION_ASSET_PATTERN + re.escape(suffix)
+    )
 
 
 def _upstream_urls(source: SourceTemplate) -> tuple[str, ...]:
