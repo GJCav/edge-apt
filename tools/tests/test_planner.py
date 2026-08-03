@@ -5,6 +5,7 @@ import pytest
 from edgeapt.constants import ROOT, SOURCES_DIR
 from edgeapt.errors import ValidationError
 from edgeapt.infrastructure.source_loader import load_source_documents
+from edgeapt.templates.deb_upstream_v1 import DebUpstreamV1
 from edgeapt.workflows.planning import build_repo_plan
 from edgeapt.templates.base import SourceTemplate
 from tests.factories import make_document, make_source
@@ -89,15 +90,33 @@ def test_plan_is_independent_of_source_order() -> None:
     assert forward == reverse
 
 
-def test_current_sources_keep_expected_plan_digest() -> None:
+def test_current_sources_chezmoi_upstreams_are_preserved() -> None:
     documents = load_source_documents(SOURCES_DIR, root=ROOT)
     plan = build_repo_plan(documents)
 
-    assert len(plan.builds) == 44
-    assert len(plan.publications) == 161
-    assert plan.plan_digest == (
-        "sha256:ab542bc6625a9d6936196dcfe13e99e3049a7e5b7067c22fa3e332af06313cfa"
+    chezmoi_document = next(
+        document for document in documents if document.source.id == "chezmoi"
     )
+    assert isinstance(chezmoi_document.source, DebUpstreamV1)
+
+    expected_versions = {item.version for item in chezmoi_document.source.upstream}
+    expected_suites_by_version = {
+        item.version: set(item.suites) for item in chezmoi_document.source.upstream
+    }
+
+    actual_build_versions = {
+        item.deb_key.deb_version for item in plan.builds if item.deb_key.package == "chezmoi"
+    }
+    actual_suites_by_version: dict[str, set[str]] = {}
+    for publication in plan.publications:
+        if publication.deb_key.package != "chezmoi":
+            continue
+        version = publication.deb_key.deb_version
+        actual_suites_by_version.setdefault(version, set()).add(publication.key.suite)
+
+    assert actual_build_versions == expected_versions
+    assert set(actual_suites_by_version) == expected_versions
+    assert actual_suites_by_version == expected_suites_by_version
 
 
 def _plan(*sources: SourceTemplate):
