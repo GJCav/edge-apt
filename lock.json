@@ -127,6 +127,31 @@
       "upstream_version": "2.71.0"
     },
     {
+      "build_plan_digest": "sha256:ef306a211037fcec4bdaf1f3ff35566ae753f4a2654d14dcf7054db220e2b901",
+      "created_at": "2026-08-03T06:52:08Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "chezmoi",
+        "version": "2.71.1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "2.71.1",
+        "package": "chezmoi"
+      },
+      "path": "packages/chezmoi/chezmoi_2.71.1_amd64.deb",
+      "sha256": "sha256:49b68f441f60fbf84a79928e35076ccd4d0d7d5c050924c27d03bda25a7024eb",
+      "size": 15668446,
+      "upstream": {
+        "etag": "\"0x8DEE69B14EC82E7\"",
+        "last_modified": "Mon, 20 Jul 2026 20:11:27 GMT",
+        "sha256": "sha256:49b68f441f60fbf84a79928e35076ccd4d0d7d5c050924c27d03bda25a7024eb",
+        "size": 15668446,
+        "url": "https://github.com/twpayne/chezmoi/releases/download/v2.71.1/chezmoi_2.71.1_linux_amd64.deb"
+      },
+      "upstream_version": "2.71.1"
+    },
+    {
       "build_plan_digest": "sha256:60879e8ec9b5f3afb30468aabbc452373797324bd9ead2f91b06d9370fb29799",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -383,6 +408,32 @@
       "upstream_version": "v0.74.0"
     },
     {
+      "build_plan_digest": "sha256:ddb0a9aa9d2cd8186f59608d3b3428d56f2a131c1a5d3e1a6c9657d5901db1be",
+      "created_at": "2026-08-03T06:52:08Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "fzf",
+        "version": "0.74.2-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.74.2-1",
+        "package": "fzf"
+      },
+      "path": "packages/fzf/fzf_0.74.2-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:351a18ec07ab795a4198b4287b09e63f52d04ab79cd1ba5c72606cf5cbb83523",
+      "size": 1691706,
+      "upstream": {
+        "etag": "\"0x8DEEF623322AB1E\"",
+        "last_modified": "Sat, 01 Aug 2026 00:16:57 GMT",
+        "sha256": "sha256:b3648f48675612b69ee35371cf6dc99ca96d767e89b912d079080916ac8ba8bd",
+        "size": 2013806,
+        "url": "https://github.com/junegunn/fzf/releases/download/v0.74.2/fzf-0.74.2-linux_amd64.tar.gz"
+      },
+      "upstream_version": "v0.74.2"
+    },
+    {
       "build_plan_digest": "sha256:1257cadb1544083415fae7676e717e7f97a54ffcdae2bf69f510dcc484b91172",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -486,6 +537,32 @@
       "upstream_version": "41"
     },
     {
+      "build_plan_digest": "sha256:c9c46dc32138ab84c231505b741284b9e102456a3dd7493c1e559e13dda0ff76",
+      "created_at": "2026-08-03T06:52:08Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "lf",
+        "version": "42-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "42-1",
+        "package": "lf"
+      },
+      "path": "packages/lf/lf_42-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:20bc1df8ba3959a708f506b96c3794c03fc1d961acd56b04662dff47fd680f26",
+      "size": 1975728,
+      "upstream": {
+        "etag": "\"0x8DEEED39CC1DF6B\"",
+        "last_modified": "Fri, 31 Jul 2026 07:16:16 GMT",
+        "sha256": "sha256:c6abe6c0c11a0a4ae89754884aad67de18decc113935cbc5eaa57dc0d1850fb4",
+        "size": 2324047,
+        "url": "https://github.com/gokcehan/lf/releases/download/r42/lf-linux-amd64.tar.gz"
+      },
+      "upstream_version": "42"
+    },
+    {
       "build_plan_digest": "sha256:36767a42d3db1ba953d509b5069a483eb80ce4035e4501153009abcac9b2b804",
       "created_at": "2026-07-16T02:10:39Z",
       "deb_control": {
@@ -509,6 +586,31 @@
         "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.28/mihomo-linux-amd64-v2-v1.19.28.deb"
       },
       "upstream_version": "1.19.28"
+    },
+    {
+      "build_plan_digest": "sha256:2b3a85526b91d0a82361366b2c4d902e1cf2125425377b92eb74442b76f80ec6",
+      "created_at": "2026-08-03T06:52:08Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "mihomo",
+        "version": "1.19.29"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.19.29",
+        "package": "mihomo"
+      },
+      "path": "packages/mihomo/mihomo_1.19.29_amd64.deb",
+      "sha256": "sha256:c4553ece2740738d95a4e1f399c5f3e5b304b6e0f3f94ac339fc1dd8266af7a0",
+      "size": 17759416,
+      "upstream": {
+        "etag": "\"0x8DEE4C8D8C2E92E\"",
+        "last_modified": "Sat, 18 Jul 2026 12:34:01 GMT",
+        "sha256": "sha256:c4553ece2740738d95a4e1f399c5f3e5b304b6e0f3f94ac339fc1dd8266af7a0",
+        "size": 17759416,
+        "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.29/mihomo-linux-amd64-v2-v1.19.29.deb"
+      },
+      "upstream_version": "1.19.29"
     },
     {
       "build_plan_digest": "sha256:f8149abc3c73299224566676b1282fa4a5cd09105ccf4da16b2aacd1df148f9b",
@@ -587,6 +689,32 @@
       "upstream_version": "1:0.54.0"
     },
     {
+      "build_plan_digest": "sha256:12421eae1a798011ade8a1521ed7367d082e98e9829202e646201dc208530a5f",
+      "created_at": "2026-08-03T06:52:08Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "prek",
+        "version": "0.4.11-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.4.11-1",
+        "package": "prek"
+      },
+      "path": "packages/prek/prek_0.4.11-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:ed9884d598aeab647106df1ffb0b58be2ec6b9944d137eece9ef3e5ab46a0239",
+      "size": 4726318,
+      "upstream": {
+        "etag": "\"0x8DEE9A61FCA9E66\"",
+        "last_modified": "Fri, 24 Jul 2026 17:08:04 GMT",
+        "sha256": "sha256:038f67b69c1d1547e920532f975a0ec1a51453b962f1a2d9148abcb252a6d194",
+        "size": 6122371,
+        "url": "https://github.com/j178/prek/releases/download/v0.4.11/prek-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "v0.4.11"
+    },
+    {
       "build_plan_digest": "sha256:0bc5f259f564051b7653b7629bf96bede3e0ce7cf6649b1d2357897ce48bd281",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -662,6 +790,31 @@
         "url": "https://github.com/rclone/rclone/releases/download/v1.74.4/rclone-v1.74.4-linux-amd64.deb"
       },
       "upstream_version": "1.74.4"
+    },
+    {
+      "build_plan_digest": "sha256:3195d46f06ed838859534a4e3cd0c8a81f2fe011d6466effa2ee86f3830a5730",
+      "created_at": "2026-08-03T06:52:08Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "rclone",
+        "version": "1.75.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.75.0",
+        "package": "rclone"
+      },
+      "path": "packages/rclone/rclone_1.75.0_amd64.deb",
+      "sha256": "sha256:266598b5c66a42b821571332013cc85a88ffcff8939cf0643861c8d033dd3a4a",
+      "size": 32099950,
+      "upstream": {
+        "etag": "\"0x8DEEF2551C31EE9\"",
+        "last_modified": "Fri, 31 Jul 2026 17:01:09 GMT",
+        "sha256": "sha256:266598b5c66a42b821571332013cc85a88ffcff8939cf0643861c8d033dd3a4a",
+        "size": 32099950,
+        "url": "https://github.com/rclone/rclone/releases/download/v1.75.0/rclone-v1.75.0-linux-amd64.deb"
+      },
+      "upstream_version": "1.75.0"
     },
     {
       "build_plan_digest": "sha256:aa981b10269665f13b7ba5ef51ea19dc20ff5ced2b35d26baa7a23445fdf9cf6",
@@ -818,6 +971,32 @@
       "upstream_version": "v0.26.1"
     },
     {
+      "build_plan_digest": "sha256:0d2a1ffce4bf7056e19a82592a22dc00bba37f4cd668a48720279af68e651a6a",
+      "created_at": "2026-08-03T06:52:08Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "xh",
+        "version": "0.26.2-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.26.2-1",
+        "package": "xh"
+      },
+      "path": "packages/xh/xh_0.26.2-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:5f44a7ac23fc1c8569508476f142f63f1ed0aff8bc4bde3069823bd9d26a388a",
+      "size": 3602762,
+      "upstream": {
+        "etag": "\"0x8DEEB2035D0711C\"",
+        "last_modified": "Sun, 26 Jul 2026 14:14:30 GMT",
+        "sha256": "sha256:8c53b6a23435754f9e2ea8ab8c0d0296a1921404b88132cf9b364ff6e8c22a6e",
+        "size": 4609532,
+        "url": "https://github.com/ducaale/xh/releases/download/v0.26.2/xh-v0.26.2-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v0.26.2"
+    },
+    {
       "build_plan_digest": "sha256:6c6059c51cfc7517174e9f467dc1a817f2ee055acd7fa79f49c4658aa01075e2",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -920,8 +1099,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-07-16T02:16:18Z",
-  "plan_digest": "sha256:526a1b1256380ab270503595b52926b5d862741853b3438bf16bb150d4cf5004",
+  "generated_at": "2026-08-03T06:52:08Z",
+  "plan_digest": "sha256:3a32bbd961834b2c7806419f42e008cbbd708348ee301cd83a47c8cf057d2039",
   "publications": [
     {
       "artifact": {
@@ -1303,6 +1482,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.74.2-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.2-1",
+        "package": "fzf",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "7.1.4-3",
         "package": "jellyfin-ffmpeg7"
       },
@@ -1365,6 +1573,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "42-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "42-1",
+        "package": "lf",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
@@ -1388,6 +1625,64 @@
         "component": "main",
         "deb_version": "1.19.28",
         "package": "mihomo",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.29",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.29",
+        "package": "mihomo",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.4.11-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.11-1",
+        "package": "prek",
         "suite": "focal"
       }
     },
@@ -1474,6 +1769,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.74.4",
+        "package": "rclone",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.0",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.0",
         "package": "rclone",
         "suite": "focal"
       }
@@ -1619,6 +1943,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.26.1-1",
+        "package": "xh",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.2-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.2-1",
         "package": "xh",
         "suite": "focal"
       }
@@ -1822,6 +2175,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "2.71.0",
+        "package": "chezmoi",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.71.1",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.71.1",
         "package": "chezmoi",
         "suite": "jammy"
       }
@@ -2119,6 +2501,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.74.2-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.2-1",
+        "package": "fzf",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
@@ -2239,6 +2650,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "42-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "42-1",
+        "package": "lf",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
@@ -2261,6 +2701,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.19.28",
+        "package": "mihomo",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.29",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.29",
         "package": "mihomo",
         "suite": "jammy"
       }
@@ -2355,6 +2824,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.4.11-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.11-1",
+        "package": "prek",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.9-1",
         "package": "prek"
       },
@@ -2435,6 +2933,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.74.4",
+        "package": "rclone",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.0",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.0",
         "package": "rclone",
         "suite": "jammy"
       }
@@ -2613,6 +3140,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.26.1-1",
+        "package": "xh",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.2-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.2-1",
         "package": "xh",
         "suite": "jammy"
       }
@@ -2816,6 +3372,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "2.71.0",
+        "package": "chezmoi",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.71.1",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.71.1",
         "package": "chezmoi",
         "suite": "noble"
       }
@@ -3113,6 +3698,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.74.2-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.2-1",
+        "package": "fzf",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
@@ -3233,6 +3847,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "42-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "42-1",
+        "package": "lf",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
@@ -3255,6 +3898,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.19.28",
+        "package": "mihomo",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.29",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.29",
         "package": "mihomo",
         "suite": "noble"
       }
@@ -3349,6 +4021,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.4.11-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.11-1",
+        "package": "prek",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.9-1",
         "package": "prek"
       },
@@ -3429,6 +4130,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.74.4",
+        "package": "rclone",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.0",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.0",
         "package": "rclone",
         "suite": "noble"
       }
@@ -3607,6 +4337,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.26.1-1",
+        "package": "xh",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.2-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.2-1",
         "package": "xh",
         "suite": "noble"
       }
@@ -3846,6 +4605,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "2.71.1",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.71.1",
+        "package": "chezmoi",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.69.0-1",
         "package": "difftastic"
       },
@@ -4136,6 +4924,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.74.2-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.2-1",
+        "package": "fzf",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
@@ -4256,6 +5073,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "42-1",
+        "package": "lf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "lf",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/lf.yaml",
+            "source_id": "lf",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "42-1",
+        "package": "lf",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.19.28",
         "package": "mihomo"
       },
@@ -4278,6 +5124,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.19.28",
+        "package": "mihomo",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.19.29",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.29",
         "package": "mihomo",
         "suite": "resolute"
       }
@@ -4372,6 +5247,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.4.11-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.4.11-1",
+        "package": "prek",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.9-1",
         "package": "prek"
       },
@@ -4452,6 +5356,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.74.4",
+        "package": "rclone",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.0",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.0",
         "package": "rclone",
         "suite": "resolute"
       }
@@ -4630,6 +5563,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.26.1-1",
+        "package": "xh",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.26.2-1",
+        "package": "xh"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "xh",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/xh.yaml",
+            "source_id": "xh",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.26.2-1",
         "package": "xh",
         "suite": "resolute"
       }

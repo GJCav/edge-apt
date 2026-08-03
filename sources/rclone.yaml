@@ -12,3 +12,9 @@ upstream:
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/rclone/rclone/releases/download/v1.74.4/rclone-v1.74.4-linux-amd64.deb"
     sha256: "sha256:a9da2eaa70428c6dcc5acbb0b7eac0faec4c61643e0b468d9fe09ddf79b7e929"
+
+  - version: 1.75.0
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/rclone/rclone/releases/download/v1.75.0/rclone-v1.75.0-linux-amd64.deb"
+    sha256: "sha256:266598b5c66a42b821571332013cc85a88ffcff8939cf0643861c8d033dd3a4a"

@@ -20,3 +20,11 @@ upstream:
     url: "https://github.com/junegunn/fzf/releases/download/v0.74.0/fzf-0.74.0-linux_amd64.tar.gz"
     sha256: "sha256:cf919f05b7581b4c744d764eaa704665d61dd6d3ca785f0df2351281dff60cda"
     extract_path: fzf
+
+  - version: v0.74.2
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/junegunn/fzf/releases/download/v0.74.2/fzf-0.74.2-linux_amd64.tar.gz"
+    sha256: "sha256:b3648f48675612b69ee35371cf6dc99ca96d767e89b912d079080916ac8ba8bd"
+    extract_path: fzf
