@@ -128,7 +128,7 @@
     },
     {
       "build_plan_digest": "sha256:ef306a211037fcec4bdaf1f3ff35566ae753f4a2654d14dcf7054db220e2b901",
-      "created_at": "2026-08-03T06:52:08Z",
+      "created_at": "2026-08-03T08:15:14Z",
       "deb_control": {
         "architecture": "amd64",
         "package": "chezmoi",
@@ -150,6 +150,31 @@
         "url": "https://github.com/twpayne/chezmoi/releases/download/v2.71.1/chezmoi_2.71.1_linux_amd64.deb"
       },
       "upstream_version": "2.71.1"
+    },
+    {
+      "build_plan_digest": "sha256:a6ea190d045076c53551c7a7d80c1c5f915b25489bb302d002391b01a063c248",
+      "created_at": "2026-08-03T08:03:00Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "chezmoi",
+        "version": "2.72.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "2.72.0",
+        "package": "chezmoi"
+      },
+      "path": "packages/chezmoi/chezmoi_2.72.0_amd64.deb",
+      "sha256": "sha256:6023435f5393553345ec10c75cd8160658c415f2bf9c3d8def3e120c92faf629",
+      "size": 15735490,
+      "upstream": {
+        "etag": "\"0x8DEF0C6FAF7DA15\"",
+        "last_modified": "Sun, 02 Aug 2026 18:50:53 GMT",
+        "sha256": "sha256:6023435f5393553345ec10c75cd8160658c415f2bf9c3d8def3e120c92faf629",
+        "size": 15735490,
+        "url": "https://github.com/twpayne/chezmoi/releases/download/v2.72.0/chezmoi_2.72.0_linux_amd64.deb"
+      },
+      "upstream_version": "2.72.0"
     },
     {
       "build_plan_digest": "sha256:60879e8ec9b5f3afb30468aabbc452373797324bd9ead2f91b06d9370fb29799",
@@ -1099,8 +1124,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-08-03T06:52:08Z",
-  "plan_digest": "sha256:3a32bbd961834b2c7806419f42e008cbbd708348ee301cd83a47c8cf057d2039",
+  "generated_at": "2026-08-03T08:15:14Z",
+  "plan_digest": "sha256:ab542bc6625a9d6936196dcfe13e99e3049a7e5b7067c22fa3e332af06313cfa",
   "publications": [
     {
       "artifact": {
@@ -2204,6 +2229,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "2.71.1",
+        "package": "chezmoi",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.72.0",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 3
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.72.0",
         "package": "chezmoi",
         "suite": "jammy"
       }
@@ -3401,6 +3455,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "2.71.1",
+        "package": "chezmoi",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.72.0",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 3
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.72.0",
         "package": "chezmoi",
         "suite": "noble"
       }
@@ -4627,6 +4710,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "2.71.1",
+        "package": "chezmoi",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "2.72.0",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 3
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.72.0",
         "package": "chezmoi",
         "suite": "resolute"
       }
