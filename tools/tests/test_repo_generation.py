@@ -67,6 +67,10 @@ def test_generate_repo_writes_signed_metadata(tmp_path: Path) -> None:
     assert "Copy SHA256 for ${item.package}" in html
     assert "./assets/vue.global.prod.js" in html
     assert "cdn" not in html.lower()
+    script = explorer_script.read_text(encoding="utf-8")
+    assert 'arch === "all" ? "amd64" : arch' in script
+    assert "this.setupArch = this.setupArches[0]" in script
+    assert 'v-for="value in setupArches"' in html
     manifest = cast(
         dict[str, Any],
         json.loads(package_manifest.read_text(encoding="utf-8")),

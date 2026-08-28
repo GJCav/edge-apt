@@ -43,6 +43,32 @@ Cloudflare's individual asset limit are split into static chunks; the Worker
 reassembles them as a streaming response under the original APT URL. The package
 explorer and installation guide are generated alongside the repository metadata.
 
+### Architecture model
+
+EdgeAPT keeps package architecture separate from repository target architecture.
+A deb's `Architecture` field describes that individual package and may be `all`
+for architecture-independent content. Repository and client source architectures
+describe real target machines, such as `amd64` and `arm64`; `all` is not a target
+machine architecture.
+
+Aptly includes `Architecture: all` packages in each published target's Packages
+index. An amd64 client therefore finds an `_all.deb` through
+`binary-amd64/Packages`, not by selecting a `binary-all/Packages` target.
+
+This distinction must be preserved wherever architecture data crosses layers:
+
+- Package manifests and explorer filters retain the deb's package architecture,
+  including `all`.
+- Installation guidance must normalize package architecture into a real client
+  target and must never emit `Architectures: all` in an APT source configuration.
+- Repository publication must continue to declare the target architectures whose
+  Packages indexes it generates.
+
+APT can report an unsupported configured architecture while still exiting with
+status zero. E2E setup treats that notice as a failure so a mismatch between
+generated client configuration and published repository metadata cannot pass
+silently.
+
 `packages/` is disposable build output. It is ignored by Git and used only as a
 local or GitHub Actions cache. A clean checkout can always rebuild it from the
 source declarations and committed lock.

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -10,10 +11,13 @@ from edgeapt.e2e import docker_e2e_command_args
 from edgeapt.e2e import docker_install_args
 from edgeapt.e2e import docker_remove_args
 from edgeapt.e2e import E2ETestCase
+from edgeapt.e2e import E2ECommandContext
 from edgeapt.e2e import group_e2e_test_cases
 from edgeapt.e2e import run_e2e
 from edgeapt.e2e import validate_e2e_repository
 from edgeapt.e2e import validate_e2e_scope
+from edgeapt.e2e import _run_checked  # pyright: ignore[reportPrivateUsage]
+from edgeapt.errors import CommandError
 from edgeapt.errors import ValidationError
 from edgeapt.package_manifest import PACKAGE_MANIFEST_SCHEMA
 from edgeapt.util import write_json
@@ -188,6 +192,32 @@ def test_e2e_rejects_invalid_jobs_before_starting_docker() -> None:
 def test_e2e_rejects_clear_cache_when_cache_is_disabled() -> None:
     with pytest.raises(ValidationError, match="clear_apt_cache"):
         run_e2e(apt_cache=False, clear_apt_cache=True)
+
+
+def test_e2e_rejects_unsupported_architecture_notice(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    result = subprocess.CompletedProcess(
+        args=["apt-get", "update"],
+        returncode=0,
+        stdout="",
+        stderr=(
+            "N: Skipping acquire of configured file 'main/binary-all/Packages' "
+            "as repository 'https://example.test jammy InRelease' doesn't support "
+            "architecture 'all'\n"
+        ),
+    )
+
+    def run(*args: object, **kwargs: object) -> subprocess.CompletedProcess[str]:
+        return result
+
+    monkeypatch.setattr("edgeapt.e2e.subprocess.run", run)
+
+    with pytest.raises(CommandError, match="doesn't support architecture"):
+        _run_checked(
+            ("apt-get", "update"),
+            E2ECommandContext(stage="setup", suite="jammy", arch="all"),
+        )
 
 
 def test_clear_e2e_apt_cache_removes_archives(

@@ -483,7 +483,11 @@ def _run_checked(
         capture_output=True,
         text=True,
     )
-    if result.returncode != 0:
+    unsupported_architecture = (
+        context.stage == "setup"
+        and "doesn't support architecture" in (result.stdout + result.stderr)
+    )
+    if result.returncode != 0 or unsupported_architecture:
         raise CommandError(_format_failure(args=args, context=context, result=result))
     return result
 

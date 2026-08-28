@@ -34,6 +34,9 @@ createApp({
     arches() {
       return this.uniqueValues("arch");
     },
+    setupArches() {
+      return [...new Set(this.arches.map((arch) => arch === "all" ? "amd64" : arch))];
+    },
     components() {
       return this.uniqueValues("component");
     },
@@ -110,7 +113,7 @@ sudo apt update`;
         this.component = this.validFilter(this.component, this.components);
         this.currentPage = Math.min(this.currentPage, this.pageCount);
         this.setupSuite = this.suites[0] || "";
-        this.setupArch = this.arches[0] || "";
+        this.setupArch = this.setupArches[0] || "";
         this.syncUrl(false);
       } catch (error) {
         this.error = error instanceof Error ? error.message : String(error);
