@@ -5,10 +5,14 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from edgeapt.constants import SUPPORTED_ARCHES
 from edgeapt.domain.artifacts import ArtifactFact
 from edgeapt.domain.lock import LockFile
 from edgeapt.project import ProjectPaths
 from edgeapt.util import run, write_json
+
+_APTLY_ARCHES = tuple(sorted(SUPPORTED_ARCHES))
+_APTLY_ARCHES_ARG = ",".join(_APTLY_ARCHES)
 
 
 def publish_with_aptly(
@@ -31,7 +35,7 @@ def publish_with_aptly(
     config: dict[str, Any] = {
         "rootDir": aptly_root.as_posix(),
         "logLevel": "warning",
-        "architectures": ["amd64", "arm64"],
+        "architectures": list(_APTLY_ARCHES),
         "skipLegacyPool": True,
         "gpgProvider": "gpg",
         "gpgDisableSign": False,
@@ -62,7 +66,7 @@ def publish_with_aptly(
             "create",
             f"-distribution={suite}",
             f"-component={component}",
-            "-architectures=amd64,arm64",
+            f"-architectures={_APTLY_ARCHES_ARG}",
             repo_name,
         )
         package_paths = sorted(
@@ -89,7 +93,7 @@ def publish_with_aptly(
             "-batch",
             "-skip-contents",
             f"-gpg-key={signing_key_fingerprint}",
-            "-architectures=amd64,arm64",
+            f"-architectures={_APTLY_ARCHES_ARG}",
             f"-distribution={suite}",
             f"-component={component}",
             snapshot_name,
