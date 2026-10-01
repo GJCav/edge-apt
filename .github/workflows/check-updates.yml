@@ -55,7 +55,6 @@ jobs:
           result="$RUNNER_TEMP/upstream-updates.json"
           uv run check-updates --format markdown --output "$report" --json-output "$result"
           echo "report=$report" >> "$GITHUB_OUTPUT"
-          echo "result=$result" >> "$GITHUB_OUTPUT"
           echo "update-count=$(jq -r '.update_count' "$result")" >> "$GITHUB_OUTPUT"
           echo "error-count=$(jq -r '.error_count' "$result")" >> "$GITHUB_OUTPUT"
           cat "$report" >> "$GITHUB_STEP_SUMMARY"

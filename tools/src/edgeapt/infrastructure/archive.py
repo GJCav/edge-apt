@@ -80,7 +80,7 @@ def _extract_tar(
             )
         _validate_member_size(member.name, member.size)
         if stripped is not None:
-            _add_to_index(index, stripped, member, original=member.name)
+            _add_to_index(index, stripped, member)
 
     def copy_member(name: str, target: Path) -> None:
         source = archive.extractfile(index[name])
@@ -124,7 +124,7 @@ def _extract_zip(
             )
         _validate_member_size(member.filename, member.file_size)
         if stripped is not None:
-            _add_to_index(index, stripped, member, original=member.filename)
+            _add_to_index(index, stripped, member)
 
     def copy_member(name: str, target: Path) -> None:
         with archive.open(index[name]) as source, target.open("wb") as output:
@@ -246,8 +246,6 @@ def _add_to_index[T](
     index: dict[str, T],
     path: str,
     member: T,
-    *,
-    original: str,
 ) -> None:
     if path in index:
         raise ValidationError(f"duplicate archive path after strip: {path}")

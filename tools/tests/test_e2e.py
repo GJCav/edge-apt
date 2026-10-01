@@ -1,15 +1,18 @@
 from __future__ import annotations
 
 import subprocess
+from collections.abc import Sequence
+from contextlib import nullcontext
 from pathlib import Path
 
 import pytest
 
 from edgeapt.e2e import build_e2e_test_cases
 from edgeapt.e2e import clear_e2e_apt_cache
-from edgeapt.e2e import docker_e2e_command_args
 from edgeapt.e2e import docker_install_args
 from edgeapt.e2e import docker_remove_args
+from edgeapt.e2e import E2EEvent
+from edgeapt.e2e import E2EGroup
 from edgeapt.e2e import E2ETestCase
 from edgeapt.e2e import E2ECommandContext
 from edgeapt.e2e import group_e2e_test_cases
@@ -17,6 +20,7 @@ from edgeapt.e2e import run_e2e
 from edgeapt.e2e import validate_e2e_repository
 from edgeapt.e2e import validate_e2e_scope
 from edgeapt.e2e import _run_checked  # pyright: ignore[reportPrivateUsage]
+from edgeapt.e2e import _run_group  # pyright: ignore[reportPrivateUsage]
 from edgeapt.errors import CommandError
 from edgeapt.errors import ValidationError
 from edgeapt.package_manifest import PACKAGE_MANIFEST_SCHEMA
@@ -95,15 +99,114 @@ def test_e2e_install_uses_package_version_pin() -> None:
     )
 
 
-def test_e2e_command_uses_argv() -> None:
-    case = _case()
-
-    assert docker_e2e_command_args("container-id", case) == (
+@pytest.mark.parametrize(
+    "failure_stage",
+    [None, "setup", "install", "second-command", "remove"],
+)
+def test_run_group_preserves_argv_and_cleans_up(
+    monkeypatch: pytest.MonkeyPatch,
+    failure_stage: str | None,
+) -> None:
+    command_one = ("doggo", "--format", "literal value; $(not-a-command)")
+    command_two = ("doggo", "--version")
+    install = (
         "docker",
         "exec",
         "container-id",
+        "env",
+        "DEBIAN_FRONTEND=noninteractive",
+        "apt-get",
+        "install",
+        "-y",
+        "doggo=1.1.7-1",
+    )
+    first = ("docker", "exec", "container-id", *command_one)
+    second = ("docker", "exec", "container-id", *command_two)
+    remove = (
+        "docker",
+        "exec",
+        "container-id",
+        "env",
+        "DEBIAN_FRONTEND=noninteractive",
+        "apt-get",
+        "remove",
+        "-y",
         "doggo",
-        "--version",
+    )
+    cleanup = ("docker", "rm", "-f", "container-id")
+    calls: list[tuple[str, ...]] = []
+    events: list[E2EEvent] = []
+
+    def fake_run(
+        args: Sequence[str],
+        **kwargs: object,
+    ) -> subprocess.CompletedProcess[str]:
+        assert not isinstance(args, str)
+        assert kwargs.get("shell", False) is False
+        assert kwargs.get("check") is False
+        assert kwargs.get("capture_output") is True
+        assert kwargs.get("text") is True
+        argv = tuple(args)
+        calls.append(argv)
+        failed = (
+            (
+                failure_stage == "setup"
+                and argv[:5] == ("docker", "exec", "container-id", "bash", "-lc")
+            )
+            or (failure_stage == "install" and argv == install)
+            or (failure_stage == "second-command" and argv == second)
+            or (failure_stage == "remove" and argv == remove)
+        )
+        return subprocess.CompletedProcess(
+            args=list(args),
+            returncode=1 if failed else 0,
+            stdout="container-id\n" if argv[:2] == ("docker", "run") else "",
+            stderr="simulated failure" if failed else "",
+        )
+
+    monkeypatch.setattr("edgeapt.e2e.subprocess.run", fake_run)
+    case = E2ETestCase(
+        suite="noble",
+        arch="amd64",
+        source_ids=("doggo",),
+        package="doggo",
+        version="1.1.7-1",
+        commands=(command_one, command_two),
+    )
+    group = E2EGroup(
+        suite="noble",
+        arch="amd64",
+        image="ubuntu:24.04",
+        cases=(case,),
+    )
+    failure_context = "e2e-command" if failure_stage == "second-command" else failure_stage
+    error_context = (
+        pytest.raises(CommandError, match=f"E2E failed during {failure_context}")
+        if failure_stage is not None
+        else nullcontext()
+    )
+    with error_context:
+        _run_group(
+            group=group,
+            port=12345,
+            test_keyring="/test keyring.gpg",
+            apt_cache=False,
+            on_event=events.append,
+        )
+
+    assert calls[0][:4] == ("docker", "run", "--detach", "--rm")
+    assert calls[0][-3:] == ("ubuntu:24.04", "sleep", "infinity")
+    assert calls[1][:5] == ("docker", "exec", "container-id", "bash", "-lc")
+    if failure_stage == "setup":
+        expected_tail = [cleanup]
+    elif failure_stage == "install":
+        expected_tail = [install, cleanup]
+    else:
+        expected_tail = [install, first, second, remove, cleanup]
+    assert calls[2:] == expected_tail
+    started = [event.command for event in events if event.kind == "test_start"]
+    assert started == (
+        [] if failure_stage in {"setup", "install"} else [command_one, command_two]
     )
 
 

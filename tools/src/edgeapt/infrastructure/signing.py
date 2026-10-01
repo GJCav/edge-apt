@@ -29,7 +29,6 @@ def ensure_test_key() -> SigningKey:
         import_secret_key(secret_ascii)
 
     if fingerprint is not None and has_secret_key(fingerprint):
-        export_profile_key_files(profile="test", fingerprint=fingerprint, export_secret=True)
         return load_signing_key("test")
 
     if secret_ascii.exists():
