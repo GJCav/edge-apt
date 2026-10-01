@@ -35,7 +35,7 @@ def test_repackage_reuses_cached_package_and_refreshes_publications(
         source=previous_source,
         artifact_path=artifact_path,
     )
-    _patch_environment(monkeypatch, tmp_path, source)
+    _patch_environment(monkeypatch, source)
 
     events: list[RepackageEvent] = []
 
@@ -72,7 +72,7 @@ def test_repackage_cache_miss_when_artifact_missing(
     source = _source(suites=("noble",))
     artifact_path = _artifact_path(tmp_path)
     _write_previous_lock(tmp_path, source=source, artifact_path=artifact_path)
-    _patch_environment(monkeypatch, tmp_path, source)
+    _patch_environment(monkeypatch, source)
     events: list[RepackageEvent] = []
 
     with pytest.raises(RuntimeError, match="stop after cache miss"):
@@ -108,7 +108,7 @@ def test_repackage_rejects_changed_plan_for_same_deb_key(
     artifact_path.parent.mkdir(parents=True)
     artifact_path.write_bytes(b"cached artifact")
     _write_previous_lock(tmp_path, source=previous, artifact_path=artifact_path)
-    _patch_environment(monkeypatch, tmp_path, current)
+    _patch_environment(monkeypatch, current)
 
     with pytest.raises(ValidationError, match="build plan changed for DebKey"):
         repackage_project(project=make_project(tmp_path))
@@ -181,7 +181,6 @@ def _write_previous_lock(
 
 def _patch_environment(
     monkeypatch: pytest.MonkeyPatch,
-    tmp_path: Path,
     source: SourceTemplate,
 ) -> None:
     def load_test_sources(*args: object, **kwargs: object):
@@ -205,13 +204,4 @@ class _FailingFetcher:
         destination: Path,
         root: Path,
     ) -> FetchResult:
-        raise self._error
-
-    def prepare_single_binary(
-        self,
-        *,
-        downloaded: Path,
-        extract_path: str | None,
-        work_dir: Path,
-    ) -> Path:
         raise self._error

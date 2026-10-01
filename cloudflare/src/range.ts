@@ -6,7 +6,7 @@ export interface ByteRange {
 export class RangeNotSatisfiable extends Error {}
 
 export function parseByteRange(value: string, size: number): ByteRange {
-  if (!value.startsWith("bytes=") || value.includes(",") || size < 1) {
+  if (!value.startsWith("bytes=") || size < 1) {
     throw new RangeNotSatisfiable();
   }
   const specification = value.slice("bytes=".length);
@@ -30,7 +30,6 @@ export function parseByteRange(value: string, size: number): ByteRange {
 }
 
 function parseInteger(value: string): number {
-  if (!/^\d+$/.test(value)) throw new RangeNotSatisfiable();
   const parsed = Number(value);
   if (!Number.isSafeInteger(parsed)) throw new RangeNotSatisfiable();
   return parsed;

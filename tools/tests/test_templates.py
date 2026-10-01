@@ -15,17 +15,14 @@ from edgeapt.domain.planning import (
     JsonObject,
     SourceProvenance,
 )
-from edgeapt.project import EdgeAptProject, ProjectPaths
-from edgeapt.infrastructure.archive import DefaultArchiveExtractor
 from edgeapt.templates.base import (
     BuildContext,
-    FetchResult,
     SourceTemplate,
     TemplateBuildResult,
 )
 from edgeapt.templates.registry import DEFAULT_TEMPLATES, TemplateRegistry
 from edgeapt.workflows.repackage import repackage_project
-from tests.factories import make_document, make_source
+from tests.factories import make_document, make_project, make_source
 
 
 @pytest.mark.parametrize(
@@ -165,13 +162,7 @@ def test_fake_template_works_through_planner_and_repackage(tmp_path: Path) -> No
     )
 
     result = repackage_project(
-        project=EdgeAptProject(
-            paths=ProjectPaths(tmp_path),
-            templates=registry,
-            fetcher=_FakeFetcher(),
-            archive_extractor=DefaultArchiveExtractor(),
-            deb_tools=deb_tools,
-        )
+        project=make_project(tmp_path, templates=registry, deb_tools=deb_tools)
     )
     lock = result.lock
 
@@ -240,25 +231,6 @@ class _FakeTemplate(SourceTemplate):
             ),
         )
 
-
-class _FakeFetcher:
-    def fetch(
-        self,
-        *,
-        url: str,
-        sha256: str | None,
-        destination: Path,
-        root: Path,
-    ) -> FetchResult:
-        destination.write_bytes(b"download")
-        return FetchResult(
-            path=destination,
-            fact=UpstreamFact(
-                url=url,
-                sha256="sha256:download",
-                size=len(b"download"),
-            ),
-        )
 
 class _FakeDebTools:
     def __init__(self, control: DebControlFact) -> None:
