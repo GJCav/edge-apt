@@ -1,0 +1,13 @@
+template: edgeapt.deb_upstream/v1
+id: jellyfin-ffmpeg8-noble
+package: jellyfin-ffmpeg8
+e2e_commands:
+  - [/usr/lib/jellyfin-ffmpeg/ffmpeg, -version]
+  - [/usr/lib/jellyfin-ffmpeg/ffprobe, -version]
+
+upstream:
+  - version: 8.1.3-1-noble
+    arch: amd64
+    suites: [noble]
+    url: "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v8.1.3-1/jellyfin-ffmpeg8_8.1.3-1-noble_amd64.deb"
+    sha256: "sha256:188fa8b31f7e0ded9dadd1d11d1cd05482a7f03cec4e5c0af80aae21fde44ce4"

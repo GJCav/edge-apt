@@ -16,3 +16,9 @@ upstream:
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.29/mihomo-linux-amd64-v2-v1.19.29.deb"
     sha256: "sha256:c4553ece2740738d95a4e1f399c5f3e5b304b6e0f3f94ac339fc1dd8266af7a0"
+
+  - version: 1.19.32
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.32/mihomo-linux-amd64-v2-v1.19.32.deb"
+    sha256: "sha256:968bcf66cb7941e1e0a3d7b842abd80179a859cd514561b73303fca99e255475"

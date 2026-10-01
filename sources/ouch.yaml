@@ -61,3 +61,11 @@ upstream:
     url: "https://github.com/ouch-org/ouch/releases/download/0.8.1/ouch-x86_64-unknown-linux-gnu.tar.gz"
     sha256: "sha256:b515aac953cf37d85d81a563eba37e4fee7b0960994f008cfad2e9fa1a09b26a"
     strip_components: 1
+
+  - version: 0.8.3
+    revision: 1
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/ouch-org/ouch/releases/download/0.8.3/ouch-x86_64-unknown-linux-gnu.tar.gz"
+    sha256: "sha256:f0664cbb3bf8c5c781637da2c8bb86b4561a8709f7e10ddb1188150e68e619a7"
+    strip_components: 1

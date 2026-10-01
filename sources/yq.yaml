@@ -19,3 +19,10 @@ upstream:
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
     sha256: "sha256:fa52a4e758c63d38299163fbdd1edfb4c4963247918bf9c1c5d31d84789eded4"
+
+  - version: v4.54.1
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/mikefarah/yq/releases/download/v4.54.1/yq_linux_amd64"
+    sha256: "sha256:8e34fc298390875de416e6a4afcb8cabeceb25d9aa8506c1a2f9353cf702ea5f"

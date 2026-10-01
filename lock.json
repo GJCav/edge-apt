@@ -177,6 +177,31 @@
       "upstream_version": "2.72.0"
     },
     {
+      "build_plan_digest": "sha256:8a90e53a8e33c35dc235f24ba15c7da73f85763ded1f0ef7992e9c733cc0fe46",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "chezmoi",
+        "version": "2.73.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "2.73.0",
+        "package": "chezmoi"
+      },
+      "path": "packages/chezmoi/chezmoi_2.73.0_amd64.deb",
+      "sha256": "sha256:24df0be680b422e87fd8b4930fba583650920d68af81d53162a30867f8a8e0c8",
+      "size": 16017710,
+      "upstream": {
+        "etag": "\"0x8DF1D99FFF1D3B9\"",
+        "last_modified": "Mon, 28 Sep 2026 19:52:17 GMT",
+        "sha256": "sha256:24df0be680b422e87fd8b4930fba583650920d68af81d53162a30867f8a8e0c8",
+        "size": 16017710,
+        "url": "https://github.com/twpayne/chezmoi/releases/download/v2.73.0/chezmoi_2.73.0_linux_amd64.deb"
+      },
+      "upstream_version": "2.73.0"
+    },
+    {
       "build_plan_digest": "sha256:60879e8ec9b5f3afb30468aabbc452373797324bd9ead2f91b06d9370fb29799",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -203,6 +228,32 @@
       "upstream_version": "v0.69.0"
     },
     {
+      "build_plan_digest": "sha256:aa355b8744ec4de1bfbaa2c089c41a0da2442c9bba7896f5e0bcb146be35e47e",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "difftastic",
+        "version": "0.71.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic"
+      },
+      "path": "packages/difftastic/difftastic_0.71.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:3e2df9fc84fa8811820c898c1b7d7b27e9935d23054cbf78bacc48dbd299a5b0",
+      "size": 7933178,
+      "upstream": {
+        "etag": "\"0x8DF15D01842B353\"",
+        "last_modified": "Fri, 18 Sep 2026 21:59:21 GMT",
+        "sha256": "sha256:61aea5394a53c56f144637cf39b3a0c0dafa27769731745e5851ff276e6478da",
+        "size": 11684847,
+        "url": "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "v0.71.0"
+    },
+    {
       "build_plan_digest": "sha256:cb9b1584a0cd7bfc07a74412848528b1ceefea468b2bc50b60b3c2dc5ac5f577",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -227,6 +278,32 @@
         "url": "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-musl.tar.gz"
       },
       "upstream_version": "v0.69.0"
+    },
+    {
+      "build_plan_digest": "sha256:47827003bbad67debc9230a8e3c79dad48bf6eff3808e288e0f9ad8ce8aefbfa",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "difftastic-musl",
+        "version": "0.71.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic-musl"
+      },
+      "path": "packages/difftastic-musl/difftastic-musl_0.71.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:36bb7f82d55c67661d0a082f6ec2fe03225c76f8815f71c88eca7a621885c632",
+      "size": 7981298,
+      "upstream": {
+        "etag": "\"0x8DF15D041632E2A\"",
+        "last_modified": "Fri, 18 Sep 2026 22:00:30 GMT",
+        "sha256": "sha256:0a65e6715df992b0adae012e606bd9cc74fa6cfe90eaf13bbae165a0a19b3086",
+        "size": 11746371,
+        "url": "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v0.71.0"
     },
     {
       "build_plan_digest": "sha256:f74eee8e42a46a3a647ccdbb730cfffd9a74e71e5f45d130e8dc31596899ceaf",
@@ -279,6 +356,32 @@
         "url": "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-linux-x86_64.tar.gz"
       },
       "upstream_version": "v1.2.0"
+    },
+    {
+      "build_plan_digest": "sha256:85b1978c1010cd3b52f71b99b2712e78a7e643ce6f3a21dee1a94f160f210021",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "doggo",
+        "version": "1.4.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.4.0-1",
+        "package": "doggo"
+      },
+      "path": "packages/doggo/doggo_1.4.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:6918fec00f6c5ed4a545aedb58dc9297aa7a2a304b1ad0ba6e263389ef950dea",
+      "size": 4791562,
+      "upstream": {
+        "etag": "\"0x8DF080C899DAB53\"",
+        "last_modified": "Tue, 01 Sep 2026 09:36:45 GMT",
+        "sha256": "sha256:f85e2471737677a5fa65491b4241e0f46960aae6cc2211cc660ee6394a1a3d06",
+        "size": 5852262,
+        "url": "https://github.com/mr-karan/doggo/releases/download/v1.4.0/doggo-linux-x86_64.tar.gz"
+      },
+      "upstream_version": "v1.4.0"
     },
     {
       "build_plan_digest": "sha256:fe8c7ff1b760e48b6ebdf154dfbbfc84cff757ebdf309cbc9500f2432b039e0a",
@@ -381,6 +484,31 @@
       "upstream_version": "10.4.2"
     },
     {
+      "build_plan_digest": "sha256:42bfad5640a0e483e3acf3bdec9a83c4d867bf5891a8849efe552e17841ec6c2",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "fd",
+        "version": "10.5.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "10.5.0",
+        "package": "fd"
+      },
+      "path": "packages/fd/fd_10.5.0_amd64.deb",
+      "sha256": "sha256:1fca9f8fb221f26fe37b425db4935dc8180099bdecfd8e031538bfc9396e95f8",
+      "size": 1235940,
+      "upstream": {
+        "etag": "\"0x8DF0347FA2DD5D9\"",
+        "last_modified": "Wed, 26 Aug 2026 07:59:38 GMT",
+        "sha256": "sha256:1fca9f8fb221f26fe37b425db4935dc8180099bdecfd8e031538bfc9396e95f8",
+        "size": 1235940,
+        "url": "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd_10.5.0_amd64.deb"
+      },
+      "upstream_version": "10.5.0"
+    },
+    {
       "build_plan_digest": "sha256:12ecf5cc7360ed6f9875361a8d09fedfd91426d9bf2454a15f406478ea57580c",
       "created_at": "2026-07-13T06:45:33Z",
       "deb_control": {
@@ -459,6 +587,32 @@
       "upstream_version": "v0.74.2"
     },
     {
+      "build_plan_digest": "sha256:c0a0d76501ab69bdc37944929e094a4fdf1b98d5164d4b2475cab88ac1cd719e",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "fzf",
+        "version": "0.74.4-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.74.4-1",
+        "package": "fzf"
+      },
+      "path": "packages/fzf/fzf_0.74.4-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:a2e6c8ed79410356dd8fdedcbbd910aa7569b2d98305b9d4e3925b26ef0e49ff",
+      "size": 1923394,
+      "upstream": {
+        "etag": "\"0x8DF10643630F693\"",
+        "last_modified": "Sat, 12 Sep 2026 00:24:30 GMT",
+        "sha256": "sha256:05e6813a337cc722c3ed07e54a764b75cc5d671e2e60459db0ba696ee5fa7504",
+        "size": 2286563,
+        "url": "https://github.com/junegunn/fzf/releases/download/v0.74.4/fzf-0.74.4-linux_amd64.tar.gz"
+      },
+      "upstream_version": "v0.74.4"
+    },
+    {
       "build_plan_digest": "sha256:1257cadb1544083415fae7676e717e7f97a54ffcdae2bf69f510dcc484b91172",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -508,6 +662,81 @@
         "url": "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v7.1.4-3/jellyfin-ffmpeg_7.1.4-3_portable_linux64-gpl.tar.xz"
       },
       "upstream_version": "7.1.4"
+    },
+    {
+      "build_plan_digest": "sha256:2e54b75b7979a2727e01fac37c507eba21d0bc4f4b8f681158b1712b19761bb5",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "jellyfin-ffmpeg8",
+        "version": "8.1.3-1-jammy"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "8.1.3-1-jammy",
+        "package": "jellyfin-ffmpeg8"
+      },
+      "path": "packages/jellyfin-ffmpeg8/jellyfin-ffmpeg8_8.1.3-1-jammy_amd64.deb",
+      "sha256": "sha256:e619de9bf8d15d0a196aa860129faeddbe413fde50b45bc30a4b30e691fdaa74",
+      "size": 51562788,
+      "upstream": {
+        "etag": "\"0x8DF1CA99BB87CAA\"",
+        "last_modified": "Sun, 27 Sep 2026 15:11:29 GMT",
+        "sha256": "sha256:e619de9bf8d15d0a196aa860129faeddbe413fde50b45bc30a4b30e691fdaa74",
+        "size": 51562788,
+        "url": "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v8.1.3-1/jellyfin-ffmpeg8_8.1.3-1-jammy_amd64.deb"
+      },
+      "upstream_version": "8.1.3-1-jammy"
+    },
+    {
+      "build_plan_digest": "sha256:0e6905749ea44e99312d17c4d1dc383e52f7c65ae45d6837663ea7f9e74ee123",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "jellyfin-ffmpeg8",
+        "version": "8.1.3-1-noble"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "8.1.3-1-noble",
+        "package": "jellyfin-ffmpeg8"
+      },
+      "path": "packages/jellyfin-ffmpeg8/jellyfin-ffmpeg8_8.1.3-1-noble_amd64.deb",
+      "sha256": "sha256:188fa8b31f7e0ded9dadd1d11d1cd05482a7f03cec4e5c0af80aae21fde44ce4",
+      "size": 52574218,
+      "upstream": {
+        "etag": "\"0x8DF1CA99822E278\"",
+        "last_modified": "Sun, 27 Sep 2026 15:11:23 GMT",
+        "sha256": "sha256:188fa8b31f7e0ded9dadd1d11d1cd05482a7f03cec4e5c0af80aae21fde44ce4",
+        "size": 52574218,
+        "url": "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v8.1.3-1/jellyfin-ffmpeg8_8.1.3-1-noble_amd64.deb"
+      },
+      "upstream_version": "8.1.3-1-noble"
+    },
+    {
+      "build_plan_digest": "sha256:e7a35277bf173d34f66350c383eda9978a928c58f30efe50dc8c0c7232b291de",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "jellyfin-ffmpeg8",
+        "version": "8.1.3-1-resolute"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "8.1.3-1-resolute",
+        "package": "jellyfin-ffmpeg8"
+      },
+      "path": "packages/jellyfin-ffmpeg8/jellyfin-ffmpeg8_8.1.3-1-resolute_amd64.deb",
+      "sha256": "sha256:2f4cf15936625c4bb13ea8ea0e2f35536be7ecb84af83372ff5df45cd861576a",
+      "size": 53211932,
+      "upstream": {
+        "etag": "\"0x8DF1CA99B026CE0\"",
+        "last_modified": "Sun, 27 Sep 2026 15:11:28 GMT",
+        "sha256": "sha256:2f4cf15936625c4bb13ea8ea0e2f35536be7ecb84af83372ff5df45cd861576a",
+        "size": 53211932,
+        "url": "https://github.com/jellyfin/jellyfin-ffmpeg/releases/download/v8.1.3-1/jellyfin-ffmpeg8_8.1.3-1-resolute_amd64.deb"
+      },
+      "upstream_version": "8.1.3-1-resolute"
     },
     {
       "build_plan_digest": "sha256:4196b75a9574573e56892f0292c8ac130ee96c244165d23e849397169ec4dec2",
@@ -638,6 +867,31 @@
       "upstream_version": "1.19.29"
     },
     {
+      "build_plan_digest": "sha256:0371eef3668a853a6ecc088e88003492ca5ac29f8330cf7726d14efafd3192ba",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "mihomo",
+        "version": "1.19.32"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.19.32",
+        "package": "mihomo"
+      },
+      "path": "packages/mihomo/mihomo_1.19.32_amd64.deb",
+      "sha256": "sha256:968bcf66cb7941e1e0a3d7b842abd80179a859cd514561b73303fca99e255475",
+      "size": 22730120,
+      "upstream": {
+        "etag": "\"0x8DF1F15990FF4C8\"",
+        "last_modified": "Wed, 30 Sep 2026 17:09:33 GMT",
+        "sha256": "sha256:968bcf66cb7941e1e0a3d7b842abd80179a859cd514561b73303fca99e255475",
+        "size": 22730120,
+        "url": "https://github.com/MetaCubeX/mihomo/releases/download/v1.19.32/mihomo-linux-amd64-v2-v1.19.32.deb"
+      },
+      "upstream_version": "1.19.32"
+    },
+    {
       "build_plan_digest": "sha256:f8149abc3c73299224566676b1282fa4a5cd09105ccf4da16b2aacd1df148f9b",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -662,6 +916,32 @@
         "url": "https://github.com/ouch-org/ouch/releases/download/0.8.1/ouch-x86_64-unknown-linux-gnu.tar.gz"
       },
       "upstream_version": "0.8.1"
+    },
+    {
+      "build_plan_digest": "sha256:916daf2f2551d986d3ee096010a8e1b036e5dfd1aba6cdbc7c1094ea3bcec90b",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "ouch",
+        "version": "0.8.3-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.8.3-1",
+        "package": "ouch"
+      },
+      "path": "packages/ouch/ouch_0.8.3-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:755bad63461c225b2e608226c32ccbbc0168bb511d6334c36213d8deff87c718",
+      "size": 2269524,
+      "upstream": {
+        "etag": "\"0x8DF11AC07178FBD\"",
+        "last_modified": "Sun, 13 Sep 2026 15:31:06 GMT",
+        "sha256": "sha256:f0664cbb3bf8c5c781637da2c8bb86b4561a8709f7e10ddb1188150e68e619a7",
+        "size": 2690027,
+        "url": "https://github.com/ouch-org/ouch/releases/download/0.8.3/ouch-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "0.8.3"
     },
     {
       "build_plan_digest": "sha256:2e6aa44498af321b25f936c8f540de1ad45336e07118aff8a22e78fd84d3d895",
@@ -714,6 +994,31 @@
       "upstream_version": "1:0.54.0"
     },
     {
+      "build_plan_digest": "sha256:750ea57ff25a4e440c81dfa5c4064fd40c24ba3cf5ca580ccb9ce6b74b9d72b6",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "ov",
+        "version": "1:0.55.0"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1:0.55.0",
+        "package": "ov"
+      },
+      "path": "packages/ov/ov_1:0.55.0_amd64.deb",
+      "sha256": "sha256:1630090bf9c056e11d694870a20d63f1e95ff2d1c04f656cc297f7abdda8fb4f",
+      "size": 7349364,
+      "upstream": {
+        "etag": "\"0x8DF1DDED1A0A1F4\"",
+        "last_modified": "Tue, 29 Sep 2026 04:04:54 GMT",
+        "sha256": "sha256:1630090bf9c056e11d694870a20d63f1e95ff2d1c04f656cc297f7abdda8fb4f",
+        "size": 7349364,
+        "url": "https://github.com/noborus/ov/releases/download/v0.55.0/ov_0.55.0_amd64.deb"
+      },
+      "upstream_version": "1:0.55.0"
+    },
+    {
       "build_plan_digest": "sha256:12421eae1a798011ade8a1521ed7367d082e98e9829202e646201dc208530a5f",
       "created_at": "2026-08-03T06:52:08Z",
       "deb_control": {
@@ -764,6 +1069,32 @@
         "url": "https://github.com/j178/prek/releases/download/v0.4.9/prek-x86_64-unknown-linux-gnu.tar.gz"
       },
       "upstream_version": "v0.4.9"
+    },
+    {
+      "build_plan_digest": "sha256:9c6898268c353e9532b137854cb75e875ec5cc6f1a3aeec45ceef24cf36fb5ad",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "prek",
+        "version": "0.5.4-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.5.4-1",
+        "package": "prek"
+      },
+      "path": "packages/prek/prek_0.5.4-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:d0327a321121a580a0ba32ce5d544f41c6fcd234230e1d9468b83aa51e102f79",
+      "size": 4625266,
+      "upstream": {
+        "etag": "\"0x8DF1D1CDCB7820C\"",
+        "last_modified": "Mon, 28 Sep 2026 04:56:30 GMT",
+        "sha256": "sha256:6147dfe64051af590f4bfc2c073a0780fb5e2cc37d9eab8e47fe9fe26c7dfb80",
+        "size": 6023829,
+        "url": "https://github.com/j178/prek/releases/download/v0.5.4/prek-x86_64-unknown-linux-gnu.tar.gz"
+      },
+      "upstream_version": "v0.5.4"
     },
     {
       "build_plan_digest": "sha256:aa182f828cf3235ddff126925f459e743765f97ffb16269e1c20e5b4c177c69a",
@@ -840,6 +1171,31 @@
         "url": "https://github.com/rclone/rclone/releases/download/v1.75.0/rclone-v1.75.0-linux-amd64.deb"
       },
       "upstream_version": "1.75.0"
+    },
+    {
+      "build_plan_digest": "sha256:2498aca9c83ab385a84f610683237ce335779fe3dc89b10159809d72460fcdf2",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "rclone",
+        "version": "1.75.1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "1.75.1",
+        "package": "rclone"
+      },
+      "path": "packages/rclone/rclone_1.75.1_amd64.deb",
+      "sha256": "sha256:09c9f7606ed9e31eecc1eec26a89992cf2931a8d2d1a5f0ae2bb1c11630ffb15",
+      "size": 32154762,
+      "upstream": {
+        "etag": "\"0x8DF0AA63D6A2769\"",
+        "last_modified": "Fri, 04 Sep 2026 17:02:02 GMT",
+        "sha256": "sha256:09c9f7606ed9e31eecc1eec26a89992cf2931a8d2d1a5f0ae2bb1c11630ffb15",
+        "size": 32154762,
+        "url": "https://github.com/rclone/rclone/releases/download/v1.75.1/rclone-v1.75.1-linux-amd64.deb"
+      },
+      "upstream_version": "1.75.1"
     },
     {
       "build_plan_digest": "sha256:aa981b10269665f13b7ba5ef51ea19dc20ff5ced2b35d26baa7a23445fdf9cf6",
@@ -942,6 +1298,32 @@
         "url": "https://github.com/cargo-bins/cargo-quickinstall/releases/download/tokei-14.0.0/tokei-14.0.0-x86_64-unknown-linux-musl.tar.gz"
       },
       "upstream_version": "v14.0.0"
+    },
+    {
+      "build_plan_digest": "sha256:8282c87e06380e6ffec9a1e65cad655ed8e8e03eef6d41a5a94d2da3adf1405d",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "tokei-musl",
+        "version": "15.0.0-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "15.0.0-1",
+        "package": "tokei-musl"
+      },
+      "path": "packages/tokei-musl/tokei-musl_15.0.0-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:71751ed6856eb17fa0dcc1d77416915e38eeaea25d11da473b78c5c4a6624f50",
+      "size": 1242886,
+      "upstream": {
+        "etag": "\"0x8DF11C6B0870972\"",
+        "last_modified": "Sun, 13 Sep 2026 18:41:57 GMT",
+        "sha256": "sha256:0e47da89fa9398173a27a7b4b197edcebfd9a6233e27780ec6a00fea0697c677",
+        "size": 1494113,
+        "url": "https://github.com/cargo-bins/cargo-quickinstall/releases/download/tokei-15.0.0/tokei-15.0.0-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v15.0.0"
     },
     {
       "build_plan_digest": "sha256:182b162977358b21a9bf5de7cfad1674ee3dae574a0fedf525d7f9850d855710",
@@ -1047,6 +1429,31 @@
       "upstream_version": "26.5.6-1"
     },
     {
+      "build_plan_digest": "sha256:18a8f4255384367d86afaaa1494bc76ff4e6b4d5c90b35909290f7215757873b",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "yazi",
+        "version": "26.9.1-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "26.9.1-1",
+        "package": "yazi"
+      },
+      "path": "packages/yazi/yazi_26.9.1-1_amd64.deb",
+      "sha256": "sha256:331d6247c0a0fd549f14cd599a928a529b8b22eded1bb1f61a518376c7621b45",
+      "size": 10476564,
+      "upstream": {
+        "etag": "\"0x8DF080577824F1B\"",
+        "last_modified": "Tue, 01 Sep 2026 08:46:08 GMT",
+        "sha256": "sha256:331d6247c0a0fd549f14cd599a928a529b8b22eded1bb1f61a518376c7621b45",
+        "size": 10476564,
+        "url": "https://github.com/sxyazi/yazi/releases/download/v26.9.1/yazi-x86_64-unknown-linux-gnu.deb"
+      },
+      "upstream_version": "26.9.1-1"
+    },
+    {
       "build_plan_digest": "sha256:1021d998d64c7b3bebb016b8d12549cd2daa14e8775f2975664bdc6c1c421d0f",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -1071,6 +1478,32 @@
         "url": "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
       },
       "upstream_version": "v4.53.3"
+    },
+    {
+      "build_plan_digest": "sha256:1003e84c2ea26a332db9b1108a8b2f3a7bb7e534fb3f0fdf39fb01ef7c0e39d0",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "yq",
+        "version": "4.54.1-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "4.54.1-1",
+        "package": "yq"
+      },
+      "path": "packages/yq/yq_4.54.1-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:17e32e2053aff5aa89926927802805b5364677c8a14a02ac304966e2c3225cfc",
+      "size": 4756812,
+      "upstream": {
+        "etag": "\"0x8DF1DE031C2AE4F\"",
+        "last_modified": "Tue, 29 Sep 2026 04:14:45 GMT",
+        "sha256": "sha256:8e34fc298390875de416e6a4afcb8cabeceb25d9aa8506c1a2f9353cf702ea5f",
+        "size": 14168224,
+        "url": "https://github.com/mikefarah/yq/releases/download/v4.54.1/yq_linux_amd64"
+      },
+      "upstream_version": "v4.54.1"
     },
     {
       "build_plan_digest": "sha256:d050fc0d0e9c1bc058b9e54258a2f07ab0b27f236f5be74141b09870b89d1e25",
@@ -1099,6 +1532,32 @@
       "upstream_version": "v0.44.3"
     },
     {
+      "build_plan_digest": "sha256:c5c3f3e3841581e54b1111dffa14b71948f25082be0291daa3674b595835e5d4",
+      "created_at": "2026-10-01T13:02:17Z",
+      "deb_control": {
+        "architecture": "amd64",
+        "package": "zellij",
+        "version": "0.45.1-1"
+      },
+      "deb_key": {
+        "arch": "amd64",
+        "deb_version": "0.45.1-1",
+        "package": "zellij"
+      },
+      "path": "packages/zellij/zellij_0.45.1-1_amd64.deb",
+      "revision": 1,
+      "sha256": "sha256:da91e134f5364ddfcb95fd90a2008c32d156879cbcb1b4da81beee5bb98b8fd2",
+      "size": 11462564,
+      "upstream": {
+        "etag": "\"0x8DF04E351028735\"",
+        "last_modified": "Fri, 28 Aug 2026 09:04:07 GMT",
+        "sha256": "sha256:40bcc2e03f5d5ae8e054e39f676081fe12ab70871506996ba595834c3718eefc",
+        "size": 18729165,
+        "url": "https://github.com/zellij-org/zellij/releases/download/v0.45.1/zellij-x86_64-unknown-linux-musl.tar.gz"
+      },
+      "upstream_version": "v0.45.1"
+    },
+    {
       "build_plan_digest": "sha256:ca379e9ec31432e9993c66636896a5576dbb8c774bc0de9928419a8725608774",
       "created_at": "2026-07-11T15:13:39Z",
       "deb_control": {
@@ -1124,8 +1583,8 @@
       "upstream_version": "0.10.0-1"
     }
   ],
-  "generated_at": "2026-08-03T08:15:14Z",
-  "plan_digest": "sha256:ab542bc6625a9d6936196dcfe13e99e3049a7e5b7067c22fa3e332af06313cfa",
+  "generated_at": "2026-10-01T13:02:17Z",
+  "plan_digest": "sha256:4de39930d845dcfe5ec9f226b96679f80496399ebe422e8a2316c7cd8836d63f",
   "publications": [
     {
       "artifact": {
@@ -1275,6 +1734,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic-musl.yaml",
+            "source_id": "difftastic-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic-musl",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "1.1.7-1",
         "package": "doggo"
       },
@@ -1326,6 +1814,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.4.0-1",
+        "package": "doggo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.4.0-1",
         "package": "doggo",
         "suite": "focal"
       }
@@ -1447,6 +1964,35 @@
     },
     {
       "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.5.0",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.5.0",
+        "package": "fd",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
         "arch": "all",
         "deb_version": "7.9-1",
         "package": "fonts-maple-mono-nf-cn-unhinted"
@@ -1529,6 +2075,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.74.2-1",
+        "package": "fzf",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.74.4-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.4-1",
         "package": "fzf",
         "suite": "focal"
       }
@@ -1685,6 +2260,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.19.32",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.32",
+        "package": "mihomo",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.11-1",
         "package": "prek"
       },
@@ -1736,6 +2340,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.4.9-1",
+        "package": "prek",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.5.4-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.5.4-1",
         "package": "prek",
         "suite": "focal"
       }
@@ -1823,6 +2456,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.75.0",
+        "package": "rclone",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.1",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.1",
         "package": "rclone",
         "suite": "focal"
       }
@@ -1946,6 +2608,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "15.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.0.0-1",
+        "package": "tokei-musl",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.26.1-1",
         "package": "xh"
       },
@@ -2033,6 +2724,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "4.54.1-1",
+        "package": "yq"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.54.1-1",
+        "package": "yq",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.44.3-2",
         "package": "zellij"
       },
@@ -2055,6 +2775,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.44.3-2",
+        "package": "zellij",
+        "suite": "focal"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.45.1-1",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.45.1-1",
         "package": "zellij",
         "suite": "focal"
       }
@@ -2265,6 +3014,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "2.73.0",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 4
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.73.0",
+        "package": "chezmoi",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.69.0-1",
         "package": "difftastic"
       },
@@ -2294,6 +3072,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic.yaml",
+            "source_id": "difftastic",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.69.0-1",
         "package": "difftastic-musl"
       },
@@ -2316,6 +3123,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.69.0-1",
+        "package": "difftastic-musl",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic-musl.yaml",
+            "source_id": "difftastic-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.71.0-1",
         "package": "difftastic-musl",
         "suite": "jammy"
       }
@@ -2374,6 +3210,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.4.0-1",
+        "package": "doggo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.4.0-1",
         "package": "doggo",
         "suite": "jammy"
       }
@@ -2495,6 +3360,35 @@
     },
     {
       "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.5.0",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.5.0",
+        "package": "fd",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
         "arch": "all",
         "deb_version": "7.9-1",
         "package": "fonts-maple-mono-nf-cn-unhinted"
@@ -2584,6 +3478,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.74.4-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.4-1",
+        "package": "fzf",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
@@ -2640,6 +3563,39 @@
         "component": "main",
         "deb_version": "7.1.4-3",
         "package": "jellyfin-ffmpeg7",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "8.1.3-1-jammy",
+        "package": "jellyfin-ffmpeg8"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffmpeg",
+              "-version"
+            ],
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffprobe",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/jellyfin-ffmpeg8-jammy.yaml",
+            "source_id": "jellyfin-ffmpeg8-jammy",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "8.1.3-1-jammy",
+        "package": "jellyfin-ffmpeg8",
         "suite": "jammy"
       }
     },
@@ -2791,6 +3747,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.19.32",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.32",
+        "package": "mihomo",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.8.1-1",
         "package": "ouch"
       },
@@ -2813,6 +3798,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.8.1-1",
+        "package": "ouch",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.8.3-1",
+        "package": "ouch"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ouch",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ouch.yaml",
+            "source_id": "ouch",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.8.3-1",
         "package": "ouch",
         "suite": "jammy"
       }
@@ -2878,6 +3892,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1:0.55.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.55.0",
+        "package": "ov",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.11-1",
         "package": "prek"
       },
@@ -2929,6 +3972,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.4.9-1",
+        "package": "prek",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.5.4-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.5.4-1",
         "package": "prek",
         "suite": "jammy"
       }
@@ -3016,6 +4088,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.75.0",
+        "package": "rclone",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.1",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.1",
         "package": "rclone",
         "suite": "jammy"
       }
@@ -3132,6 +4233,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "14.0.0-1",
+        "package": "tokei-musl",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.0.0-1",
         "package": "tokei-musl",
         "suite": "jammy"
       }
@@ -3259,6 +4389,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "4.54.1-1",
+        "package": "yq"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.54.1-1",
+        "package": "yq",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.44.3-2",
         "package": "zellij"
       },
@@ -3281,6 +4440,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.44.3-2",
+        "package": "zellij",
+        "suite": "jammy"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.45.1-1",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.45.1-1",
         "package": "zellij",
         "suite": "jammy"
       }
@@ -3491,6 +4679,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "2.73.0",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 4
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.73.0",
+        "package": "chezmoi",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.69.0-1",
         "package": "difftastic"
       },
@@ -3520,6 +4737,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic.yaml",
+            "source_id": "difftastic",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.69.0-1",
         "package": "difftastic-musl"
       },
@@ -3542,6 +4788,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.69.0-1",
+        "package": "difftastic-musl",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic-musl.yaml",
+            "source_id": "difftastic-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.71.0-1",
         "package": "difftastic-musl",
         "suite": "noble"
       }
@@ -3600,6 +4875,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.4.0-1",
+        "package": "doggo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.4.0-1",
         "package": "doggo",
         "suite": "noble"
       }
@@ -3721,6 +5025,35 @@
     },
     {
       "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.5.0",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.5.0",
+        "package": "fd",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
         "arch": "all",
         "deb_version": "7.9-1",
         "package": "fonts-maple-mono-nf-cn-unhinted"
@@ -3810,6 +5143,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.74.4-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.4-1",
+        "package": "fzf",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
@@ -3866,6 +5228,39 @@
         "component": "main",
         "deb_version": "7.1.4-3",
         "package": "jellyfin-ffmpeg7",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "8.1.3-1-noble",
+        "package": "jellyfin-ffmpeg8"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffmpeg",
+              "-version"
+            ],
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffprobe",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/jellyfin-ffmpeg8-noble.yaml",
+            "source_id": "jellyfin-ffmpeg8-noble",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "8.1.3-1-noble",
+        "package": "jellyfin-ffmpeg8",
         "suite": "noble"
       }
     },
@@ -4017,6 +5412,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.19.32",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.32",
+        "package": "mihomo",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.8.1-1",
         "package": "ouch"
       },
@@ -4039,6 +5463,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.8.1-1",
+        "package": "ouch",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.8.3-1",
+        "package": "ouch"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ouch",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ouch.yaml",
+            "source_id": "ouch",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.8.3-1",
         "package": "ouch",
         "suite": "noble"
       }
@@ -4104,6 +5557,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1:0.55.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.55.0",
+        "package": "ov",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.11-1",
         "package": "prek"
       },
@@ -4155,6 +5637,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.4.9-1",
+        "package": "prek",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.5.4-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.5.4-1",
         "package": "prek",
         "suite": "noble"
       }
@@ -4242,6 +5753,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.75.0",
+        "package": "rclone",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.1",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.1",
         "package": "rclone",
         "suite": "noble"
       }
@@ -4358,6 +5898,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "14.0.0-1",
+        "package": "tokei-musl",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.0.0-1",
         "package": "tokei-musl",
         "suite": "noble"
       }
@@ -4485,6 +6054,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "26.9.1-1",
+        "package": "yazi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yazi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yazi.yaml",
+            "source_id": "yazi",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "26.9.1-1",
+        "package": "yazi",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "4.53.3-1",
         "package": "yq"
       },
@@ -4514,6 +6112,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "4.54.1-1",
+        "package": "yq"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.54.1-1",
+        "package": "yq",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.44.3-2",
         "package": "zellij"
       },
@@ -4536,6 +6163,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.44.3-2",
+        "package": "zellij",
+        "suite": "noble"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.45.1-1",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.45.1-1",
         "package": "zellij",
         "suite": "noble"
       }
@@ -4746,6 +6402,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "2.73.0",
+        "package": "chezmoi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "chezmoi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/chezmoi.yaml",
+            "source_id": "chezmoi",
+            "upstream_index": 4
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "2.73.0",
+        "package": "chezmoi",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.69.0-1",
         "package": "difftastic"
       },
@@ -4775,6 +6460,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic.yaml",
+            "source_id": "difftastic",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.69.0-1",
         "package": "difftastic-musl"
       },
@@ -4797,6 +6511,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.69.0-1",
+        "package": "difftastic-musl",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.71.0-1",
+        "package": "difftastic-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "difft",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/difftastic-musl.yaml",
+            "source_id": "difftastic-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.71.0-1",
         "package": "difftastic-musl",
         "suite": "resolute"
       }
@@ -4855,6 +6598,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.2.0-1",
+        "package": "doggo",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.4.0-1",
+        "package": "doggo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "doggo",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/doggo.yaml",
+            "source_id": "doggo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.4.0-1",
         "package": "doggo",
         "suite": "resolute"
       }
@@ -4976,6 +6748,35 @@
     },
     {
       "artifact": {
+        "arch": "amd64",
+        "deb_version": "10.5.0",
+        "package": "fd"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fd",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fd.yaml",
+            "source_id": "fd",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "10.5.0",
+        "package": "fd",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
         "arch": "all",
         "deb_version": "7.9-1",
         "package": "fonts-maple-mono-nf-cn-unhinted"
@@ -5065,6 +6866,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "0.74.4-1",
+        "package": "fzf"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "fzf",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/fzf.yaml",
+            "source_id": "fzf",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.74.4-1",
+        "package": "fzf",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "25.7.1-1",
         "package": "helix"
       },
@@ -5121,6 +6951,39 @@
         "component": "main",
         "deb_version": "7.1.4-3",
         "package": "jellyfin-ffmpeg7",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "8.1.3-1-resolute",
+        "package": "jellyfin-ffmpeg8"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffmpeg",
+              "-version"
+            ],
+            [
+              "/usr/lib/jellyfin-ffmpeg/ffprobe",
+              "-version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/jellyfin-ffmpeg8-resolute.yaml",
+            "source_id": "jellyfin-ffmpeg8-resolute",
+            "upstream_index": 0
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "8.1.3-1-resolute",
+        "package": "jellyfin-ffmpeg8",
         "suite": "resolute"
       }
     },
@@ -5272,6 +7135,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1.19.32",
+        "package": "mihomo"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "mihomo",
+              "-v"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/mihomo.yaml",
+            "source_id": "mihomo",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.19.32",
+        "package": "mihomo",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.8.1-1",
         "package": "ouch"
       },
@@ -5294,6 +7186,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.8.1-1",
+        "package": "ouch",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.8.3-1",
+        "package": "ouch"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ouch",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ouch.yaml",
+            "source_id": "ouch",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.8.3-1",
         "package": "ouch",
         "suite": "resolute"
       }
@@ -5359,6 +7280,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "1:0.55.0",
+        "package": "ov"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "ov",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/ov.yaml",
+            "source_id": "ov",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1:0.55.0",
+        "package": "ov",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.4.11-1",
         "package": "prek"
       },
@@ -5410,6 +7360,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.4.9-1",
+        "package": "prek",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.5.4-1",
+        "package": "prek"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "prek",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/prek.yaml",
+            "source_id": "prek",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.5.4-1",
         "package": "prek",
         "suite": "resolute"
       }
@@ -5497,6 +7476,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "1.75.0",
+        "package": "rclone",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "1.75.1",
+        "package": "rclone"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "rclone",
+              "version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/rclone.yaml",
+            "source_id": "rclone",
+            "upstream_index": 2
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "1.75.1",
         "package": "rclone",
         "suite": "resolute"
       }
@@ -5613,6 +7621,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "14.0.0-1",
+        "package": "tokei-musl",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "15.0.0-1",
+        "package": "tokei-musl"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "tokei",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/tokei-musl.yaml",
+            "source_id": "tokei-musl",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "15.0.0-1",
         "package": "tokei-musl",
         "suite": "resolute"
       }
@@ -5740,6 +7777,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "26.9.1-1",
+        "package": "yazi"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yazi",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yazi.yaml",
+            "source_id": "yazi",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "26.9.1-1",
+        "package": "yazi",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "4.53.3-1",
         "package": "yq"
       },
@@ -5769,6 +7835,35 @@
     {
       "artifact": {
         "arch": "amd64",
+        "deb_version": "4.54.1-1",
+        "package": "yq"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "yq",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/yq.yaml",
+            "source_id": "yq",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "4.54.1-1",
+        "package": "yq",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
         "deb_version": "0.44.3-2",
         "package": "zellij"
       },
@@ -5791,6 +7886,35 @@
         "arch": "amd64",
         "component": "main",
         "deb_version": "0.44.3-2",
+        "package": "zellij",
+        "suite": "resolute"
+      }
+    },
+    {
+      "artifact": {
+        "arch": "amd64",
+        "deb_version": "0.45.1-1",
+        "package": "zellij"
+      },
+      "e2e_claims": [
+        {
+          "commands": [
+            [
+              "zellij",
+              "--version"
+            ]
+          ],
+          "provenance": {
+            "source_file": "sources/zellij.yaml",
+            "source_id": "zellij",
+            "upstream_index": 1
+          }
+        }
+      ],
+      "key": {
+        "arch": "amd64",
+        "component": "main",
+        "deb_version": "0.45.1-1",
         "package": "zellij",
         "suite": "resolute"
       }

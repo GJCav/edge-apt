@@ -16,3 +16,9 @@ upstream:
     suites: [focal, jammy, noble, resolute]
     url: "https://github.com/sharkdp/fd/releases/download/v10.4.2/fd_10.4.2_amd64.deb"
     sha256: "sha256:0e44eb5fca93f09bc6f5430b90acdf44c8e069d0a903700aeb4820629337b67b"
+
+  - version: 10.5.0
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd_10.5.0_amd64.deb"
+    sha256: "sha256:1fca9f8fb221f26fe37b425db4935dc8180099bdecfd8e031538bfc9396e95f8"

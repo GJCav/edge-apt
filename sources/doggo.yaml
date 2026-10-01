@@ -26,3 +26,11 @@ upstream:
     url: "https://github.com/mr-karan/doggo/releases/download/v1.2.0/doggo-linux-x86_64.tar.gz"
     sha256: "sha256:aa6760e7f163958e7626420447385ab938fdc127983edaceb121f809bd3e2bca"
     extract_path: doggo
+
+  - version: v1.4.0
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/mr-karan/doggo/releases/download/v1.4.0/doggo-linux-x86_64.tar.gz"
+    sha256: "sha256:f85e2471737677a5fa65491b4241e0f46960aae6cc2211cc660ee6394a1a3d06"
+    extract_path: doggo

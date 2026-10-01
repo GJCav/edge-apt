@@ -18,3 +18,11 @@ upstream:
     url: "https://github.com/Wilfred/difftastic/releases/download/0.69.0/difft-x86_64-unknown-linux-gnu.tar.gz"
     sha256: "sha256:038db96a0e8fce69f2554e33e04ff75fbf6f96ea45cb4edb9ed6203a2c4750ff"
     extract_path: difft
+
+  - version: v0.71.0
+    revision: 1
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/Wilfred/difftastic/releases/download/0.71.0/difft-0.71.0-x86_64-unknown-linux-gnu.tar.gz"
+    sha256: "sha256:61aea5394a53c56f144637cf39b3a0c0dafa27769731745e5851ff276e6478da"
+    extract_path: difft

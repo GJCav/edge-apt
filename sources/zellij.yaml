@@ -18,3 +18,11 @@ upstream:
     url: "https://github.com/zellij-org/zellij/releases/download/v0.44.3/zellij-x86_64-unknown-linux-musl.tar.gz"
     sha256: "sha256:0f7c346788627f506c0a28296517768633cff24fc822a739f8264b640ecad751"
     extract_path: zellij
+
+  - version: v0.45.1
+    revision: 1
+    arch: amd64
+    suites: [focal, jammy, noble, resolute]
+    url: "https://github.com/zellij-org/zellij/releases/download/v0.45.1/zellij-x86_64-unknown-linux-musl.tar.gz"
+    sha256: "sha256:40bcc2e03f5d5ae8e054e39f676081fe12ab70871506996ba595834c3718eefc"
+    extract_path: zellij

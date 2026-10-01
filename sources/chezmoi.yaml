@@ -28,3 +28,9 @@ upstream:
     suites: [jammy, noble, resolute]
     url: "https://github.com/twpayne/chezmoi/releases/download/v2.72.0/chezmoi_2.72.0_linux_amd64.deb"
     sha256: "sha256:6023435f5393553345ec10c75cd8160658c415f2bf9c3d8def3e120c92faf629"
+
+  - version: 2.73.0
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/twpayne/chezmoi/releases/download/v2.73.0/chezmoi_2.73.0_linux_amd64.deb"
+    sha256: "sha256:24df0be680b422e87fd8b4930fba583650920d68af81d53162a30867f8a8e0c8"

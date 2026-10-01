@@ -17,3 +17,9 @@ upstream:
     suites: [jammy, noble, resolute]
     url: "https://github.com/noborus/ov/releases/download/v0.54.0/ov_0.54.0_amd64.deb"
     sha256: "sha256:4d71fb8c0d2c78e70f4ae601cc943cf13364bae79f0a834ab031658664cc0463"
+
+  - version: 1:0.55.0
+    arch: amd64
+    suites: [jammy, noble, resolute]
+    url: "https://github.com/noborus/ov/releases/download/v0.55.0/ov_0.55.0_amd64.deb"
+    sha256: "sha256:1630090bf9c056e11d694870a20d63f1e95ff2d1c04f656cc297f7abdda8fb4f"
